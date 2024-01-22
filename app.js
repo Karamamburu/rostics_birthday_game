@@ -1,5 +1,5 @@
 import { playSound } from './src/sound-handlers.js';
-import { deadSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike } from './src/const.js';
+import { deadSound, winSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike, CALORY_INCREASE, COOKIES_COUNT, TROPHY_CALORY_INCREASE, TROPHY_COUNT } from './src/const.js';
 
 let trophyCounter = 1;
 
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // what happens when you eat a pac-dot
   function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
-      score++
+      score += CALORY_INCREASE
       scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
     }
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function powerPelletEaten() {
 
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
-      score +=10
+      score += TROPHY_CALORY_INCREASE
       ghosts.forEach(ghost => ghost.isScared = true)
       setTimeout(unScareGhosts, 10000)
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
@@ -242,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')) {
         squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
         ghost.currentIndex = ghost.startIndex
-        score +=100
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
       }
     checkForGameOver()
@@ -262,10 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //check for a win - more is when this score is reached
   function checkForWin() {
-    if (score === 274) {
+    if (score === COOKIES_COUNT * CALORY_INCREASE + TROPHY_COUNT * TROPHY_CALORY_INCREASE) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("You have WON!"); }, 500)
+      playSound(winSound)
     }
   }
 });
