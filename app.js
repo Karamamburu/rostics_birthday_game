@@ -1,5 +1,7 @@
 import { playSound } from './src/sound-handlers.js';
-import { deadSound, moveSound, eatSound, sountrackSound } from './src/const.js';
+import { deadSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike } from './src/const.js';
+
+let trophyCounter = 1;
 
 const playButton = document.getElementById('play-button')
 playButton.addEventListener('click', () => {
@@ -138,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     powerPelletEaten()
     checkForGameOver()
     checkForWin()
-    moveCount++;
   }
   document.addEventListener('keyup', movePacman)
 
@@ -153,13 +154,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //what happens when you eat a power-pellet
   function powerPelletEaten() {
+
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       score +=10
       ghosts.forEach(ghost => ghost.isScared = true)
       setTimeout(unScareGhosts, 10000)
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      
+    switch (trophyCounter) {
+
+      case 1:
+        playSound(dominating)
+        break;
+      case 2:
+        playSound(rampage)
+        break;
+      case 3:
+        playSound(unstoppable)
+        break;
+      case 4:
+        playSound(godlike)
+        break;
+    }
+      trophyCounter++
     }
   }
+
+  
 
   //make the ghosts stop flashing
   function unScareGhosts() {
