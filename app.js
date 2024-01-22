@@ -221,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      playSound(deadSound)
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("Game Over"); }, 500)
     }
