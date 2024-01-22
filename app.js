@@ -1,3 +1,12 @@
+import { playSound } from './src/sound-handlers.js';
+import { deadSound, winSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike, CALORY_INCREASE, COOKIES_COUNT, TROPHY_CALORY_INCREASE, TROPHY_COUNT } from './src/const.js';
+
+let trophyCounter = 1;
+
+const playButton = document.getElementById('play-button')
+playButton.addEventListener('click', () => {
+  playSound(sountrackSound)
+})
 document.addEventListener('DOMContentLoaded', () => {
 
   const scoreDisplay = document.getElementById('score')
@@ -16,12 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,
     1,1,1,1,1,1,0,1,1,4,4,4,4,4,4,4,4,4,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,1,1,2,2,1,1,1,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,2,2,2,2,2,2,1,4,1,1,0,1,1,1,1,1,1,
-    4,4,4,4,4,4,0,0,0,4,1,2,2,2,2,2,2,1,4,0,0,0,4,4,4,4,4,4,
-    1,1,1,1,1,1,0,1,1,4,1,2,2,2,2,2,2,1,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,1,1,1,1,1,1,1,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,1,1,1,1,1,1,1,4,1,1,0,1,1,1,1,1,1,
+    1,1,1,1,1,1,0,1,1,4,4,4,4,4,4,4,4,4,4,1,1,0,1,1,1,1,1,1,
+    1,1,1,1,1,1,0,1,1,4,4,2,2,2,2,2,2,4,4,1,1,0,1,1,1,1,1,1,
+    4,4,4,4,4,4,0,0,0,4,4,2,2,2,2,2,2,4,4,0,0,0,4,4,4,4,4,4,
+    1,1,1,1,1,1,0,1,1,4,4,2,2,2,2,2,2,4,4,1,1,0,1,1,1,1,1,1,
+    1,1,1,1,1,1,0,1,1,4,4,2,2,2,2,2,2,4,4,1,1,0,1,1,1,1,1,1,
+    1,1,1,1,1,1,0,1,1,4,4,4,1,1,1,1,4,4,4,1,1,0,1,1,1,1,1,1,
     1,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,1,
     1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
     1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
@@ -84,8 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
           pacmanCurrentIndex % width !== 0 &&
           !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
-          )
-        pacmanCurrentIndex -= 1
+          ) {
+            pacmanCurrentIndex -= 1
+            playSound(moveSound)
+          }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
           pacmanCurrentIndex = 391
         }
@@ -95,16 +106,20 @@ document.addEventListener('DOMContentLoaded', () => {
           pacmanCurrentIndex - width >= 0 &&
           !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
           !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
-          ) 
-        pacmanCurrentIndex -= width
+          ) {
+            pacmanCurrentIndex -= width
+            playSound(moveSound)
+          }
         break
       case 39:
         if(
           pacmanCurrentIndex % width < width - 1 &&
           !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
-        )
-        pacmanCurrentIndex += 1
+        ) {
+          pacmanCurrentIndex += 1
+          playSound(moveSound)
+        }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
         }
@@ -114,8 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
           pacmanCurrentIndex + width < width * width &&
           !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
           !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
-        )
-        pacmanCurrentIndex += width
+        ){
+          pacmanCurrentIndex += width
+          playSound(moveSound)
+        }
         break
     }
     squares[pacmanCurrentIndex].classList.add('pac-man')
@@ -129,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // what happens when you eat a pac-dot
   function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
-      score++
+      score += CALORY_INCREASE
       scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
     }
@@ -137,13 +154,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //what happens when you eat a power-pellet
   function powerPelletEaten() {
+
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
-      score +=10
+      score += TROPHY_CALORY_INCREASE
       ghosts.forEach(ghost => ghost.isScared = true)
       setTimeout(unScareGhosts, 10000)
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      
+    switch (trophyCounter) {
+
+      case 1:
+        playSound(dominating)
+        break;
+      case 2:
+        playSound(rampage)
+        break;
+      case 3:
+        playSound(unstoppable)
+        break;
+      case 4:
+        playSound(godlike)
+        break;
+    }
+      trophyCounter++
     }
   }
+
+  
 
   //make the ghosts stop flashing
   function unScareGhosts() {
@@ -163,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //all my ghosts
-  ghosts = [
+  const ghosts = [
     new Ghost('blinky', 348, 250),
     new Ghost('pinky', 376, 400),
     new Ghost('inky', 351, 300),
@@ -205,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')) {
         squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
         ghost.currentIndex = ghost.startIndex
-        score +=100
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
       }
     checkForGameOver()
@@ -217,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      playSound(deadSound)
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("Game Over"); }, 500)
     }
@@ -224,10 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //check for a win - more is when this score is reached
   function checkForWin() {
-    if (score === 274) {
+    if (score === COOKIES_COUNT * CALORY_INCREASE + TROPHY_COUNT * TROPHY_CALORY_INCREASE) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("You have WON!"); }, 500)
+      playSound(winSound)
     }
   }
-})
+});
