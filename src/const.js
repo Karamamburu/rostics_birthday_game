@@ -1,6 +1,6 @@
-const dead = './assets/sounds/packman_death.mp3'
-const move = './assets/sounds/packman_waka.mp3'
-const eat = './assets/sounds/packman_eatfruit.mp3'
-const sountrack = './assets/sounds/packman_sountrack.mp3'
+const deadSound = './assets/sounds/packman_death.mp3'
+const moveSound = './assets/sounds/packman_waka.mp3'
+const eatSound = './assets/sounds/packman_eatfruit.mp3'
+const sountrackSound = './assets/sounds/packman_sountrack.mp3'
 
-export { dead, move, eat, sountrack }
+export { deadSound, moveSound, eatSound, sountrackSound }

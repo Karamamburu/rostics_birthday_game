@@ -1,5 +1,9 @@
+import { playSound } from './src/sound-handlers.js';
+import { deadSound, moveSound, eatSound, sountrackSound } from './src/const.js';
+
 document.addEventListener('DOMContentLoaded', () => {
 
+  playSound(sountrackSound);
   const scoreDisplay = document.getElementById('score')
   const width = 28
   let score = 0
