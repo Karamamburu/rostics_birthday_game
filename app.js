@@ -49,6 +49,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3 - power-pellet
   // 4 - empty
 
+  const countCellsByGroups = (layout) => {
+    const groups = {
+      pacDots: 0,
+      walls: 0,
+      ghostLairs: 0,
+      powerPellets: 0,
+      empty: 0
+    }
+    for (let i of layout) {
+      if (i === 0) {
+        groups.pacDots++
+      } else if (i === 1) {
+        groups.walls++
+      } else if (i === 2) {
+        groups.ghostLairs++
+      } else if (i === 3) {
+        groups.powerPellets++
+      } else if (i === 4) {
+        groups.empty++
+      }
+    }
+  }
+
   const squares = []
 
   //create your board
