@@ -1,6 +1,10 @@
 import { playSound } from './src/sound-handlers.js';
 import { deadSound, moveSound, eatSound, sountrackSound } from './src/const.js';
 
+const playButton = document.getElementById('play-button')
+playButton.addEventListener('click', () => {
+  playSound(sountrackSound)
+})
 document.addEventListener('DOMContentLoaded', () => {
 
   const scoreDisplay = document.getElementById('score')
@@ -134,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     powerPelletEaten()
     checkForGameOver()
     checkForWin()
+    moveCount++;
   }
   document.addEventListener('keyup', movePacman)
 
@@ -242,4 +247,4 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(function(){ alert("You have WON!"); }, 500)
     }
   }
-})
+});
