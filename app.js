@@ -70,10 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         groups.empty++
       }
     }
-    console.log(groups);
   }
-
-  countCellsByGroups(layout)
 
   const squares = []
 
