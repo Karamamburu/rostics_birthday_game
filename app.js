@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         break
     }
     squares[pacmanCurrentIndex].classList.add('pac-man')
+    playSound(moveSound)
     pacDotEaten()
     powerPelletEaten()
     checkForGameOver()
