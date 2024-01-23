@@ -1,4 +1,4 @@
-import { playSound } from './src/sound-handlers.js';
+import { playSound, pauseSound } from './src/sound-handlers.js';
 import { deadSound, winSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike, CALORY_INCREASE, COOKIES_COUNT, TROPHY_CALORY_INCREASE, TROPHY_COUNT, WALL_COLORS } from './src/const.js';
 import { getRandomInteger, getRandomElementOfArray } from './src//util.js'
 
@@ -296,12 +296,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function calculateScore() {
+    return COOKIES_COUNT * CALORY_INCREASE + TROPHY_COUNT * TROPHY_CALORY_INCREASE
+  }
   //check for a win - more is when this score is reached
   function checkForWin() {
-    if (score === COOKIES_COUNT * CALORY_INCREASE + TROPHY_COUNT * TROPHY_CALORY_INCREASE) {
+    if (score === calculateScore()) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ alert("You have WON!"); }, 500)
+      setTimeout(function(){ 
+        alert("You have WON!")
+      }, 500)
+
+      pauseSound(sountrackSound)
       playSound(winSound)
     }
   }

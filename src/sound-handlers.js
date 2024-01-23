@@ -3,4 +3,9 @@ const playSound = (sound) =>{
     audio.play()
 }
 
-export { playSound }
+const pauseSound = () => {
+    const audio = new Audio()
+    audio.pause()
+} 
+
+export { playSound, pauseSound }
