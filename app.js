@@ -17,7 +17,7 @@ let trophyCounter = 1;
 
 const playButton = document.getElementById('play-button')
 playButton.addEventListener('click', () => {
-  playSound(sountrackSound)
+  playSound(DIFFICULTY_LEVELS['sountrackSound'])
 })
 
 let difficultyLevel = 1;
