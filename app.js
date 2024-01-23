@@ -1,5 +1,16 @@
 import { playSound, pauseSound } from './src/sound-handlers.js';
-import { deadSound, winSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike, CALORY_INCREASE, COOKIES_COUNT, TROPHY_CALORY_INCREASE, TROPHY_COUNT, WALL_COLORS } from './src/const.js';
+import { 
+          PACMAN_SOUNDS, 
+          RAMPAGE_SOUNDS,
+          CALORY_INCREASE, 
+          COOKIES_COUNT, 
+          TROPHY_CALORY_INCREASE, 
+          TROPHY_COUNT, 
+          WALL_COLORS,
+          DIFFICULTY_LEVELS
+        } 
+        from './src/const.js';
+
 import { getRandomInteger, getRandomElementOfArray } from './src//util.js'
 
 let trophyCounter = 1;
@@ -8,6 +19,8 @@ const playButton = document.getElementById('play-button')
 playButton.addEventListener('click', () => {
   playSound(sountrackSound)
 })
+
+let difficultyLevel = 1;
 document.addEventListener('DOMContentLoaded', () => {
 
   const scoreDisplay = document.getElementById('score')
@@ -119,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= 1
-            playSound(moveSound)
+            playSound(PACMAN_SOUNDS['moveSound'])
           }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
           pacmanCurrentIndex = 391
@@ -132,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= width
-            playSound(moveSound)
+            playSound(PACMAN_SOUNDS['moveSound'])
           }
         break
       case 39:
@@ -142,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex += 1
-          playSound(moveSound)
+          playSound(PACMAN_SOUNDS['moveSound'])
         }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
@@ -155,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
         ){
           pacmanCurrentIndex += width
-          playSound(moveSound)
+          playSound(PACMAN_SOUNDS['moveSound'])
         }
         break
     }
@@ -189,16 +202,16 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (trophyCounter) {
 
       case 1:
-        playSound(dominating)
+        playSound(RAMPAGE_SOUNDS['dominating'])
         break;
       case 2:
-        playSound(rampage)
+        playSound(RAMPAGE_SOUNDS['rampage'])
         break;
       case 3:
-        playSound(unstoppable)
+        playSound(RAMPAGE_SOUNDS['unstoppable'])
         break;
       case 4:
-        playSound(godlike)
+        playSound(RAMPAGE_SOUNDS['godlike'])
         break;
     }
       trophyCounter++
@@ -290,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
-      playSound(deadSound)
+      playSound(PACMAN_SOUNDS['deadSound'])
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("Game Over"); }, 500)
     }
@@ -308,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("You have WON!")
       }, 500)
 
-      pauseSound(sountrackSound)
-      playSound(winSound)
+      pauseSound(PACMAN_SOUNDS['sountrackSound'])
+      playSound(PACMAN_SOUNDS['winSound'])
     }
   }
 });
