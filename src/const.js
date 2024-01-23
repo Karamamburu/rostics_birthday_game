@@ -14,6 +14,8 @@ const CALORY_INCREASE = 35
 const TROPHY_COUNT = 4
 const TROPHY_CALORY_INCREASE = 100
 
+const WALL_COLORS = ['wall-1', 'wall-2', 'wall-3', 'wall-4', 'wall-5', 'wall-6', 'wall-7', 'wall-8']
+
 export { 
         deadSound, 
         winSound, 
@@ -27,5 +29,6 @@ export {
         CALORY_INCREASE, 
         COOKIES_COUNT,
         TROPHY_COUNT,
-        TROPHY_CALORY_INCREASE
+        TROPHY_CALORY_INCREASE,
+        WALL_COLORS
     }
