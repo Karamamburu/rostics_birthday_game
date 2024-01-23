@@ -1,5 +1,6 @@
 import { playSound } from './src/sound-handlers.js';
-import { deadSound, winSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike, CALORY_INCREASE, COOKIES_COUNT, TROPHY_CALORY_INCREASE, TROPHY_COUNT } from './src/const.js';
+import { deadSound, winSound, moveSound, eatSound, sountrackSound, dominating, rampage, unstoppable, godlike, CALORY_INCREASE, COOKIES_COUNT, TROPHY_CALORY_INCREASE, TROPHY_COUNT, WALL_COLORS } from './src/const.js';
+import { getRandomInteger, getRandomElementOfArray } from './src//util.js'
 
 let trophyCounter = 1;
 
@@ -172,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
       score += CALORY_INCREASE
       scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
+      changeWallsColor()
     }
   }
 
@@ -203,7 +205,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function changeWallsColor() {
+    const randomColor = getRandomElementOfArray(WALL_COLORS);
+    
+    squares.forEach(square => {
+      if (square.classList.contains('wall')) {
+        WALL_COLORS.forEach(color => {
+          square.classList.remove(color);
+        });
   
+        square.classList.add(randomColor);
+      }
+    });
+  }
 
   //make the ghosts stop flashing
   function unScareGhosts() {
@@ -225,9 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
   //all my ghosts
   const ghosts = [
     new Ghost('blinky', 348, 250),
-    new Ghost('pinky', 376, 400),
-    new Ghost('inky', 351, 300),
-    new Ghost('clyde', 379, 500)
+    new Ghost('pinky', 376, 250),
+    new Ghost('inky', 351, 250),
+    new Ghost('clyde', 379, 250)
     ]
 
   //draw my ghosts onto the grid
