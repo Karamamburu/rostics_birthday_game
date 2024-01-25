@@ -2,7 +2,7 @@ const PACMAN_SOUNDS = {
     moveSound: './assets/sounds/pacman_move.mp3',
     eatSound: './assets/sounds/pacman_eatfruit.mp3',
     deadSound: './assets/sounds/pacman_death.mp3',
-    sountrackSound: './assets/sounds/pacman_soundtrack.mp3'
+    soundtrackSound: './assets/sounds/pacman_soundtrack.mp3'
 }
 
 const RAMPAGE_SOUNDS = {
