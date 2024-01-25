@@ -20,7 +20,7 @@ playButton.addEventListener('click', () => {
   playSound(PACMAN_SOUNDS['soundtrackSound'])
 })
 
-let difficultyLevel = 1;
+let difficultyLevel = 1;``
 document.addEventListener('DOMContentLoaded', () => {
 
   const scoreDisplay = document.getElementById('score')

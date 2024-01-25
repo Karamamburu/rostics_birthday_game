@@ -16,14 +16,14 @@ body {
 .grid {
     display: flex;
     flex-wrap: wrap;
-    width: 840px;
-    height: 840px;
+    width: 700px;
+    height: 700px;
     border: solid black;
 }
   
 .grid div {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .pac-dot {
@@ -71,7 +71,8 @@ body {
 }
 
 .power-pellet {
-    background-color: green;
+    background-image: url(../assets/images/pho_bo.png);
+    background-size: contain;
     border-radius: 10px;
     z-index: 0;
 }
