@@ -19,6 +19,7 @@ let selectedDifficulty = null;
 
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
+const restartButton = document.querySelector('.restart-button');
 
 function onDifficultyButtonClick(e) {
   selectedDifficulty = e.target.dataset.difficulty;
@@ -27,6 +28,14 @@ function onDifficultyButtonClick(e) {
     modalBackground.classList.add('hidden');
   }
   playSoundtrack()
+}
+
+function restartGame() {
+  window.location.reload()
+}
+
+function onRestartButtonClick() {
+  restartGame()
 }
 
 function initializeGame(difficulty) {
@@ -312,6 +321,7 @@ function initializeGame(difficulty) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
+      restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
     }
@@ -331,8 +341,10 @@ function initializeGame(difficulty) {
 
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['winSound'])
+      restartButton.classList.remove('hidden')
     }
   }
 }
 
 difficultyButtons.forEach(button => button.addEventListener('click', onDifficultyButtonClick));
+restartButton.addEventListener('click', restartGame)
