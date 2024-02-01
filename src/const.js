@@ -35,6 +35,17 @@ const DIFFICULTY_LEVELS = {
     },
 }
 
+const WIN_MESSAGE = `Поздравляем тебя в алёрте! Ты победил!`
+const LOOSE_MESSAGE = `О боже! Какой ужас! Я замутил макбук, а игру DenKman пройти не смог...`
+
+const DEN_FACE = {
+  regular: '../assets/images/den/den_regular.png',
+  openLeft: '../assets/images/den/den_open_left.png',
+  openRight: '../assets/images/den/den_open_right.png',
+  win: '../assets/images/den/den_win.png'
+}
+
+const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'win']
 
 export {
         PACMAN_SOUNDS,
@@ -44,5 +55,9 @@ export {
         TROPHY_COUNT,
         TROPHY_CALORY_INCREASE,
         WALL_COLORS,
-        DIFFICULTY_LEVELS
+        DIFFICULTY_LEVELS,
+        WIN_MESSAGE,
+        LOOSE_MESSAGE,
+        DEN_FACE,
+        DEN_FACE_ARRAY
     }

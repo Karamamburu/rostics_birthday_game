@@ -1,4 +1,5 @@
 import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
+import { WIN_MESSAGE, LOOSE_MESSAGE } from './src/const.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -7,6 +8,8 @@ import {
           TROPHY_CALORY_INCREASE, 
           TROPHY_COUNT, 
           WALL_COLORS,
+          DEN_FACE,
+          DEN_FACE_ARRAY,
           DIFFICULTY_LEVELS
         } 
         from './src/const.js';
@@ -18,6 +21,10 @@ let selectedDifficulty = null;
 
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
+const restartButton = document.querySelector('.restart-button');
+const denDiv = document.querySelector('.talking-den')
+
+denDiv.style.backgroundImage = DEN_FACE['regular']
 
 function onDifficultyButtonClick(e) {
   selectedDifficulty = e.target.dataset.difficulty;
@@ -26,6 +33,15 @@ function onDifficultyButtonClick(e) {
     modalBackground.classList.add('hidden');
   }
   playSoundtrack()
+}
+
+function restartGame() {
+  window.location.reload()
+}
+
+function forceDenToTalk() {
+  const denFace = getRandomElementOfArray(DEN_FACE_ARRAY);
+  denDiv.style.backgroundImage = `url(${DEN_FACE[denFace]})`;
 }
 
 function initializeGame(difficulty) {
@@ -193,6 +209,7 @@ function initializeGame(difficulty) {
       scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
       changeWallsColor()
+      forceDenToTalk()
     }
   }
 
@@ -311,8 +328,9 @@ function initializeGame(difficulty) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
+      restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ alert("Game Over"); }, 500)
+      setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
     }
   }
 
@@ -325,13 +343,16 @@ function initializeGame(difficulty) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ 
-        alert("You have WON!")
+        alert(WIN_MESSAGE)
       }, 500)
 
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['winSound'])
+      denDiv.style.backgroundImage = 'url(`DEN_FACE[`${getRandomElementOfArray(DEN_FACE_ARRAY)}`]}'
+      restartButton.classList.remove('hidden')
     }
   }
 }
 
 difficultyButtons.forEach(button => button.addEventListener('click', onDifficultyButtonClick));
+restartButton.addEventListener('click', restartGame)
