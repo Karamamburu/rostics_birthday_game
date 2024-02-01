@@ -5,7 +5,7 @@ const playSound = (sound) =>{
     audioInstance.play();
 }
 
-const soundtrack = new Audio(PACMAN_SOUNDS.soundtrackSound)
+const soundtrack = new Audio(PACMAN_SOUNDS['soundtrackSound'])
 
 const playSoundtrack = () =>{
     soundtrack.play();
