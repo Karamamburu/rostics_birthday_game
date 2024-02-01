@@ -1,6 +1,6 @@
 const PACMAN_SOUNDS = {
     moveSound: './assets/sounds/pacman_move.mp3',
-    eatSound: './assets/sounds/pacman_eatfruit.mp3',
+    winSound: './assets/sounds/pacman_win.mp3',
     deadSound: './assets/sounds/pacman_death.mp3',
     sountrackSound: './assets/sounds/pacman_soundtrack.mp3'
 }

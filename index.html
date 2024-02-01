@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Pac-man</title>
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/modal-style.css">
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/modal-style.css" />
     <script src="app.js" charset="utf-8" type="module"></script>
   </head>
   <body>
     <div class="modalBackground">
       <div class="modalActive">
-
-          <div class="modalWindow"></div>
+        <div class="modalWindow">
+          <h3>Ты действительно хочешь сыграть в эту жесть??!!11</h3>
+          <p>тогда выбери уровень сложности</p>
+          <div class="buttons">
+            <button class="difficulty-button normal-button" data-difficulty="normal">Normal</button>
+            <button class="difficulty-button nightmare-button" data-difficulty="nightmare">Nightmare</button>
+            <button class="difficulty-button hell-button" data-difficulty="hell">Hell</button>
+          </div>
+          <p>Жми быстрее, они уже идут за тобой...</p>
+        </div>
       </div>
-  </div>
+    </div>
     <div class="grid"></div>
     <button id="play-button">play</button>
+    <button id="pause-button">pause</button>
 
     <h3>Счётчик калорий:<span id="score"></span></h3>
-
   </body>
 </html>
