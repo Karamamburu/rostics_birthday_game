@@ -35,6 +35,8 @@ const DIFFICULTY_LEVELS = {
     },
 }
 
+const WIN_MESSAGE = `Поздравляем тебя в алёрте! Ты победил!`
+const LOOSE_MESSAGE = `О боже! Какой ужас! Я замутил макбук, а игру DenKman пройти не смог...`
 
 export {
         PACMAN_SOUNDS,
@@ -44,5 +46,7 @@ export {
         TROPHY_COUNT,
         TROPHY_CALORY_INCREASE,
         WALL_COLORS,
-        DIFFICULTY_LEVELS
+        DIFFICULTY_LEVELS,
+        WIN_MESSAGE,
+        LOOSE_MESSAGE
     }

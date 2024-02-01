@@ -1,4 +1,5 @@
 import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
+import { WIN_MESSAGE, LOOSE_MESSAGE } from './src/const.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -312,7 +313,7 @@ function initializeGame(difficulty) {
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ alert("Game Over"); }, 500)
+      setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
     }
   }
 
@@ -325,7 +326,7 @@ function initializeGame(difficulty) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ 
-        alert("You have WON!")
+        alert(WIN_MESSAGE)
       }, 500)
 
       pauseSoundtrack()
