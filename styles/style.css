@@ -125,3 +125,11 @@ body {
 .hidden {
   display: none;
 }
+
+.talking-den {
+  width: 80%;
+  height: 60%;
+  background-image: url(/assets/images/den/den_regular.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+}

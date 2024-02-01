@@ -8,6 +8,8 @@ import {
           TROPHY_CALORY_INCREASE, 
           TROPHY_COUNT, 
           WALL_COLORS,
+          DEN_FACE,
+          DEN_FACE_ARRAY,
           DIFFICULTY_LEVELS
         } 
         from './src/const.js';
@@ -20,6 +22,9 @@ let selectedDifficulty = null;
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
 const restartButton = document.querySelector('.restart-button');
+const denDiv = document.querySelector('.talking-den')
+
+denDiv.style.backgroundImage = DEN_FACE['regular']
 
 function onDifficultyButtonClick(e) {
   selectedDifficulty = e.target.dataset.difficulty;
@@ -34,8 +39,9 @@ function restartGame() {
   window.location.reload()
 }
 
-function onRestartButtonClick() {
-  restartGame()
+function forceDenToTalk() {
+  const denFace = getRandomElementOfArray(DEN_FACE_ARRAY);
+  denDiv.style.backgroundImage = `url(${DEN_FACE[denFace]})`;
 }
 
 function initializeGame(difficulty) {
@@ -203,6 +209,7 @@ function initializeGame(difficulty) {
       scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
       changeWallsColor()
+      forceDenToTalk()
     }
   }
 
@@ -341,6 +348,7 @@ function initializeGame(difficulty) {
 
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['winSound'])
+      denDiv.style.backgroundImage = 'url(`DEN_FACE[`${getRandomElementOfArray(DEN_FACE_ARRAY)}`]}'
       restartButton.classList.remove('hidden')
     }
   }
