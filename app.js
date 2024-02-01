@@ -15,6 +15,21 @@ import { getRandomInteger, getRandomElementOfArray } from './src//util.js'
 
 let trophyCounter = 1;
 
+const difficultyButtons = document.querySelectorAll('.difficulty-button')
+const modalBackground = document.querySelector('.modalBackground')
+
+function onDifficultyButtonClick(e) {
+  const selectedDifficulty = e.target.dataset.difficulty;
+  if (selectedDifficulty) {
+    // initializeGame(selectedDifficulty);
+    modalBackground.classList.add('hidden');
+  }
+  console.log(selectedDifficulty);
+}
+
+difficultyButtons.forEach(button => button.addEventListener('click', onDifficultyButtonClick));
+
+
 const playButton = document.getElementById('play-button')
 playButton.addEventListener('click', () => {
   playSound(DIFFICULTY_LEVELS['sountrackSound'])
