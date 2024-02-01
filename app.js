@@ -1,4 +1,4 @@
-import { playSound } from './src/sound-handlers.js';
+import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -25,7 +25,7 @@ function onDifficultyButtonClick(e) {
     initializeGame(selectedDifficulty);
     modalBackground.classList.add('hidden');
   }
-  playSound(PACMAN_SOUNDS['soundtrackSound'])
+  playSoundtrack()
 }
 
 function initializeGame(difficulty) {
@@ -309,6 +309,7 @@ function initializeGame(difficulty) {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert("Game Over"); }, 500)
@@ -327,7 +328,7 @@ function initializeGame(difficulty) {
         alert("You have WON!")
       }, 500)
 
-      // pauseSound(PACMAN_SOUNDS['sountrackSound'])
+      pauseSoundtrack()
       playSound(PACMAN_SOUNDS['winSound'])
     }
   }
