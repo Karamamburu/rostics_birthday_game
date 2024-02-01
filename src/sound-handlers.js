@@ -1,19 +1,20 @@
-// let soundtrackInstance = null;
+import { PACMAN_SOUNDS } from "../src/const.js";
 
 const playSound = (sound) =>{
     const audioInstance = new Audio(sound);
     audioInstance.play();
 }
 
-// const playSoundtrack = (soundtrack) =>{
-//   soundtrackInstance = new Audio(soundtrack);
-//   soundtrackInstance.play();
-// }
+const soundtrack = new Audio(PACMAN_SOUNDS.soundtrackSound)
 
-// const pauseSoundtrack = () => {
-//     if (soundtrackInstance) {
-//       soundtrackInstance.pause();
-//     }
-// }
+const playSoundtrack = () =>{
+    soundtrack.play();
+}
 
-export { playSound }
+const pauseSoundtrack = () => {
+    if (soundtrack) {
+      soundtrack.pause();
+    }
+}
+
+export { playSound, playSoundtrack, pauseSoundtrack }
