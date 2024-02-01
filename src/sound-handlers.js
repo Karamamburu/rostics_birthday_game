@@ -1,13 +1,19 @@
-let audioInstance = null;
+// let soundtrackInstance = null;
 
 const playSound = (sound) =>{
-    audioInstance = new Audio(sound);
+    const audioInstance = new Audio(sound);
     audioInstance.play();
 }
 
-const pauseSound = () => {
-    if (audioInstance) {
-        audioInstance.pause();
-    }
-}
-export { playSound, pauseSound }
+// const playSoundtrack = (soundtrack) =>{
+//   soundtrackInstance = new Audio(soundtrack);
+//   soundtrackInstance.play();
+// }
+
+// const pauseSoundtrack = () => {
+//     if (soundtrackInstance) {
+//       soundtrackInstance.pause();
+//     }
+// }
+
+export { playSound }

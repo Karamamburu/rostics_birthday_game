@@ -1,4 +1,4 @@
-import { playSound, pauseSound } from './src/sound-handlers.js';
+import { playSound } from './src/sound-handlers.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -327,7 +327,7 @@ function initializeGame(difficulty) {
         alert("You have WON!")
       }, 500)
 
-      pauseSound(PACMAN_SOUNDS['sountrackSound'])
+      // pauseSound(PACMAN_SOUNDS['sountrackSound'])
       playSound(PACMAN_SOUNDS['winSound'])
     }
   }
