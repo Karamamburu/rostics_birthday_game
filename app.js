@@ -1,4 +1,4 @@
-import { playSound, pauseSound } from './src/sound-handlers.js';
+import { playSound } from './src/sound-handlers.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -14,15 +14,21 @@ import {
 import { getRandomInteger, getRandomElementOfArray } from './src//util.js'
 
 let trophyCounter = 1;
+let selectedDifficulty = null;
 
-const playButton = document.getElementById('play-button')
-playButton.addEventListener('click', () => {
+const difficultyButtons = document.querySelectorAll('.difficulty-button')
+const modalBackground = document.querySelector('.modalBackground')
+
+function onDifficultyButtonClick(e) {
+  selectedDifficulty = e.target.dataset.difficulty;
+  if (selectedDifficulty) {
+    initializeGame(selectedDifficulty);
+    modalBackground.classList.add('hidden');
+  }
   playSound(PACMAN_SOUNDS['soundtrackSound'])
-})
+}
 
-let difficultyLevel = 1;``
-document.addEventListener('DOMContentLoaded', () => {
-
+function initializeGame(difficulty) {
   const scoreDisplay = document.getElementById('score')
   const width = 28
   let score = 0
@@ -312,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function calculateScore() {
     return COOKIES_COUNT * CALORY_INCREASE + TROPHY_COUNT * TROPHY_CALORY_INCREASE
   }
-  //check for a win - more is when this score is reached
+  
   function checkForWin() {
     if (score === calculateScore()) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
@@ -321,8 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("You have WON!")
       }, 500)
 
-      pauseSound(PACMAN_SOUNDS['sountrackSound'])
+      // pauseSound(PACMAN_SOUNDS['sountrackSound'])
       playSound(PACMAN_SOUNDS['winSound'])
     }
   }
-});
+}
+
+difficultyButtons.forEach(button => button.addEventListener('click', onDifficultyButtonClick));

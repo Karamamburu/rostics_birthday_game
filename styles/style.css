@@ -107,7 +107,7 @@ body {
 
 .clyde {
     background-color: orange;
-    z-index: 0;     
+    z-index: 1;     
 }
 
 .pac-man {
@@ -120,4 +120,8 @@ body {
 
 .scared-ghost {
     background-color: aquamarine;
+}
+
+.hidden {
+  display: none;
 }
