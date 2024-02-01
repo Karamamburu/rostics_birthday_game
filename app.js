@@ -25,7 +25,7 @@ function onDifficultyButtonClick(e) {
     initializeGame(selectedDifficulty);
     modalBackground.classList.add('hidden');
   }
-  playSound(PACMAN_SOUNDS['sountrackSound'])
+  playSound(PACMAN_SOUNDS['soundtrackSound'])
 }
 
 function initializeGame(difficulty) {
