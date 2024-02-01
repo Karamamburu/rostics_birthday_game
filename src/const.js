@@ -26,13 +26,21 @@ const DIFFICULTY_LEVELS = {
         ghostsCount: 4
     },
     nightmare: {
-        speed: 100,
+        speed: 150,
         ghostsCount: 6
     },
     hell: {
         speed: 100,
-        ghostsCount: 6
+        ghostsCount: 8
     },
+}
+
+const GHOST_START_INDEX = [348, 351, 376, 379]
+const GHOST_STYLES = ['blinky', 'pinky', 'inky', 'clyde']
+const GHOST_SPEED = {
+  normal: 250,
+  nightmare: 150,
+  hell: 190
 }
 
 const WIN_MESSAGE = `Поздравляем тебя в алёрте! Ты победил!`
@@ -59,5 +67,8 @@ export {
         WIN_MESSAGE,
         LOOSE_MESSAGE,
         DEN_FACE,
-        DEN_FACE_ARRAY
+        DEN_FACE_ARRAY,
+        GHOST_START_INDEX,
+        GHOST_STYLES,
+        GHOST_SPEED
     }

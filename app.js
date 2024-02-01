@@ -1,5 +1,5 @@
 import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
-import { WIN_MESSAGE, LOOSE_MESSAGE } from './src/const.js';
+import { WIN_MESSAGE, LOOSE_MESSAGE, GHOST_STYLES } from './src/const.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -10,7 +10,8 @@ import {
           WALL_COLORS,
           DEN_FACE,
           DEN_FACE_ARRAY,
-          DIFFICULTY_LEVELS
+          DIFFICULTY_LEVELS,
+          GHOST_START_INDEX
         } 
         from './src/const.js';
 
@@ -272,12 +273,24 @@ function initializeGame(difficulty) {
     }
   }
 
+  function createGhosts(difficulty) {
+    console.log(DIFFICULTY_LEVELS[selectedDifficulty])
+    const randomClass = getRandomElementOfArray(GHOST_STYLES)
+    const randomIndex = getRandomElementOfArray(GHOST_START_INDEX)
+
+  }
+  createGhosts()
+
   //all my ghosts
   const ghosts = [
-    new Ghost('blinky', 348, 250),
-    new Ghost('pinky', 376, 250),
-    new Ghost('inky', 351, 250),
-    new Ghost('clyde', 379, 250)
+    // new Ghost('blinky', 348, 250),
+    // new Ghost('blinky', 348, 250),
+    // new Ghost('pinky', 376, 250),
+    // new Ghost('pinky', 376, 250),
+    // new Ghost('inky', 351, 250),
+    // new Ghost('inky', 351, 250),
+    // new Ghost('clyde', 379, 250),
+    // new Ghost('clyde', 379, 250),
     ]
 
   //draw my ghosts onto the grid
