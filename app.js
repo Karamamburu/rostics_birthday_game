@@ -18,7 +18,7 @@ import {
         } 
         from './src/const.js';
 
-import { getRandomInteger, getRandomElementOfArray } from './src//util.js'
+import { getRandomElementOfArray } from './src//util.js'
 
 let trophyCounter = 1;
 let selectedDifficulty = null;
@@ -27,6 +27,7 @@ const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
 const restartButton = document.querySelector('.restart-button');
 const denDiv = document.querySelector('.talking-den')
+const difficulty = document.querySelector('.selected-difficulty')
 
 denDiv.style.backgroundImage = DEN_FACE['regular']
 
@@ -36,7 +37,9 @@ function onDifficultyButtonClick(e) {
     initializeGame(selectedDifficulty);
     modalBackground.classList.add('hidden');
   }
-  playSoundtrack(VOLUMES['half'])
+  playSoundtrack(VOLUMES['low'])
+  difficulty.textContent = selectedDifficulty
+
 }
 
 function restartGame() {
@@ -222,8 +225,6 @@ function initializeGame(difficulty) {
 
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       score += TROPHY_CALORY_INCREASE
-      ghosts.forEach(ghost => ghost.isScared = true)
-      setTimeout(unScareGhosts, 10000)
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
       
     switch (trophyCounter) {
@@ -260,9 +261,9 @@ function initializeGame(difficulty) {
   }
 
   //make the ghosts stop flashing
-  function unScareGhosts() {
-    ghosts.forEach(ghost => ghost.isScared = false)
-  }
+  // function unScareGhosts() {
+  //   ghosts.forEach(ghost => ghost.isScared = false)
+  // }
 
   //create ghosts using Constructors
   class Ghost {
@@ -287,28 +288,8 @@ function initializeGame(difficulty) {
         const newGhost = new Ghost(randomClass, randomIndex, speed);
         ghosts.push(newGhost);
     }
-  
-    return ghosts;
 }
   createGhosts();
-
-  //all my ghosts
-  // const ghosts = [
-  //   new Ghost('blinky', 348, 250),
-  //   new Ghost('blinky', 348, 250),
-  //   new Ghost('pinky', 376, 250),
-  //   new Ghost('pinky', 376, 250),
-  //   new Ghost('inky', 351, 250),
-  //   new Ghost('inky', 351, 250),
-  //   new Ghost('clyde', 379, 250),
-  //   new Ghost('clyde', 379, 250)
-  //   ]
-
-  //draw my ghosts onto the grid
-  ghosts.forEach(ghost => {
-    squares[ghost.currentIndex].classList.add(ghost.className)
-    squares[ghost.currentIndex].classList.add('ghost')
-    })
 
   //move the Ghosts randomly
   ghosts.forEach(ghost => moveGhost(ghost))
