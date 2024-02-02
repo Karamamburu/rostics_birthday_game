@@ -353,7 +353,7 @@ function initializeGame(difficulty) {
 
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['winSound'], VOLUMES['medium'])
-      denDiv.style.backgroundImage = 'url(`DEN_FACE[`${getRandomElementOfArray(DEN_FACE_ARRAY)}`]}'
+      denDiv.style.backgroundImage = `url(${DEN_FACE.win})`;
       restartButton.classList.remove('hidden')
     }
   }
