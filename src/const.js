@@ -12,6 +12,13 @@ const RAMPAGE_SOUNDS = {
     godlike: './assets/sounds/godlike.mp3'
 }
 
+const VOLUMES = {
+  high: 1,
+  medium: 0.75,
+  half: 0.5,
+  low: 0.25
+}
+
 const COOKIES_COUNT = 234
 const CALORY_INCREASE = 35
 
@@ -37,11 +44,6 @@ const DIFFICULTY_LEVELS = {
 
 const GHOST_START_INDEX = [348, 351, 376, 379]
 const GHOST_STYLES = ['blinky', 'pinky', 'inky', 'clyde']
-const GHOST_SPEED = {
-  normal: 250,
-  nightmare: 150,
-  hell: 190
-}
 
 const WIN_MESSAGE = `Поздравляем тебя в алёрте! Ты победил!`
 const LOOSE_MESSAGE = `О боже! Какой ужас! Я замутил макбук, а игру DenKman пройти не смог...`
@@ -58,6 +60,7 @@ const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'win']
 export {
         PACMAN_SOUNDS,
         RAMPAGE_SOUNDS,
+        VOLUMES,
         CALORY_INCREASE, 
         COOKIES_COUNT,
         TROPHY_COUNT,
@@ -69,6 +72,5 @@ export {
         DEN_FACE,
         DEN_FACE_ARRAY,
         GHOST_START_INDEX,
-        GHOST_STYLES,
-        GHOST_SPEED
+        GHOST_STYLES
     }

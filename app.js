@@ -1,8 +1,8 @@
 import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
-import { WIN_MESSAGE, LOOSE_MESSAGE, GHOST_STYLES } from './src/const.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
+          VOLUMES,
           CALORY_INCREASE, 
           COOKIES_COUNT, 
           TROPHY_CALORY_INCREASE, 
@@ -11,7 +11,10 @@ import {
           DEN_FACE,
           DEN_FACE_ARRAY,
           DIFFICULTY_LEVELS,
-          GHOST_START_INDEX
+          GHOST_START_INDEX,
+          GHOST_STYLES,
+          WIN_MESSAGE,
+          LOOSE_MESSAGE,
         } 
         from './src/const.js';
 
@@ -33,7 +36,7 @@ function onDifficultyButtonClick(e) {
     initializeGame(selectedDifficulty);
     modalBackground.classList.add('hidden');
   }
-  playSoundtrack()
+  playSoundtrack(VOLUMES['half'])
 }
 
 function restartGame() {
@@ -155,7 +158,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= 1
-            playSound(PACMAN_SOUNDS['moveSound'])
+            playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
           }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
           pacmanCurrentIndex = 391
@@ -168,7 +171,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= width
-            playSound(PACMAN_SOUNDS['moveSound'])
+            playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
           }
         break
       case 39:
@@ -178,7 +181,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex += 1
-          playSound(PACMAN_SOUNDS['moveSound'])
+          playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
         }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
@@ -191,7 +194,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
         ){
           pacmanCurrentIndex += width
-          playSound(PACMAN_SOUNDS['moveSound'])
+          playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
         }
         break
     }
@@ -226,16 +229,16 @@ function initializeGame(difficulty) {
     switch (trophyCounter) {
 
       case 1:
-        playSound(RAMPAGE_SOUNDS['dominating'])
+        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['high'])
         break;
       case 2:
-        playSound(RAMPAGE_SOUNDS['rampage'])
+        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['high'])
         break;
       case 3:
-        playSound(RAMPAGE_SOUNDS['unstoppable'])
+        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['high'])
         break;
       case 4:
-        playSound(RAMPAGE_SOUNDS['godlike'])
+        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['high'])
         break;
     }
       trophyCounter++
@@ -274,24 +277,32 @@ function initializeGame(difficulty) {
   }
 
   function createGhosts(difficulty) {
-    console.log(DIFFICULTY_LEVELS[selectedDifficulty])
-    const randomClass = getRandomElementOfArray(GHOST_STYLES)
-    const randomIndex = getRandomElementOfArray(GHOST_START_INDEX)
-
+    const ghosts = [];
+    const randomClass = getRandomElementOfArray(GHOST_STYLES);
+    const randomIndex = getRandomElementOfArray(GHOST_START_INDEX);
+    const speed = difficulty['speed'];
+  
+    for (let i = 0; i < difficulty.ghostsCount; i++) {
+      const newGhost = new Ghost(randomClass, randomIndex, speed);
+      ghosts.push(newGhost);
+    }
+  
+    return ghosts;  // Add this line to return the array of ghosts
   }
-  createGhosts()
+
+  const ghosts = createGhosts(selectedDifficulty);
 
   //all my ghosts
-  const ghosts = [
-    // new Ghost('blinky', 348, 250),
-    // new Ghost('blinky', 348, 250),
-    // new Ghost('pinky', 376, 250),
-    // new Ghost('pinky', 376, 250),
-    // new Ghost('inky', 351, 250),
-    // new Ghost('inky', 351, 250),
-    // new Ghost('clyde', 379, 250),
-    // new Ghost('clyde', 379, 250),
-    ]
+  // const ghosts = [
+  //   // new Ghost('blinky', 348, 250),
+  //   // new Ghost('blinky', 348, 250),
+  //   // new Ghost('pinky', 376, 250),
+  //   // new Ghost('pinky', 376, 250),
+  //   // new Ghost('inky', 351, 250),
+  //   // new Ghost('inky', 351, 250),
+  //   // new Ghost('clyde', 379, 250),
+  //   // new Ghost('clyde', 379, 250),
+  //   ]
 
   //draw my ghosts onto the grid
   ghosts.forEach(ghost => {
@@ -360,7 +371,7 @@ function initializeGame(difficulty) {
       }, 500)
 
       pauseSoundtrack()
-      playSound(PACMAN_SOUNDS['winSound'])
+      playSound(PACMAN_SOUNDS['winSound'], VOLUMES['medium'])
       denDiv.style.backgroundImage = 'url(`DEN_FACE[`${getRandomElementOfArray(DEN_FACE_ARRAY)}`]}'
       restartButton.classList.remove('hidden')
     }
