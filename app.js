@@ -275,33 +275,33 @@ function initializeGame(difficulty) {
       this.timerId = NaN
     }
   }
+  const ghosts = [];
 
-  function createGhosts(difficulty) {
-    const ghosts = [];
-    const randomClass = getRandomElementOfArray(GHOST_STYLES);
-    const randomIndex = getRandomElementOfArray(GHOST_START_INDEX);
-    const speed = difficulty['speed'];
+  function createGhosts() {
+    const speed = DIFFICULTY_LEVELS[selectedDifficulty].speed;
+    const ghostsCount = DIFFICULTY_LEVELS[selectedDifficulty].ghostsCount;
   
-    for (let i = 0; i < difficulty.ghostsCount; i++) {
-      const newGhost = new Ghost(randomClass, randomIndex, speed);
-      ghosts.push(newGhost);
+    for (let i = 0; i < ghostsCount; i++) {
+        const randomClass = getRandomElementOfArray(GHOST_STYLES);
+        const randomIndex = getRandomElementOfArray(GHOST_START_INDEX);
+        const newGhost = new Ghost(randomClass, randomIndex, speed);
+        ghosts.push(newGhost);
     }
   
-    return ghosts;  // Add this line to return the array of ghosts
-  }
-
-  const ghosts = createGhosts(selectedDifficulty);
+    return ghosts;
+}
+  createGhosts();
 
   //all my ghosts
   // const ghosts = [
-  //   // new Ghost('blinky', 348, 250),
-  //   // new Ghost('blinky', 348, 250),
-  //   // new Ghost('pinky', 376, 250),
-  //   // new Ghost('pinky', 376, 250),
-  //   // new Ghost('inky', 351, 250),
-  //   // new Ghost('inky', 351, 250),
-  //   // new Ghost('clyde', 379, 250),
-  //   // new Ghost('clyde', 379, 250),
+  //   new Ghost('blinky', 348, 250),
+  //   new Ghost('blinky', 348, 250),
+  //   new Ghost('pinky', 376, 250),
+  //   new Ghost('pinky', 376, 250),
+  //   new Ghost('inky', 351, 250),
+  //   new Ghost('inky', 351, 250),
+  //   new Ghost('clyde', 379, 250),
+  //   new Ghost('clyde', 379, 250)
   //   ]
 
   //draw my ghosts onto the grid
