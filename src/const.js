@@ -52,10 +52,12 @@ const DEN_FACE = {
   regular: '../assets/images/den/den_regular.png',
   openLeft: '../assets/images/den/den_open_left.png',
   openRight: '../assets/images/den/den_open_right.png',
-  win: '../assets/images/den/den_win.png'
+  openWide: '../assets/images/den/den_open_wide.png',
+  win: '../assets/images/den/den_win.png',
+  sad: '../assets/images/den/Den_sad.png'
 }
 
-const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'win']
+const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'openWide', 'win']
 
 export {
         PACMAN_SOUNDS,
