@@ -43,19 +43,21 @@ const DIFFICULTY_LEVELS = {
 }
 
 const GHOST_START_INDEX = [348, 351, 376, 379]
-const GHOST_STYLES = ['blinky', 'pinky', 'inky', 'clyde']
+const GHOST_STYLES = ['ghost-apple', 'ghost-avocado', 'ghost-broccoli', 'ghost-cucumber', 'ghost-lemon', 'ghost-orange', 'ghost-pumpkin', 'ghost-tomato']
 
-const WIN_MESSAGE = `Поздравляем тебя в алёрте! Ты победил!`
-const LOOSE_MESSAGE = `О боже! Какой ужас! Я замутил макбук, а игру DenKman пройти не смог...`
+const WIN_MESSAGE = `С ДР, крч! Ты победил!`
+const LOOSE_MESSAGE = `О! Какой ужас! Памагите! Я замутил макбук, а игру DenKman пройти не смог...`
 
 const DEN_FACE = {
   regular: '../assets/images/den/den_regular.png',
   openLeft: '../assets/images/den/den_open_left.png',
   openRight: '../assets/images/den/den_open_right.png',
-  win: '../assets/images/den/den_win.png'
+  openWide: '../assets/images/den/den_open_wide.png',
+  win: '../assets/images/den/den_win.png',
+  sad: '../assets/images/den/Den_sad.png'
 }
 
-const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'win']
+const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'openWide', 'win']
 
 export {
         PACMAN_SOUNDS,

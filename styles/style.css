@@ -45,8 +45,8 @@ body {
 
 .pac-dot {
     background-image: url(/assets/images/chicken.png);
-    background-size: contain;
-    border: 3.5px solid white;
+    background-size: cover;
+    /* border: 2.5px solid white; */
     box-sizing: border-box;
     z-index: 0;
 }
@@ -92,27 +92,64 @@ body {
     background-size: contain;
     border-radius: 10px;
     z-index: 0;
+    box-sizing: border-box;
 }
 
-.blinky {
-    background-color: red;
+.ghost-apple {
+    background-image: url(/assets/images/ghosts/apple.png);
     z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
 }
 
-.pinky {
-    background-color: pink;
+.ghost-avocado {
+    background-image: url(/assets/images/ghosts/avocado.png);
     z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
 }
 
 
-.inky {
-    background-color: cyan;
+.ghost-broccoli {
+    background-image: url(/assets/images/ghosts/broccoli.png);
     z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
 }
 
-.clyde {
-    background-color: orange;
-    z-index: 1;     
+.ghost-cucumber {
+    background-image: url(/assets/images/ghosts/cucumber.png);
+    z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
+}
+
+.ghost-lemon {
+    background-image: url(/assets/images/ghosts/lemon.png);
+    z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
+}
+
+.ghost-orange {
+    background-image: url(/assets/images/ghosts/orange.png);
+    z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
+}
+
+.ghost-pumpkin {
+    background-image: url(/assets/images/ghosts/pumkin.png);
+    z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
+}
+
+.ghost-tomato {
+    background-image: url(/assets/images/ghosts/tomato.png);
+    z-index: 1;
+    background-size: cover;
+    box-sizing: border-box;
 }
 
 .pac-man {
@@ -138,4 +175,57 @@ body {
   background-repeat: no-repeat;
   background-size: 100%;
   padding:10%;
+}
+
+.difficulty-button {
+    width: 30%;
+    height: 20%;
+    border-radius: 10px;
+    color: white;
+    transition: .2s linear;
+    background: #0B63F6;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.difficulty-button:hover {
+    -webkit-transform: rotateZ(5deg);
+    -ms-transform: rotateZ(5deg);
+    transform: rotateZ(5deg);
+    cursor: pointer;
+}
+
+.normal-button {
+    background: #05a42a;
+}
+
+.nightmare-button {
+    background: #846926;
+}
+
+.hell-button {
+    background: #cf1f07;
+    box-shadow: 0px 0px 5px red;
+}
+
+.restart-button {
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    color: white;
+    transition: .4s linear;
+    background: #f60b0b;
+    font-size: 30px;
+    padding: 5px;
+}
+
+.restart-button:hover {
+    -webkit-transform: rotateZ(360deg);
+    -ms-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+    cursor: pointer;
+}
+
+.modalActive {
+    background-image: linear-gradient(to bottom right, pink, #f6eee5);
 }

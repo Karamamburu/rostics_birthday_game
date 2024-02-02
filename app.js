@@ -333,6 +333,7 @@ function initializeGame(difficulty) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
+      denDiv.style.backgroundImage = `url(${DEN_FACE.sad})`;
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
