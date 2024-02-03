@@ -15,6 +15,8 @@ import {
           GHOST_STYLES,
           WIN_MESSAGE,
           LOOSE_MESSAGE,
+          PHOBO_STYLES,
+          PHOBO_IMAGES
         } 
         from './src/const.js';
 
@@ -116,6 +118,7 @@ function initializeGame(difficulty) {
   }
 
   const squares = []
+  let powerPelletIndex = 0;
 
   //create your board
   function createBoard() {
@@ -133,6 +136,13 @@ function initializeGame(difficulty) {
         squares[i].classList.add('ghost-lair')
       } else if (layout[i] === 3) {
         squares[i].classList.add('power-pellet')
+        squares[i].style.backgroundImage = `url(../assets/images/phobos/${PHOBO_STYLES[powerPelletIndex]}.png)`;
+        squares[i].style.backgroundSize = 'contain';
+        squares[i].style.borderRadius = '10px';
+        squares[i].style.zIndex = '0';
+        squares[i].style.boxSizing = 'border-box';
+      
+      powerPelletIndex++
       }
     }
   }
@@ -226,6 +236,7 @@ function initializeGame(difficulty) {
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       score += TROPHY_CALORY_INCREASE
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      squares[pacmanCurrentIndex].style.backgroundImage = ''
       
     switch (trophyCounter) {
 
