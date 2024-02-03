@@ -59,6 +59,15 @@ const DEN_FACE = {
 
 const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'openWide', 'win']
 
+const PHOBO_IMAGES = {
+  guitar: '../assets/images/phobos/guitar.png',
+  jar: '../assets/images/phobos/jar.png',
+  phobo: '../assets/images/phobos/phobo.png',
+  printer: '../assets/images/phobos/printer.png'
+}
+
+const PHOBO_STYLES = ['guitar', 'phobo', 'jar', 'printer']
+
 export {
         PACMAN_SOUNDS,
         RAMPAGE_SOUNDS,
@@ -74,5 +83,7 @@ export {
         DEN_FACE,
         DEN_FACE_ARRAY,
         GHOST_START_INDEX,
-        GHOST_STYLES
+        GHOST_STYLES,
+        PHOBO_STYLES,
+        PHOBO_IMAGES
     }

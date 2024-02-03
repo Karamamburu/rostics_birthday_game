@@ -15,6 +15,8 @@ import {
           GHOST_STYLES,
           WIN_MESSAGE,
           LOOSE_MESSAGE,
+          PHOBO_STYLES,
+          PHOBO_IMAGES
         } 
         from './src/const.js';
 
