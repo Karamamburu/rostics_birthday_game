@@ -110,7 +110,13 @@ function filterTableByDifficulty(difficulty) {
     ? allRatingData 
     : allRatingData.filter(player => player.difficulty_level === difficulty);
 
-  const topTenResults = filteredData.slice(0, 10);
+  const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
+
+  const topTenResults = filteredData.slice(0, 10).sort((a, b) => 
+   b.score - a.score || 
+   difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
+   a.durationInSeconds - b.durationInSeconds
+);
   
   topTenResults.forEach((player, index) => {
     const row = document.createElement('tr');

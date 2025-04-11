@@ -104,11 +104,12 @@ switch (mode) {
 				newObj.difficulty_level = object.difficulty_level
 				newObj.score = object.score
 				
-				durationInSeconds = RawSecondsToDate(DateDiff(object.end_time, object.start_time))
-				minutes = Minute(durationInSeconds)
-				strSeconds = StrInt(Second(durationInSeconds))
+				durationInSeconds = DateDiff(object.end_time, object.start_time)
+				minutes = Minute(RawSecondsToDate(durationInSeconds))
+				strSeconds = StrInt(Second(RawSecondsToDate(durationInSeconds)))
 				seconds = StrCharCount(strSeconds) == 2 ? strSeconds : 0 + strSeconds
 				newObj.duration = minutes + ":" + seconds
+				newObj.durationInSeconds = durationInSeconds
 				newObj.is_won = object.is_won
 			} catch (ex) {
 			   LogEvent(log_file_name, "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)
