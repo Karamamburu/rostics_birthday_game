@@ -110,7 +110,13 @@ function filterTableByDifficulty(difficulty) {
     ? allRatingData 
     : allRatingData.filter(player => player.difficulty_level === difficulty);
 
-  const topTenResults = filteredData.slice(0, 10);
+  const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
+
+  const topTenResults = filteredData.slice(0, 10).sort((a, b) => 
+   b.score - a.score || 
+   difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
+   a.durationInSeconds - b.durationInSeconds
+);
   
   topTenResults.forEach((player, index) => {
     const row = document.createElement('tr');
@@ -293,7 +299,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= 1
-            playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
+            playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
           }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
           pacmanCurrentIndex = 391
@@ -306,7 +312,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= width
-            playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
+            playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
           }
         break
       case 39:
@@ -316,7 +322,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex += 1
-          playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
+          playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
         }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
@@ -329,7 +335,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
         ){
           pacmanCurrentIndex += width
-          playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['medium'])
+          playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
         }
         break
     }
@@ -363,16 +369,16 @@ function initializeGame(difficulty) {
     switch (trophyCounter) {
 
       case 1:
-        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['high'])
+        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['medium'])
         break;
       case 2:
-        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['high'])
+        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['medium'])
         break;
       case 3:
-        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['high'])
+        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['medium'])
         break;
       case 4:
-        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['high'])
+        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['medium'])
         break;
     }
       trophyCounter++
@@ -498,7 +504,7 @@ function initializeGame(difficulty) {
 
       pauseSoundtrack()
       endTime = new Date();
-      playSound(PACMAN_SOUNDS['winSound'], VOLUMES['medium'])
+      playSound(PACMAN_SOUNDS['winSound'], VOLUMES['low'])
       denDiv.style.backgroundImage = `url(${DEN_FACE.win})`;
       restartButton.classList.remove('hidden')
 

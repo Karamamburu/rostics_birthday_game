@@ -55,18 +55,34 @@ switch (mode) {
 			GetDataForLpe = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/get_data_for_lpe.js"));
 
 			var query = "sql:
+			WITH RankedResults AS (
+				SELECT
+					c.fullname,
+					c.id,
+					gr.difficulty_level, 
+					gr.score, 
+					gr.start_time, 
+					gr.end_time, 
+					gr.is_won,
+					ROW_NUMBER() OVER (
+						PARTITION BY c.id, gr.difficulty_level 
+						ORDER BY gr.score DESC, DATEDIFF(second, gr.start_time, gr.end_time) ASC
+					) AS rank
+				FROM cc_game_results gr
+				LEFT JOIN collaborators c ON c.id = gr.collaborator_id
+				WHERE c.is_dismiss = 0
+			)
 			SELECT
-				c.fullname,
-				c.id,
-				gr.difficulty_level, 
-				gr.score, 
-				gr.start_time, 
-				gr.end_time, 
-				gr.is_won
-			FROM cc_game_results gr
-			LEFT JOIN collaborators c ON c.id = gr.collaborator_id
-			WHERE c.is_dismiss = 0
-			ORDER BY gr.score DESC, DATEDIFF(second, gr.start_time, gr.end_time) ASC
+				fullname,
+				id,
+				difficulty_level, 
+				score, 
+				start_time, 
+				end_time, 
+				is_won
+			FROM RankedResults
+			WHERE rank = 1
+			ORDER BY difficulty_level, score DESC, DATEDIFF(second, start_time, end_time) ASC
 			"
 			var results= XQuery(query)
 
@@ -88,11 +104,12 @@ switch (mode) {
 				newObj.difficulty_level = object.difficulty_level
 				newObj.score = object.score
 				
-				durationInSeconds = RawSecondsToDate(DateDiff(object.end_time, object.start_time))
-				minutes = Minute(durationInSeconds)
-				strSeconds = StrInt(Second(durationInSeconds))
+				durationInSeconds = DateDiff(object.end_time, object.start_time)
+				minutes = Minute(RawSecondsToDate(durationInSeconds))
+				strSeconds = StrInt(Second(RawSecondsToDate(durationInSeconds)))
 				seconds = StrCharCount(strSeconds) == 2 ? strSeconds : 0 + strSeconds
 				newObj.duration = minutes + ":" + seconds
+				newObj.durationInSeconds = durationInSeconds
 				newObj.is_won = object.is_won
 			} catch (ex) {
 			   LogEvent(log_file_name, "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)

@@ -20,10 +20,10 @@ const VOLUMES = {
 }
 
 const COOKIES_COUNT = 234
-const CALORY_INCREASE = 35
+const CALORY_INCREASE = 40
 
 const TROPHY_COUNT = 4
-const TROPHY_CALORY_INCREASE = 100
+const TROPHY_CALORY_INCREASE = 160
 
 const WALL_COLORS = ['wall-1', 'wall-2', 'wall-3', 'wall-4', 'wall-5', 'wall-6', 'wall-7', 'wall-8']
 
@@ -45,8 +45,8 @@ const DIFFICULTY_LEVELS = {
 const GHOST_START_INDEX = [348, 351, 376, 379]
 const GHOST_STYLES = ['ghost-apple', 'ghost-avocado', 'ghost-broccoli', 'ghost-cucumber', 'ghost-lemon', 'ghost-orange', 'ghost-pumpkin', 'ghost-tomato']
 
-const WIN_MESSAGE = `С ДР, крч! Ты победил!`
-const LOOSE_MESSAGE = `О! Какой ужас! Памагите! Я замутил макбук, а игру DenKman пройти не смог...`
+const WIN_MESSAGE = `Ура! Поздравляем с победой!`
+const LOOSE_MESSAGE = `В этот раз не получилось, попробуй ещё`
 
 const DEN_FACE = {
   regular: '/test_game_for_academy/assets/images/den/den_regular.png',
