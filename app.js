@@ -109,8 +109,10 @@ function filterTableByDifficulty(difficulty) {
   const filteredData = difficulty === 'all' 
     ? allRatingData 
     : allRatingData.filter(player => player.difficulty_level === difficulty);
+
+  const topTenResults = filteredData.slice(0, 10);
   
-  filteredData.forEach((player, index) => {
+  topTenResults.forEach((player, index) => {
     const row = document.createElement('tr');
     
     const nameCell = document.createElement('td');

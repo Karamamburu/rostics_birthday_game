@@ -50,12 +50,12 @@ switch (mode) {
 	case 'get_rating_data':
 		Log("получить таблицу");
 		
-		function getTopResults(topNumber) {
+		function getTopResults() {
 			GetReadable = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/getReadable.js"));
 			GetDataForLpe = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/get_data_for_lpe.js"));
 
 			var query = "sql:
-			SELECT TOP " + topNumber + "
+			SELECT
 				c.fullname,
 				c.id,
 				gr.difficulty_level, 
@@ -103,7 +103,7 @@ switch (mode) {
 			return aResult
 		}
 		
-		result = getTopResults(10)
+		result = getTopResults()
 		break;
 }
 
