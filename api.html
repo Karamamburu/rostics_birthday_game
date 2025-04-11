@@ -73,6 +73,7 @@ switch (mode) {
 			var aResult = new Array()
 			for (object in results) {
 			try {
+			
 				newObj = new Object()
 				newObj.fullname = GetReadable.getReadableShortName(object.fullname)
 				newObj.position_name = GetReadable.getReadablePositionName(object.id)
@@ -86,12 +87,14 @@ switch (mode) {
 							 : GetDataForLpe.getPartnerName(object.id)
 				newObj.difficulty_level = object.difficulty_level
 				newObj.score = object.score
-				newObj.duration = DateDiff(object.end_time, object.start_time)
+				
+				durationInSeconds = RawSecondsToDate(DateDiff(object.end_time, object.start_time))
+				minutes = Minute(durationInSeconds)
+				seconds = Second(durationInSeconds)
+				newObj.duration = minutes + ":" + seconds
 				newObj.is_won = object.is_won
 			} catch (ex) {
-			   EnableLog("report_log", true)
-			   LogEvent("report_log", "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)
-			   EnableLog("report_log", false)
+			   LogEvent(log_file_name, "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)
 			}
 				aResult.push(newObj)
 			}
