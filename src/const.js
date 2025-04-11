@@ -20,10 +20,10 @@ const VOLUMES = {
 }
 
 const COOKIES_COUNT = 234
-const CALORY_INCREASE = 35
+const CALORY_INCREASE = 40
 
 const TROPHY_COUNT = 4
-const TROPHY_CALORY_INCREASE = 100
+const TROPHY_CALORY_INCREASE = 160
 
 const WALL_COLORS = ['wall-1', 'wall-2', 'wall-3', 'wall-4', 'wall-5', 'wall-6', 'wall-7', 'wall-8']
 
