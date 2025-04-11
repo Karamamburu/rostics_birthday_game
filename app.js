@@ -81,8 +81,6 @@ async function displayRatingData() {
       mode: 'get_rating_data'
     });
     
-    ratingData.sort((a, b) => b.score - a.score);
-    
     const tableBody = document.querySelector('.ratingTable tbody');
     
     tableBody.innerHTML = '';
@@ -93,7 +91,7 @@ async function displayRatingData() {
       const nameCell = document.createElement('td');
       nameCell.textContent = player.fullname;
 	  
-	  const positionCell = document.createElement('td');
+	    const positionCell = document.createElement('td');
       positionCell.textContent = player.position_name;
       
       const restaurantCell = document.createElement('td');
@@ -102,21 +100,25 @@ async function displayRatingData() {
       const companyCell = document.createElement('td');
       companyCell.textContent = player.partner_name;
 	  
-	  const difficultyCell = document.createElement('td');
+	    const difficultyCell = document.createElement('td');
       difficultyCell.textContent = player.difficulty_level;
       
       const scoreCell = document.createElement('td');
       scoreCell.textContent = player.score;
+
+      const durationCell = document.createElement('td');
+      durationCell.textContent = player.duration;
       
       const winCell = document.createElement('td');
       winCell.textContent = player.is_won ? 'Да' : 'Нет';
       
       row.appendChild(nameCell);
-	  row.appendChild(positionCell);
+	    row.appendChild(positionCell);
       row.appendChild(restaurantCell);
       row.appendChild(companyCell);
-	  row.appendChild(difficultyCell);
+	    row.appendChild(difficultyCell);
       row.appendChild(scoreCell);
+      row.appendChild(durationCell);
       row.appendChild(winCell);
       
       tableBody.appendChild(row);
