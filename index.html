@@ -1,35 +1,85 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <title>Pac-man</title>
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-    <link rel="stylesheet" href="./styles/style.css" />
-    <link rel="stylesheet" href="./styles/modal-style.css" />
-    <script src="app.js" charset="utf-8" type="module"></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/test_game_for_academy/favicon.ico"
+    />
+    <link rel="stylesheet" href="/test_game_for_academy/styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="/test_game_for_academy/styles/modal-style.css"
+    />
+    <script
+      src="/test_game_for_academy/app.js"
+      charset="utf-8"
+      type="module"
+    ></script>
   </head>
   <body>
     <div class="modalBackground">
       <div class="modalActive">
-        <div class="modalWindow">
-          <h3>Ты действительно хочешь сыграть в эту жесть??!!11</h3>
-          <p>Тогда выбери уровень сложности</p>
-          <div class="buttons">
-            <button class="difficulty-button normal-button" data-difficulty="normal">Normal</button>
-            <button class="difficulty-button nightmare-button" data-difficulty="nightmare">Nightmare</button>
-            <button class="difficulty-button hell-button" data-difficulty="hell">Hell</button>
+        <div class="modalContainer">
+          <div class="ratingContainer">
+            <h3>Топ 10 игроков</h3>
+            <table class="ratingTable">
+              <thead>
+                <tr>
+                  <th>Имя</th>
+				  <th>Должность</th>
+                  <th>Подразделение</th>
+                  <th>Компания</th>
+				  <th>Уровень сложности</th>
+                  <th>Балл</th>
+                  <th>Победа</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
-          <p>Жми быстрее, они уже идут за тобой...</p>
+          <div class="modalContent">
+            <div class="modalWindow">
+              <h3>
+                Привет, <%=curUser.firstname%>! Ты действительно хочешь сыграть в
+                эту жесть??!!11
+              </h3>
+              <p>Тогда выбери уровень сложности</p>
+              <div class="buttons">
+                <button
+                  class="difficulty-button normal-button"
+                  data-difficulty="normal"
+                >
+                  Normal
+                </button>
+                <button
+                  class="difficulty-button nightmare-button"
+                  data-difficulty="nightmare"
+                >
+                  Nightmare
+                </button>
+                <button
+                  class="difficulty-button hell-button"
+                  data-difficulty="hell"
+                >
+                  Hell
+                </button>
+              </div>
+              <p>Жми быстрее, они уже идут за тобой...</p>
+            </div>
+          </div>
         </div>
       </div>
-  </div>
+    </div>
     <div class="flex">
       <div class="grid"></div>
       <div class="toolbar">
-         <button class="restart-button hidden">Restart</button>
-         <p class="selected-difficulty"></p>
+        <button class="restart-button hidden">Restart</button>
+        <p class="selected-difficulty"></p>
         <h3>Счётчик калорий:<span id="score"></span></h3>
-       
+
         <div class="talking-den"></div>
       </div>
     </div>

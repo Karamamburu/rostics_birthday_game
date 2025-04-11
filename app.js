@@ -1,4 +1,4 @@
-import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
+﻿import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -24,6 +24,7 @@ import { getRandomElementOfArray } from './src//util.js'
 
 let trophyCounter = 1;
 let selectedDifficulty = null;
+let startTime, endTime;
 
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
@@ -32,6 +33,101 @@ const denDiv = document.querySelector('.talking-den')
 const difficulty = document.querySelector('.selected-difficulty')
 
 denDiv.style.backgroundImage = DEN_FACE['regular']
+/*
+function getCurUserName() {
+  const url = "custom_web_template.html?object_id=7136203866017102048"
+
+  fetch(url)
+    .then(response => {
+        if (!response.ok) {
+      throw new Error(`SERVER ERROR: ${response.statusText}`)
+        }
+        return response.text()
+    })
+    .then(responseText => {
+        document.getElementById("response_span").textContent = responseText
+    })
+    .catch(error => {
+        console.error("Error fetching data:", error)
+        alert("An error occurred while fetching data.")
+    });
+}
+getCurUserName()
+*/
+
+function sendRequest(body) {
+  var response_data;
+
+  $.ajax({
+      url: '/test_game_for_academy/api.html',
+      type: "POST",
+      dataType: "JSON",
+      data: JSON.stringify(body),
+      async: false,
+      error: (xhr, message) => {
+          alert("SERVER ERROR\n" + message);
+      },
+      success: (data) => {
+          response_data = data;
+      }
+  });
+  return response_data;
+}
+
+async function displayRatingData() {
+  try {
+
+    const ratingData = await sendRequest({
+      mode: 'get_rating_data'
+    });
+    
+    ratingData.sort((a, b) => b.score - a.score);
+    
+    const tableBody = document.querySelector('.ratingTable tbody');
+    
+    tableBody.innerHTML = '';
+    
+    ratingData.forEach((player, index) => {
+      const row = document.createElement('tr');
+      
+      const nameCell = document.createElement('td');
+      nameCell.textContent = player.fullname;
+	  
+	  const positionCell = document.createElement('td');
+      positionCell.textContent = player.position_name;
+      
+      const restaurantCell = document.createElement('td');
+      restaurantCell.textContent = player.subdivision_name;
+      
+      const companyCell = document.createElement('td');
+      companyCell.textContent = player.partner_name;
+	  
+	  const difficultyCell = document.createElement('td');
+      difficultyCell.textContent = player.difficulty_level;
+      
+      const scoreCell = document.createElement('td');
+      scoreCell.textContent = player.score;
+      
+      const winCell = document.createElement('td');
+      winCell.textContent = player.is_won ? 'Да' : 'Нет';
+      
+      row.appendChild(nameCell);
+	  row.appendChild(positionCell);
+      row.appendChild(restaurantCell);
+      row.appendChild(companyCell);
+	  row.appendChild(difficultyCell);
+      row.appendChild(scoreCell);
+      row.appendChild(winCell);
+      
+      tableBody.appendChild(row);
+    });
+    
+  } catch (error) {
+    console.error('Ошибка при загрузке данных рейтинга:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', displayRatingData);
 
 function onDifficultyButtonClick(e) {
   selectedDifficulty = e.target.dataset.difficulty;
@@ -41,7 +137,7 @@ function onDifficultyButtonClick(e) {
   }
   playSoundtrack(VOLUMES['low'])
   difficulty.textContent = selectedDifficulty
-
+  startTime = new Date();
 }
 
 function restartGame() {
@@ -136,7 +232,7 @@ function initializeGame(difficulty) {
         squares[i].classList.add('ghost-lair')
       } else if (layout[i] === 3) {
         squares[i].classList.add('power-pellet')
-        squares[i].style.backgroundImage = `url(../assets/images/phobos/${PHOBO_STYLES[powerPelletIndex]}.png)`;
+        squares[i].style.backgroundImage = `url(/test_game_for_academy/assets/images/phobos/${PHOBO_STYLES[powerPelletIndex]}.png)`;
         squares[i].style.backgroundSize = 'contain';
         squares[i].style.borderRadius = '10px';
         squares[i].style.zIndex = '0';
@@ -342,12 +438,23 @@ function initializeGame(difficulty) {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      endTime = new Date();
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
       denDiv.style.backgroundImage = `url(${DEN_FACE.sad})`;
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
+
+      sendRequest({
+        mode: 'game_over',
+        start_time: startTime,
+        end_time: endTime,
+        difficulty_level: selectedDifficulty,
+        score: score,
+        is_won: false,
+        game_code: "test_game"
+      })
     }
   }
 
@@ -364,9 +471,20 @@ function initializeGame(difficulty) {
       }, 500)
 
       pauseSoundtrack()
+      endTime = new Date();
       playSound(PACMAN_SOUNDS['winSound'], VOLUMES['medium'])
       denDiv.style.backgroundImage = `url(${DEN_FACE.win})`;
       restartButton.classList.remove('hidden')
+
+      sendRequest({
+        mode: 'game_over',
+        start_time: startTime,
+        end_time: endTime,
+        difficulty_level: selectedDifficulty,
+        score: score,
+        is_won: true,
+        game_code: "test_game"
+      })
     }
   }
 }

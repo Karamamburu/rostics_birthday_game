@@ -1,4 +1,4 @@
-const onButtonClick = (event) => {
+﻿const onButtonClick = (event) => {
   if (event.target.classList.contains('normal-button')) {
     console.log('1');
   }

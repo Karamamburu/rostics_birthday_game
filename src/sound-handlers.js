@@ -1,4 +1,4 @@
-import { PACMAN_SOUNDS } from "../src/const.js";
+﻿import { PACMAN_SOUNDS } from "/test_game_for_academy/src/const.js";
 
 const playSound = (sound, volume = 0.75) => {
     const audioInstance = new Audio(sound);

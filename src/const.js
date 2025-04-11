@@ -1,15 +1,15 @@
-const PACMAN_SOUNDS = {
-    moveSound: './assets/sounds/pacman_move.mp3',
-    winSound: './assets/sounds/pacman_win.mp3',
-    deadSound: './assets/sounds/pacman_death.mp3',
-    soundtrackSound: './assets/sounds/pacman_soundtrack.mp3'
+﻿const PACMAN_SOUNDS = {
+    moveSound: '/test_game_for_academy/assets/sounds/pacman_move.mp3',
+    winSound: '/test_game_for_academy/assets/sounds/pacman_win.mp3',
+    deadSound: '/test_game_for_academy/assets/sounds/pacman_death.mp3',
+    soundtrackSound: '/test_game_for_academy/assets/sounds/pacman_soundtrack.mp3'
 }
 
 const RAMPAGE_SOUNDS = {
-    dominating: './assets/sounds/dominating.mp3',
-    rampage: './assets/sounds/rampage.mp3',
-    unstoppable: './assets/sounds/unstoppable.mp3',
-    godlike: './assets/sounds/godlike.mp3'
+    dominating: '/test_game_for_academy/assets/sounds/dominating.mp3',
+    rampage: '/test_game_for_academy/assets/sounds/rampage.mp3',
+    unstoppable: '/test_game_for_academy/assets/sounds/unstoppable.mp3',
+    godlike: '/test_game_for_academy/assets/sounds/godlike.mp3'
 }
 
 const VOLUMES = {
@@ -49,21 +49,21 @@ const WIN_MESSAGE = `С ДР, крч! Ты победил!`
 const LOOSE_MESSAGE = `О! Какой ужас! Памагите! Я замутил макбук, а игру DenKman пройти не смог...`
 
 const DEN_FACE = {
-  regular: '../assets/images/den/den_regular.png',
-  openLeft: '../assets/images/den/den_open_left.png',
-  openRight: '../assets/images/den/den_open_right.png',
-  openWide: '../assets/images/den/den_open_wide.png',
-  win: '../assets/images/den/den_win.png',
-  sad: '../assets/images/den/Den_sad.png'
+  regular: '/test_game_for_academy/assets/images/den/den_regular.png',
+  openLeft: '/test_game_for_academy/assets/images/den/den_open_left.png',
+  openRight: '/test_game_for_academy/assets/images/den/den_open_right.png',
+  openWide: '/test_game_for_academy/assets/images/den/den_open_wide.png',
+  win: '/test_game_for_academy/assets/images/den/den_win.png',
+  sad: '/test_game_for_academy/assets/images/den/Den_sad.png'
 }
 
 const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'openWide', 'win']
 
 const PHOBO_IMAGES = {
-  guitar: '../assets/images/phobos/guitar.png',
-  jar: '../assets/images/phobos/jar.png',
-  phobo: '../assets/images/phobos/phobo.png',
-  printer: '../assets/images/phobos/printer.png'
+  guitar: '/test_game_for_academy/assets/images/phobos/guitar.png',
+  jar: '/test_game_for_academy/assets/images/phobos/jar.png',
+  phobo: '/test_game_for_academy/assets/images/phobos/phobo.png',
+  printer: '/test_game_for_academy/assets/images/phobos/printer.png'
 }
 
 const PHOBO_STYLES = ['guitar', 'phobo', 'jar', 'printer']

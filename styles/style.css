@@ -1,4 +1,4 @@
-body {
+﻿body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 30px;
     font-weight: bold;
@@ -44,7 +44,7 @@ body {
 }
 
 .pac-dot {
-    background-image: url(/assets/images/chicken.png);
+    background-image: url(/test_game_for_academy/assets/images/chicken.png);
     background-size: cover;
     /* border: 2.5px solid white; */
     box-sizing: border-box;
@@ -88,7 +88,7 @@ body {
 }
 
 .power-pellet {
-    background-image: url(../assets/images/pho_bo.png);
+    background-image: url(/test_game_for_academy/assets/images/pho_bo.png);
     background-size: contain;
     border-radius: 10px;
     z-index: 0;
@@ -96,14 +96,14 @@ body {
 }
 
 .ghost-apple {
-    background-image: url(/assets/images/ghosts/apple.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/apple.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-avocado {
-    background-image: url(/assets/images/ghosts/avocado.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/avocado.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
@@ -111,49 +111,49 @@ body {
 
 
 .ghost-broccoli {
-    background-image: url(/assets/images/ghosts/broccoli.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/broccoli.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-cucumber {
-    background-image: url(/assets/images/ghosts/cucumber.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/cucumber.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-lemon {
-    background-image: url(/assets/images/ghosts/lemon.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/lemon.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-orange {
-    background-image: url(/assets/images/ghosts/orange.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/orange.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-pumpkin {
-    background-image: url(/assets/images/ghosts/pumkin.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/pumkin.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-tomato {
-    background-image: url(/assets/images/ghosts/tomato.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/tomato.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .pac-man {
-    background-image: url(/assets/images/Den.png);
+    background-image: url(/test_game_for_academy/assets/images/Den.png);
     background-size: cover;
     /* width: 10px;
     height: 10px; */
@@ -171,7 +171,7 @@ body {
 .talking-den {
   width: 80%;
   height: 60%;
-  background-image: url(/assets/images/den/den_regular.png);
+  background-image: url(/test_game_for_academy/assets/images/den/den_regular.png);
   background-repeat: no-repeat;
   background-size: 100%;
   padding:10%;
@@ -226,6 +226,44 @@ body {
     cursor: pointer;
 }
 
-.modalActive {
-    background-image: linear-gradient(to bottom right, pink, #f6eee5);
+.page-content {
+	margin: 0px;
 }
+
+/* Добавленные стили для таблицы рейтинга */
+      .modalContainer {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .modalContent {
+        flex: 1;
+        padding: 0 15px;
+      }
+      
+      .ratingContainer {
+        width: 300px;
+        border-right: 1px solid #ccc;
+        padding-right: 15px;
+        height: 100%;
+        overflow-y: auto;
+      }
+      
+      .ratingTable {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+      
+      .ratingTable th, .ratingTable td {
+        padding: 6px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .ratingTable th {
+        background-color: #f2f2f2;
+        position: sticky;
+        top: 0;
+      }
