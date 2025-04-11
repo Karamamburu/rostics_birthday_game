@@ -45,8 +45,8 @@ const DIFFICULTY_LEVELS = {
 const GHOST_START_INDEX = [348, 351, 376, 379]
 const GHOST_STYLES = ['ghost-apple', 'ghost-avocado', 'ghost-broccoli', 'ghost-cucumber', 'ghost-lemon', 'ghost-orange', 'ghost-pumpkin', 'ghost-tomato']
 
-const WIN_MESSAGE = `С ДР, крч! Ты победил!`
-const LOOSE_MESSAGE = `О! Какой ужас! Памагите! Я замутил макбук, а игру DenKman пройти не смог...`
+const WIN_MESSAGE = `Ура! Поздравляем с победой!`
+const LOOSE_MESSAGE = `В этот раз не получилось, попробуй ещё`
 
 const DEN_FACE = {
   regular: '/test_game_for_academy/assets/images/den/den_regular.png',
