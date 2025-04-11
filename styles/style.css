@@ -1,15 +1,26 @@
 ﻿body {
-    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+@font-face {
+    font-family: 'PixelifySans-VariableFont_wght';
+    src: url('./fonts/PixelifySans-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'PixelifySans-VariableFont_wght', Pixelify Sans, Arial, Helvetica, sans-serif !important;
     font-size: 30px;
     font-weight: bold;
-    color: red;
-    text-shadow: 
-    2px 2px 2px  orange,
-    4px 4px 2px  yellow,
-    6px 6px 2px  green,
-    8px 8px 2px  blue,
-    10px 10px 2px  purple;
+    color: #323232;
 
+
+}
+
+div, p, span, a, input, textarea, keygen, select, button {
+    font-family: 'PixelifySans-VariableFont_wght', Pixelify Sans, Arial, Helvetica, sans-serif !important;
 }
 
 .flex {
@@ -52,7 +63,8 @@
 }
 
 .wall {
-    background-color: red;
+    background-color: #303030;
+    border: 1px solid #A020C2;
 }
 
 .wall-1 {
