@@ -1,26 +1,27 @@
 ﻿<%
 var log_file_name = "server_request_from_game"
-var curGameID = OptInt(7485300246935344434)
+
 function Log(message, ex) {
-    if(ex == null || ex == undefined) {
-        LogEvent(log_file_name, message);
-    } else {
-        LogEvent(log_file_name, (message + ' Exception: ' + ex));
-    }
+  if(ex == null || ex == undefined) {
+      LogEvent(log_file_name, message);
+  } else {
+      LogEvent(log_file_name, (message + ' Exception: ' + ex));
+  }
 }
 
 EnableLog(log_file_name, true);
 
+var curGameID = OptInt(7485300246935344434)
 UniTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/uni_tools.js"));
 Server.Execute(AppDirectoryPath() + "/wt/web/include/user_init.html" );
 
 result = 'start_result'
 try {
-request_body = tools.read_object(Request.Body);
-mode = request_body.GetOptProperty('mode', '')
-Log(mode)
-} catch (ex) {
-Log("Err: " + ex)
+	request_body = tools.read_object(Request.Body);
+	mode = request_body.GetOptProperty('mode', '')
+	Log(mode)
+} catch(ex) {
+	Log("Err: " + ex)
 }
 
 Log(tools.object_to_text(request_body, 'json'));
@@ -59,6 +60,8 @@ switch (mode) {
 				c.id,
 				gr.difficulty_level, 
 				gr.score, 
+				gr.start_time, 
+				gr.end_time, 
 				gr.is_won
 			FROM cc_game_results gr
 			LEFT JOIN collaborators c ON c.id = gr.collaborator_id
@@ -83,6 +86,7 @@ switch (mode) {
 							 : GetDataForLpe.getPartnerName(object.id)
 				newObj.difficulty_level = object.difficulty_level
 				newObj.score = object.score
+				newObj.duration = DateDiff(object.end_time, object.start_time)
 				newObj.is_won = object.is_won
 			} catch (ex) {
 			   EnableLog("report_log", true)
@@ -99,8 +103,7 @@ switch (mode) {
 		break;
 }
 
-		Response.Write(EncodeJson(result))
-//Response.Write(EncodeJson(request_body))
+Response.Write(EncodeJson(result))
 
 Log("завершаем обработку");
 EnableLog(log_file_name, false);
