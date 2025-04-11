@@ -74,58 +74,84 @@ function sendRequest(body) {
   return response_data;
 }
 
+let allRatingData = [];
+
 async function displayRatingData() {
   try {
-
-    const ratingData = await sendRequest({
+    allRatingData = await sendRequest({
       mode: 'get_rating_data'
     });
     
-    ratingData.sort((a, b) => b.score - a.score);
+    filterTableByDifficulty('all');
     
-    const tableBody = document.querySelector('.ratingTable tbody');
-    
-    tableBody.innerHTML = '';
-    
-    ratingData.forEach((player, index) => {
-      const row = document.createElement('tr');
-      
-      const nameCell = document.createElement('td');
-      nameCell.textContent = player.fullname;
-	  
-	  const positionCell = document.createElement('td');
-      positionCell.textContent = player.position_name;
-      
-      const restaurantCell = document.createElement('td');
-      restaurantCell.textContent = player.subdivision_name;
-      
-      const companyCell = document.createElement('td');
-      companyCell.textContent = player.partner_name;
-	  
-	  const difficultyCell = document.createElement('td');
-      difficultyCell.textContent = player.difficulty_level;
-      
-      const scoreCell = document.createElement('td');
-      scoreCell.textContent = player.score;
-      
-      const winCell = document.createElement('td');
-      winCell.textContent = player.is_won ? 'Да' : 'Нет';
-      
-      row.appendChild(nameCell);
-	  row.appendChild(positionCell);
-      row.appendChild(restaurantCell);
-      row.appendChild(companyCell);
-	  row.appendChild(difficultyCell);
-      row.appendChild(scoreCell);
-      row.appendChild(winCell);
-      
-      tableBody.appendChild(row);
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.tab-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        button.classList.add('active');
+        
+        const difficulty = button.dataset.difficulty;
+        filterTableByDifficulty(difficulty);
+      });
     });
     
   } catch (error) {
     console.error('Ошибка при загрузке данных рейтинга:', error);
   }
 }
+
+function filterTableByDifficulty(difficulty) {
+  const tableBody = document.querySelector('.ratingTable tbody');
+  tableBody.innerHTML = '';
+  
+  const filteredData = difficulty === 'all' 
+    ? allRatingData 
+    : allRatingData.filter(player => player.difficulty_level === difficulty);
+
+  const topTenResults = filteredData.slice(0, 10);
+  
+  topTenResults.forEach((player, index) => {
+    const row = document.createElement('tr');
+    
+    const nameCell = document.createElement('td');
+    nameCell.textContent = player.fullname;
+    
+    const positionCell = document.createElement('td');
+    positionCell.textContent = player.position_name;
+    
+    const restaurantCell = document.createElement('td');
+    restaurantCell.textContent = player.subdivision_name;
+    
+    const companyCell = document.createElement('td');
+    companyCell.textContent = player.partner_name;
+    
+    const difficultyCell = document.createElement('td');
+    difficultyCell.textContent = player.difficulty_level;
+    
+    const scoreCell = document.createElement('td');
+    scoreCell.textContent = player.score;
+
+    const durationCell = document.createElement('td');
+    durationCell.textContent = player.duration;
+    
+    const winCell = document.createElement('td');
+    winCell.textContent = player.is_won ? 'Да' : 'Нет';
+    
+    row.appendChild(nameCell);
+    row.appendChild(positionCell);
+    row.appendChild(restaurantCell);
+    row.appendChild(companyCell);
+    row.appendChild(difficultyCell);
+    row.appendChild(scoreCell);
+    row.appendChild(durationCell);
+    row.appendChild(winCell);
+    
+    tableBody.appendChild(row);
+  });
+}
+
 
 document.addEventListener('DOMContentLoaded', displayRatingData);
 

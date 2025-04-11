@@ -1,26 +1,27 @@
 ﻿<%
 var log_file_name = "server_request_from_game"
-var curGameID = OptInt(7485300246935344434)
+
 function Log(message, ex) {
-    if(ex == null || ex == undefined) {
-        LogEvent(log_file_name, message);
-    } else {
-        LogEvent(log_file_name, (message + ' Exception: ' + ex));
-    }
+  if(ex == null || ex == undefined) {
+      LogEvent(log_file_name, message);
+  } else {
+      LogEvent(log_file_name, (message + ' Exception: ' + ex));
+  }
 }
 
 EnableLog(log_file_name, true);
 
+var curGameID = OptInt(7485300246935344434)
 UniTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/uni_tools.js"));
 Server.Execute(AppDirectoryPath() + "/wt/web/include/user_init.html" );
 
 result = 'start_result'
 try {
-request_body = tools.read_object(Request.Body);
-mode = request_body.GetOptProperty('mode', '')
-Log(mode)
-} catch (ex) {
-Log("Err: " + ex)
+	request_body = tools.read_object(Request.Body);
+	mode = request_body.GetOptProperty('mode', '')
+	Log(mode)
+} catch(ex) {
+	Log("Err: " + ex)
 }
 
 Log(tools.object_to_text(request_body, 'json'));
@@ -49,27 +50,30 @@ switch (mode) {
 	case 'get_rating_data':
 		Log("получить таблицу");
 		
-		function getTopResults(topNumber) {
+		function getTopResults() {
 			GetReadable = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/getReadable.js"));
 			GetDataForLpe = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/get_data_for_lpe.js"));
 
 			var query = "sql:
-			SELECT TOP " + topNumber + "
+			SELECT
 				c.fullname,
 				c.id,
 				gr.difficulty_level, 
 				gr.score, 
+				gr.start_time, 
+				gr.end_time, 
 				gr.is_won
 			FROM cc_game_results gr
 			LEFT JOIN collaborators c ON c.id = gr.collaborator_id
 			WHERE c.is_dismiss = 0
-			ORDER BY gr.score DESC
+			ORDER BY gr.score DESC, DATEDIFF(second, gr.start_time, gr.end_time) ASC
 			"
 			var results= XQuery(query)
 
 			var aResult = new Array()
 			for (object in results) {
 			try {
+			
 				newObj = new Object()
 				newObj.fullname = GetReadable.getReadableShortName(object.fullname)
 				newObj.position_name = GetReadable.getReadablePositionName(object.id)
@@ -83,11 +87,15 @@ switch (mode) {
 							 : GetDataForLpe.getPartnerName(object.id)
 				newObj.difficulty_level = object.difficulty_level
 				newObj.score = object.score
+				
+				durationInSeconds = RawSecondsToDate(DateDiff(object.end_time, object.start_time))
+				minutes = Minute(durationInSeconds)
+				strSeconds = StrInt(Second(durationInSeconds))
+				seconds = StrCharCount(strSeconds) == 2 ? strSeconds : 0 + strSeconds
+				newObj.duration = minutes + ":" + seconds
 				newObj.is_won = object.is_won
 			} catch (ex) {
-			   EnableLog("report_log", true)
-			   LogEvent("report_log", "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)
-			   EnableLog("report_log", false)
+			   LogEvent(log_file_name, "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)
 			}
 				aResult.push(newObj)
 			}
@@ -95,12 +103,11 @@ switch (mode) {
 			return aResult
 		}
 		
-		result = getTopResults(10)
+		result = getTopResults()
 		break;
 }
 
-		Response.Write(EncodeJson(result))
-//Response.Write(EncodeJson(request_body))
+Response.Write(EncodeJson(result))
 
 Log("завершаем обработку");
 EnableLog(log_file_name, false);
