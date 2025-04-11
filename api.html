@@ -66,7 +66,7 @@ switch (mode) {
 			FROM cc_game_results gr
 			LEFT JOIN collaborators c ON c.id = gr.collaborator_id
 			WHERE c.is_dismiss = 0
-			ORDER BY gr.score DESC
+			ORDER BY gr.score DESC, DATEDIFF(second, gr.start_time, gr.end_time) ASC
 			"
 			var results= XQuery(query)
 
