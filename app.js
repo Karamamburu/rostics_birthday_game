@@ -270,6 +270,7 @@ function initializeGame(difficulty) {
     squares[pacmanCurrentIndex].classList.remove('pac-man')
     switch(e.keyCode) {
       case 37:
+      case 65:
         if(
           pacmanCurrentIndex % width !== 0 &&
           !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
@@ -284,6 +285,7 @@ function initializeGame(difficulty) {
         }
         break
       case 38:
+      case 87:
         if(
           pacmanCurrentIndex - width >= 0 &&
           !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
@@ -295,6 +297,7 @@ function initializeGame(difficulty) {
           }
         break
       case 39:
+      case 68:
         if(
           pacmanCurrentIndex % width < width - 1 &&
           !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
@@ -309,6 +312,7 @@ function initializeGame(difficulty) {
         }
         break
       case 40:
+      case 83:
         if (
           pacmanCurrentIndex + width < width * width &&
           !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
