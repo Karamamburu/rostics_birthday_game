@@ -351,16 +351,16 @@ function initializeGame(difficulty) {
     switch (trophyCounter) {
 
       case 1:
-        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['low'])
         break;
       case 2:
-        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['low'])
         break;
       case 3:
-        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['low'])
         break;
       case 4:
-        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['low'])
         break;
     }
       trophyCounter++

@@ -13,10 +13,10 @@ const RAMPAGE_SOUNDS = {
 }
 
 const VOLUMES = {
-  high: 1,
-  medium: 0.75,
-  half: 0.5,
-  low: 0.25
+    high: 1,
+    medium: 0.1,
+    half: 0.05,
+    low: 0.01
 }
 
 const COOKIES_COUNT = 234
