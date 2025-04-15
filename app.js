@@ -34,6 +34,30 @@ function forceCatToDance() {
   catDiv.style.backgroundImage = `url(${catImages[cat].src})`;
 }
 
+let seconds = 0;
+let timerInterval;
+
+function startTimer() {
+  seconds = 0;
+  updateTimerDisplay();
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    seconds++;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+  document.getElementById('timer').textContent = `${minutes}:${formattedSeconds}`;
+}
+
 let trophyCounter = 1;
 let selectedDifficulty = null;
 let startTime, endTime;
@@ -174,6 +198,7 @@ function onDifficultyButtonClick(e) {
   playSoundtrack(VOLUMES['low'])
   difficulty.textContent = selectedDifficulty
   startTime = new Date();
+  startTimer()
 }
 
 function restartGame() {
@@ -487,6 +512,7 @@ function initializeGame(difficulty) {
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ showEndGameModal(false) }, 500)
+      stopTimer()
 
       sendRequest({
         mode: 'game_over',
@@ -517,7 +543,7 @@ function initializeGame(difficulty) {
       playSound(PACMAN_SOUNDS['winSound'], VOLUMES['low'])
       catDiv.style.backgroundImage = `url(${CAT_DANCE.win})`;
       restartButton.classList.remove('hidden')
-
+      stopTimer()
       sendRequest({
         mode: 'game_over',
         start_time: startTime,
