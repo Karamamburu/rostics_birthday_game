@@ -20,6 +20,15 @@
     ></script>
   </head>
   <body>
+    <div class="gameEndModalBackground hidden">
+      <div class="gameEndModal">
+        <span class="closeModal">&times;</span>
+        <h3 class="resultTitle"></h3>
+        <img class="resultImage" src="" alt="Result image">
+        <p class="resultText">Твой результат № <span class="resultNumber">0</span></p>
+        <button class="restartGameButton">Restart</button>
+      </div>
+    </div>
     <div class="modalBackground">
       <div class="modalActive">
         <div class="modalContainer">
@@ -141,17 +150,98 @@
     margin-top: 20px;
 }
 
-.sound-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
+  .sound-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+  }
 
-.sound-button img {
-    width: 32px;
-    height: 32px;
-}
+  .sound-button img {
+      width: 32px;
+      height: 32px;
+  }
+  .gameEndModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .gameEndModal {
+    background-color: #1a1a2e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+  }
+
+  .gameEndModal h3 {
+    color: #fff;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+
+  .resultImage {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  .resultText {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+
+  .resultNumber {
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .restartGameButton {
+    background-color: #fff;
+    color: #1a1a2e;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+
+  .restartGameButton:hover {
+    background-color: #A020C2;
+    transform: scale(1.05);
+  }
+
+  .closeModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .closeModal:hover {
+    color: #A020C2;
+  }
+
+  .hidden {
+  display: none !important;
+  }
 </style>
   </body>
 </html>

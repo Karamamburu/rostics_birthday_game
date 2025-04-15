@@ -452,6 +452,30 @@ function initializeGame(difficulty) {
     }, ghost.speed)
   }
 
+  function showEndGameModal(isWin) {
+    const modal = document.querySelector('.gameEndModalBackground');
+    const title = document.querySelector('.resultTitle');
+    const image = document.querySelector('.resultImage');
+    const resultNumber = document.querySelector('.resultNumber');
+    
+    if (isWin) {
+      title.textContent = WIN_MESSAGE;
+      image.src = '/test_game_for_academy/assets/images/cat/cat_win.png';
+    } else {
+      title.textContent = LOOSE_MESSAGE;
+      image.src = '/test_game_for_academy/assets/images/cat/cat_lose.png';
+    }
+    
+    //resultNumber.textContent = score;
+    
+    modal.classList.remove('hidden');
+    pauseSoundtrack()
+    document.querySelector('.restartGameButton').addEventListener('click', restartGame);
+    document.querySelector('.closeModal').addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  }
+
   function checkForGameOver() {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
@@ -462,7 +486,7 @@ function initializeGame(difficulty) {
       catDiv.style.backgroundImage = `url(${CAT_DANCE.lose})`;
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
+      setTimeout(function(){ showEndGameModal(false) }, 500)
 
       sendRequest({
         mode: 'game_over',
@@ -485,7 +509,7 @@ function initializeGame(difficulty) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ 
-        alert(WIN_MESSAGE)
+        showEndGameModal(true)
       }, 500)
 
       pauseSoundtrack()
