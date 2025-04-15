@@ -116,14 +116,14 @@ p.selected-difficulty {
 }
 
 .ghost-apple {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/apple.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_1.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-avocado {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/avocado.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_2.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
@@ -131,42 +131,42 @@ p.selected-difficulty {
 
 
 .ghost-broccoli {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/broccoli.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_3.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-cucumber {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/cucumber.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_4.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-lemon {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/lemon.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_5.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-orange {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/orange.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_6.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-pumpkin {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/pumkin.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_7.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-tomato {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/tomato.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_8.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
