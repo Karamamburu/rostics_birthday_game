@@ -477,11 +477,14 @@ function initializeGame(difficulty) {
     }, ghost.speed)
   }
 
-  function showEndGameModal(isWin) {
+  function showEndGameModal(isWin, rating = null) {
     const modal = document.querySelector('.gameEndModalBackground');
     const title = document.querySelector('.resultTitle');
     const image = document.querySelector('.resultImage');
     const resultNumber = document.querySelector('.resultNumber');
+    const resultScore = document.querySelector('.resultScore');
+    const resultTime = document.querySelector('.resultTime');
+    const resultDifficulty = document.querySelector('.resultDifficulty');
     
     if (isWin) {
       title.textContent = WIN_MESSAGE;
@@ -491,8 +494,10 @@ function initializeGame(difficulty) {
       image.src = '/test_game_for_academy/assets/images/cat/cat_lose.png';
     }
     
-    //resultNumber.textContent = score;
-    
+    resultNumber.textContent = rating
+    resultScore.textContent = score
+    resultTime.textContent = document.getElementById('timer').textContent
+    resultDifficulty.textContent = selectedDifficulty.toUpperCase()
     modal.classList.remove('hidden');
     pauseSoundtrack()
     document.querySelector('.restartGameButton').addEventListener('click', restartGame);
@@ -511,10 +516,9 @@ function initializeGame(difficulty) {
       catDiv.style.backgroundImage = `url(${CAT_DANCE.lose})`;
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ showEndGameModal(false) }, 500)
       stopTimer()
 
-      sendRequest({
+      const response = sendRequest({
         mode: 'game_over',
         start_time: startTime,
         end_time: endTime,
@@ -522,7 +526,11 @@ function initializeGame(difficulty) {
         score: score,
         is_won: false,
         game_code: "test_game"
-      })
+      });
+
+      setTimeout(function() { 
+        showEndGameModal(false, response?.rating); 
+      }, 500);
     }
   }
 
@@ -534,9 +542,6 @@ function initializeGame(difficulty) {
     if (score === calculateScore()) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ 
-        showEndGameModal(true)
-      }, 500)
 
       pauseSoundtrack()
       endTime = new Date();
@@ -544,7 +549,7 @@ function initializeGame(difficulty) {
       catDiv.style.backgroundImage = `url(${CAT_DANCE.win})`;
       restartButton.classList.remove('hidden')
       stopTimer()
-      sendRequest({
+      const response = sendRequest({
         mode: 'game_over',
         start_time: startTime,
         end_time: endTime,
@@ -552,7 +557,11 @@ function initializeGame(difficulty) {
         score: score,
         is_won: true,
         game_code: "test_game"
-      })
+      });
+  
+      setTimeout(function() { 
+        showEndGameModal(true, response?.rating); 
+      }, 500);
     }
   }
 }

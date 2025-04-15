@@ -28,24 +28,87 @@ Log(tools.object_to_text(request_body, 'json'));
 
 switch (mode) {
 	case 'game_over':
-		gameResultDoc = tools.new_doc_by_name('cc_game_result', false)
-		gameResultDoc.BindToDb()
-		gameResultDoc.TopElem.name = 
-			curUser.fullname + ' - ' + 
-			request_body.GetOptProperty('game_code', '') + ' - ' + 
-			request_body.GetOptProperty('start_time', '')
-		gameResultDoc.TopElem.game_id = curGameID
-		gameResultDoc.TopElem.game_name = request_body.GetOptProperty('game_code', '')
-		gameResultDoc.TopElem.collaborator_id = curUserID
-		gameResultDoc.TopElem.score = request_body.GetOptProperty('score', '')
-		gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
-		gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
-		gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
-		gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
-		gameResultDoc.Save()
-		Log("игра окончена");
-		result = {name: 'The end'}
-		break;
+    gameResultDoc = tools.new_doc_by_name('cc_game_result', false)
+    gameResultDoc.BindToDb()
+    gameResultDoc.TopElem.name = 
+        curUser.fullname + ' - ' + 
+        request_body.GetOptProperty('game_code', '') + ' - ' + 
+        request_body.GetOptProperty('start_time', '')
+    gameResultDoc.TopElem.game_id = curGameID
+    gameResultDoc.TopElem.game_name = request_body.GetOptProperty('game_code', '')
+    gameResultDoc.TopElem.collaborator_id = curUserID
+    gameResultDoc.TopElem.score = request_body.GetOptProperty('score', '')
+    gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
+    gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
+    gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
+    gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
+    gameResultDoc.Save()
+
+    var query = "sql:
+    SELECT
+        c.fullname,
+        c.id,
+        gr.difficulty_level, 
+        gr.score, 
+        gr.start_time, 
+        gr.end_time, 
+        DATEDIFF(second, gr.start_time, gr.end_time) as duration_seconds,
+        gr.is_won,
+        CASE gr.difficulty_level
+            WHEN 'hell' THEN 3
+            WHEN 'nightmare' THEN 2
+            WHEN 'normal' THEN 1
+            ELSE 0
+        END as difficulty_weight
+    FROM cc_game_results gr
+    LEFT JOIN collaborators c ON c.id = gr.collaborator_id
+    WHERE c.is_dismiss = 0 AND gr.game_id = " + curGameID + "
+    ORDER BY 
+        gr.score DESC, 
+        difficulty_weight DESC, 
+        duration_seconds ASC
+    "
+    var allResults = ArraySelectAll(XQuery(query))
+    
+    var resultsArray = [];
+    for (object in allResults) {
+        resultsArray.push({
+            id: object.id,
+            score: object.score,
+            difficulty_level: object.difficulty_level,
+            difficulty_weight: object.difficulty_weight,
+            durationInSeconds: object.duration_seconds,
+            is_won: object.is_won
+        });
+    }
+    
+    var currentScore = request_body.GetOptProperty('score', 0);
+    var currentDifficulty = request_body.GetOptProperty('difficulty_level', '');
+    var currentDuration = DateDiff(
+        DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', ''))),
+        DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
+    );
+    
+    var difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
+    var sortedResults = ArraySort(
+		resultsArray,
+		'This.score', '-',
+		'This.difficulty_level == "hell" ? 3 : (This.difficulty_level == "nightmare" ? 2 : 1)', '-',
+		'This.durationInSeconds', '+'
+	);
+    
+    var currentPosition = -1;
+    for (var i = 0; i < resultsArray.length; i++) {
+        if (resultsArray[i].id == curUserID && 
+            resultsArray[i].score == currentScore && 
+            resultsArray[i].difficulty_level == currentDifficulty && 
+            resultsArray[i].durationInSeconds == currentDuration) {
+            currentPosition = i + 1;
+        }
+    }
+    
+    result = {rating: currentPosition}
+    break;
 		
 	case 'get_rating_data':
 		Log("получить таблицу");
