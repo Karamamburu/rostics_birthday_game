@@ -1,5 +1,5 @@
 ﻿<%
-var log_file_name = "server_request_from_game"
+var log_file_name = "rostics_birthday_game"
 
 function Log(message, ex) {
   if(ex == null || ex == undefined) {
@@ -13,13 +13,13 @@ EnableLog(log_file_name, true);
 
 var curGameID = OptInt(7485300246935344434)
 UniTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/uni_tools.js"));
+CustomGameTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/custom_tools/custom_game_tools.js"));
 Server.Execute(AppDirectoryPath() + "/wt/web/include/user_init.html" );
 
 result = 'start_result'
 try {
 	request_body = tools.read_object(Request.Body);
 	mode = request_body.GetOptProperty('mode', '')
-	Log(mode)
 } catch(ex) {
 	Log("Err: " + ex)
 }
@@ -108,10 +108,44 @@ switch (mode) {
     }
     
     result = {rating: currentPosition}
-    break;
+  try {
+    if(request_body.GetOptProperty('is_won', '')) {
+      try {
+        CustomGameTools.giveIconToUser(
+          curUserID,
+          7097909785607004599, //10 лет работы, для отладки
+          7138424178183920544 //Денис Хмыров
+        )
+      } catch(ex) {
+        Log("Ошибка при вручении значка!!!!" + ex)
+      }
+
+      if(request_body.GetOptProperty('difficulty_level', '') == 'hell') {
+        try {
+          CustomGameTools.giveTrophyToUser(
+            curUserID,
+            7441576689053233029, //Чемпион, для отладки
+            7138424178183920544, //Денис Хмыров
+            "Тебе удалось пройти игру на день рождения Rostic's на самом высоком уровне сложности! Выдающийся результат!"
+          )
+        } catch(ex) {
+          Log("Ошибка при вручении награды!!!!" + ex)
+        }
+      }
+    }
+  } catch(ex) {
+    Log("Ошибка в присвоении пользователю " + curUserID + " награды или значка: " + ex)
+  }
+  Log("Сотрудник с ID " + curUserID + " успешно завершил игру: " +
+    "результат № " + result.rating + ", " +
+    "количество баллов: " + request_body.GetOptProperty('score', '') + ", " +
+    "время: " + DateDiff(OptDate(request_body.GetOptProperty('end_time', '')), OptDate(request_body.GetOptProperty('start_time', ''))) + " секунд, " +
+    "уровень сложности: " + request_body.GetOptProperty('difficulty_level', '')
+  );
+  break;
 		
 	case 'get_rating_data':
-		Log("получить таблицу");
+		Log("Сотрудник с ID " + curUserID + " открыл страницу с игрой");
 		
 		function getTopResults() {
 			GetReadable = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/getReadable.js"));
@@ -189,7 +223,6 @@ switch (mode) {
 
 Response.Write(EncodeJson(result))
 
-Log("завершаем обработку");
 EnableLog(log_file_name, false);
 
 %>

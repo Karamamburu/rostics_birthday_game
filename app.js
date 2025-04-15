@@ -525,7 +525,7 @@ function initializeGame(difficulty) {
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: false,
-        game_code: "test_game"
+        game_code: "rostics_birthday_game"
       });
 
       setTimeout(function() { 
@@ -556,7 +556,7 @@ function initializeGame(difficulty) {
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: true,
-        game_code: "test_game"
+        game_code: "rostics_birthday_game"
       });
   
       setTimeout(function() { 
