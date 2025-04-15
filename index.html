@@ -20,6 +20,18 @@
     ></script>
   </head>
   <body>
+    <div class="gameEndModalBackground hidden">
+      <div class="gameEndModal">
+        <span class="closeModal">&times;</span>
+        <h3 class="resultTitle"></h3>
+        <img class="resultImage" src="" alt="Result image">
+        <p class="resultText">Ты занял <span class="resultNumber">0</span> место 
+          в общем зачёте, съев <span class="resultScore">0</span> калорий 
+          за <span class="resultTime">0</span> 
+          на уровне сложности <span class="resultDifficulty">0</span>!</p>
+        <button class="restartGameButton">Restart</button>
+      </div>
+    </div>
     <div class="modalBackground">
       <div class="modalActive">
         <div class="modalContainer">
@@ -51,10 +63,9 @@
             <div class="modalWindow">
               <h3>
                 Привет, <%=curUser.firstname%>! </br>
-				Ты действительно хочешь сыграть в
-                эту жесть??!!11
+				Отпразднуй день рождения Rostic's вместе с нами, установив рекорд в нашей новой игре!
               </h3>
-              <p>Тогда выбери уровень сложности</p>
+              <p>Выбери уровень сложности</p>
               <div class="buttons">
                 <button
                   class="difficulty-button normal-button"
@@ -75,7 +86,7 @@
                   Hell
                 </button>
               </div>
-              <p>Жми быстрее, они уже идут за тобой...</p>
+              <p>Твоя задача собрать все вкусняшки на карте и не столкнуться с дудликами! Удачи!</p>
             </div>
           </div>
         </div>
@@ -87,7 +98,7 @@
         <button class="restart-button hidden">Restart</button>
         <p class="selected-difficulty"></p>
         <h3>Счётчик калорий: <span id="score"></span></h3>
-
+        <h3>Время: <span id="timer">0:00</span></h3>
         <div class="talking-den"></div>
       </div>	
 	  <div class="content pixel-help">
@@ -122,13 +133,126 @@
       <h2 class="pixel-title" style="text-align: center">/// ПРАВИЛА ///</h2>
       <ul class="pixel-list">
         <li>Съешь <img src="/test_game_for_academy/assets/images/chicken.png" class="pixel-small"> - 10 очков</li>
-        <li> Собери все хиты Rostic's <img src="(/test_game_for_academy/assets/images/pho_bo.png" class="pixel-small">, за каждый - 50 очков</li>
-        <li>Избегай дудлов <img src="/test_game_for_academy/assets/images/ghosts/apple.png" class="pixel-small">, они за обнимают тебя до смерти!</li>
+        <li> Собери все хиты Rostic's <img src="/test_game_for_academy/assets/images/pho_bo.png" class="pixel-small">, за каждый - 50 очков</li>
+        <li>Избегай дудлов <img src="/test_game_for_academy/assets/images/ghosts/apple.png" class="pixel-small">, они заобнимают тебя до смерти!</li>
       </ul>
+    </div>
+    <div class="sound-control">
+      <button id="soundToggle" class="sound-button">
+        <img src="/test_game_for_academy/assets/images/sound_on.png" alt="Sound" id="soundIcon">
+      </button>
     </div>
   </div>
 </div>
     </div>
+<style>
+  .sound-control {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
+  .sound-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+  }
+
+  .sound-button img {
+      width: 32px;
+      height: 32px;
+  }
+  .gameEndModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .gameEndModal {
+    background-color: #1a1a2e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+  }
+
+  .gameEndModal h3 {
+    color: #fff;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+
+  .resultImage {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  .resultText {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+
+  span#timer {
+    font-family: 'MercutioNbpSmallcaps', Arial, Helvetica, sans-serif;
+  }
+
+  .resultNumber, 
+  .resultScore, 
+  .resultTime, 
+  .resultDifficulty {
+    color: #fff;
+    font-weight: bold;
+    font-family: 'MercutioNbpSmallcaps', Arial, Helvetica, sans-serif;
+  }
+
+  .restartGameButton {
+    background-color: #fff;
+    color: #1a1a2e;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+
+  .restartGameButton:hover {
+    background-color: #A020C2;
+    transform: scale(1.05);
+  }
+
+  .closeModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .closeModal:hover {
+    color: #A020C2;
+  }
+
+  .hidden {
+  display: none !important;
+  }
+</style>
   </body>
 </html>

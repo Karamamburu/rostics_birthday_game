@@ -13,10 +13,10 @@ const RAMPAGE_SOUNDS = {
 }
 
 const VOLUMES = {
-  high: 1,
-  medium: 0.75,
-  half: 0.5,
-  low: 0.25
+    high: 1,
+    medium: 0.1,
+    half: 0.05,
+    low: 0.01
 }
 
 const COOKIES_COUNT = 234
@@ -42,7 +42,7 @@ const DIFFICULTY_LEVELS = {
     },
 }
 
-const GHOST_START_INDEX = [348, 351, 376, 379]
+const GHOST_START_INDEX = [29, 54, 729, 754]
 const GHOST_STYLES = ['ghost-apple', 'ghost-avocado', 'ghost-broccoli', 'ghost-cucumber', 'ghost-lemon', 'ghost-orange', 'ghost-pumpkin', 'ghost-tomato']
 
 const WIN_MESSAGE = `Ура! Поздравляем с победой!`

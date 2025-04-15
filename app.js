@@ -1,4 +1,4 @@
-﻿import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
+﻿import { playSound, playSoundtrack, pauseSoundtrack, toggleSound } from './src/sound-handlers.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -34,6 +34,30 @@ function forceCatToDance() {
   catDiv.style.backgroundImage = `url(${catImages[cat].src})`;
 }
 
+let seconds = 0;
+let timerInterval;
+
+function startTimer() {
+  seconds = 0;
+  updateTimerDisplay();
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    seconds++;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+  document.getElementById('timer').textContent = `${minutes}:${formattedSeconds}`;
+}
+
 let trophyCounter = 1;
 let selectedDifficulty = null;
 let startTime, endTime;
@@ -43,6 +67,20 @@ const modalBackground = document.querySelector('.modalBackground')
 const restartButton = document.querySelector('.restart-button');
 const catDiv = document.querySelector('.talking-den')
 const difficulty = document.querySelector('.selected-difficulty')
+const soundToggle = document.getElementById('soundToggle');
+const soundIcon = document.getElementById('soundIcon');
+
+soundToggle.addEventListener('click', () => {
+  const isCurrentlyEnabled = soundIcon.src.includes('sound_on.png');
+  
+  if (isCurrentlyEnabled) {
+      soundIcon.src = "/test_game_for_academy/assets/images/sound_off.png";
+      toggleSound(false);
+  } else {
+      soundIcon.src = "/test_game_for_academy/assets/images/sound_on.png";
+      toggleSound(true);
+  }
+});
 
 catDiv.style.backgroundImage = CAT_DANCE['cat_1']
 
@@ -160,6 +198,7 @@ function onDifficultyButtonClick(e) {
   playSoundtrack(VOLUMES['low'])
   difficulty.textContent = selectedDifficulty
   startTime = new Date();
+  startTimer()
 }
 
 function restartGame() {
@@ -178,27 +217,27 @@ function initializeGame(difficulty) {
     1,3,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,3,1,
     1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
     1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
+    1,0,1,1,1,1,0,1,1,4,1,1,1,1,1,1,1,1,4,1,1,0,1,1,1,1,0,1,
+    1,0,1,1,1,1,0,1,1,4,1,1,1,1,1,1,1,1,4,1,1,0,1,1,1,1,0,1,
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,4,4,4,4,4,4,4,4,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,1,1,4,1,1,1,4,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,4,2,1,2,1,2,2,4,4,1,1,0,1,1,1,1,1,1,
-    4,4,4,4,4,4,0,0,0,4,1,1,1,2,1,1,1,4,4,0,0,0,4,4,4,4,4,4,
-    1,1,1,1,1,1,0,1,1,4,4,2,1,2,2,2,1,4,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,1,1,2,1,1,1,4,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,4,4,4,4,4,4,4,4,4,1,1,0,1,1,1,1,1,1,
-    1,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+    1,4,1,1,1,1,0,1,1,4,1,1,0,1,1,0,1,1,4,1,1,0,1,1,1,1,4,1,
+    1,4,1,1,1,1,0,1,1,4,4,4,0,0,0,0,4,4,4,1,1,0,1,1,1,1,4,1,
+    1,4,1,1,1,1,0,1,1,4,4,1,1,1,1,1,4,4,4,1,1,0,1,1,1,1,4,1,
+    1,4,1,1,1,1,0,1,1,4,4,1,4,4,4,4,1,4,4,1,1,0,1,1,1,1,4,1,
+    1,4,4,4,4,4,0,0,0,4,4,1,4,4,4,4,1,4,4,0,0,0,4,4,4,4,4,1,
+    1,4,1,1,1,1,0,1,1,4,4,1,1,1,1,1,4,4,4,1,1,0,1,1,1,1,4,1,
+    1,4,1,1,1,1,0,1,1,4,4,1,4,4,1,4,4,4,4,1,1,0,1,1,1,1,4,1,
+    1,4,1,1,1,1,0,1,1,4,4,1,4,4,4,1,1,4,4,1,1,0,1,1,1,1,4,1,
+    1,0,0,0,0,0,0,1,1,0,0,0,4,4,4,4,0,0,0,1,1,0,0,0,0,0,0,1,
+    1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
+    1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
     1,3,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,3,1,
     1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
     1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
     1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,
     1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,
     1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,
-    1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+    1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
   ]
   // 0 - drumstick
@@ -270,6 +309,7 @@ function initializeGame(difficulty) {
     squares[pacmanCurrentIndex].classList.remove('pac-man')
     switch(e.keyCode) {
       case 37:
+      case 65:
         if(
           pacmanCurrentIndex % width !== 0 &&
           !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
@@ -284,6 +324,7 @@ function initializeGame(difficulty) {
         }
         break
       case 38:
+      case 87:
         if(
           pacmanCurrentIndex - width >= 0 &&
           !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
@@ -295,6 +336,7 @@ function initializeGame(difficulty) {
           }
         break
       case 39:
+      case 68:
         if(
           pacmanCurrentIndex % width < width - 1 &&
           !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
@@ -309,6 +351,7 @@ function initializeGame(difficulty) {
         }
         break
       case 40:
+      case 83:
         if (
           pacmanCurrentIndex + width < width * width &&
           !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
@@ -347,16 +390,16 @@ function initializeGame(difficulty) {
     switch (trophyCounter) {
 
       case 1:
-        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['low'])
         break;
       case 2:
-        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['low'])
         break;
       case 3:
-        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['low'])
         break;
       case 4:
-        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['medium'])
+        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['low'])
         break;
     }
       trophyCounter++
@@ -434,27 +477,60 @@ function initializeGame(difficulty) {
     }, ghost.speed)
   }
 
+  function showEndGameModal(isWin, rating = null) {
+    const modal = document.querySelector('.gameEndModalBackground');
+    const title = document.querySelector('.resultTitle');
+    const image = document.querySelector('.resultImage');
+    const resultNumber = document.querySelector('.resultNumber');
+    const resultScore = document.querySelector('.resultScore');
+    const resultTime = document.querySelector('.resultTime');
+    const resultDifficulty = document.querySelector('.resultDifficulty');
+    
+    if (isWin) {
+      title.textContent = WIN_MESSAGE;
+      image.src = '/test_game_for_academy/assets/images/cat/cat_win.png';
+    } else {
+      title.textContent = LOOSE_MESSAGE;
+      image.src = '/test_game_for_academy/assets/images/cat/cat_lose.png';
+    }
+    
+    resultNumber.textContent = rating
+    resultScore.textContent = score
+    resultTime.textContent = document.getElementById('timer').textContent
+    resultDifficulty.textContent = selectedDifficulty.toUpperCase()
+    modal.classList.remove('hidden');
+    pauseSoundtrack()
+    document.querySelector('.restartGameButton').addEventListener('click', restartGame);
+    document.querySelector('.closeModal').addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  }
+
   function checkForGameOver() {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       endTime = new Date();
       pauseSoundtrack()
-      playSound(PACMAN_SOUNDS['deadSound'])
+      playSound(PACMAN_SOUNDS['deadSound'], VOLUMES['half'])
       catDiv.style.backgroundImage = `url(${CAT_DANCE.lose})`;
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
+      stopTimer()
 
-      sendRequest({
+      const response = sendRequest({
         mode: 'game_over',
         start_time: startTime,
         end_time: endTime,
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: false,
-        game_code: "test_game"
-      })
+        game_code: "rostics_birthday_game"
+      });
+
+      setTimeout(function() { 
+        showEndGameModal(false, response?.rating); 
+      }, 500);
     }
   }
 
@@ -466,25 +542,26 @@ function initializeGame(difficulty) {
     if (score === calculateScore()) {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
-      setTimeout(function(){ 
-        alert(WIN_MESSAGE)
-      }, 500)
 
       pauseSoundtrack()
       endTime = new Date();
       playSound(PACMAN_SOUNDS['winSound'], VOLUMES['low'])
       catDiv.style.backgroundImage = `url(${CAT_DANCE.win})`;
       restartButton.classList.remove('hidden')
-
-      sendRequest({
+      stopTimer()
+      const response = sendRequest({
         mode: 'game_over',
         start_time: startTime,
         end_time: endTime,
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: true,
-        game_code: "test_game"
-      })
+        game_code: "rostics_birthday_game"
+      });
+  
+      setTimeout(function() { 
+        showEndGameModal(true, response?.rating); 
+      }, 500);
     }
   }
 }

@@ -1,5 +1,5 @@
 ﻿<%
-var log_file_name = "server_request_from_game"
+var log_file_name = "rostics_birthday_game"
 
 function Log(message, ex) {
   if(ex == null || ex == undefined) {
@@ -13,13 +13,13 @@ EnableLog(log_file_name, true);
 
 var curGameID = OptInt(7485300246935344434)
 UniTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/uni_tools.js"));
+CustomGameTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/custom_tools/custom_game_tools.js"));
 Server.Execute(AppDirectoryPath() + "/wt/web/include/user_init.html" );
 
 result = 'start_result'
 try {
 	request_body = tools.read_object(Request.Body);
 	mode = request_body.GetOptProperty('mode', '')
-	Log(mode)
 } catch(ex) {
 	Log("Err: " + ex)
 }
@@ -28,27 +28,124 @@ Log(tools.object_to_text(request_body, 'json'));
 
 switch (mode) {
 	case 'game_over':
-		gameResultDoc = tools.new_doc_by_name('cc_game_result', false)
-		gameResultDoc.BindToDb()
-		gameResultDoc.TopElem.name = 
-			curUser.fullname + ' - ' + 
-			request_body.GetOptProperty('game_code', '') + ' - ' + 
-			request_body.GetOptProperty('start_time', '')
-		gameResultDoc.TopElem.game_id = curGameID
-		gameResultDoc.TopElem.game_name = request_body.GetOptProperty('game_code', '')
-		gameResultDoc.TopElem.collaborator_id = curUserID
-		gameResultDoc.TopElem.score = request_body.GetOptProperty('score', '')
-		gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
-		gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
-		gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
-		gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
-		gameResultDoc.Save()
-		Log("игра окончена");
-		result = {name: 'The end'}
-		break;
+    gameResultDoc = tools.new_doc_by_name('cc_game_result', false)
+    gameResultDoc.BindToDb()
+    gameResultDoc.TopElem.name = 
+        curUser.fullname + ' - ' + 
+        request_body.GetOptProperty('game_code', '') + ' - ' + 
+        request_body.GetOptProperty('start_time', '')
+    gameResultDoc.TopElem.game_id = curGameID
+    gameResultDoc.TopElem.game_name = request_body.GetOptProperty('game_code', '')
+    gameResultDoc.TopElem.collaborator_id = curUserID
+    gameResultDoc.TopElem.score = request_body.GetOptProperty('score', '')
+    gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
+    gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
+    gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
+    gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
+    gameResultDoc.Save()
+
+    var query = "sql:
+    SELECT
+        c.fullname,
+        c.id,
+        gr.difficulty_level, 
+        gr.score, 
+        gr.start_time, 
+        gr.end_time, 
+        DATEDIFF(second, gr.start_time, gr.end_time) as duration_seconds,
+        gr.is_won,
+        CASE gr.difficulty_level
+            WHEN 'hell' THEN 3
+            WHEN 'nightmare' THEN 2
+            WHEN 'normal' THEN 1
+            ELSE 0
+        END as difficulty_weight
+    FROM cc_game_results gr
+    LEFT JOIN collaborators c ON c.id = gr.collaborator_id
+    WHERE c.is_dismiss = 0 AND gr.game_id = " + curGameID + "
+    ORDER BY 
+        gr.score DESC, 
+        difficulty_weight DESC, 
+        duration_seconds ASC
+    "
+    var allResults = ArraySelectAll(XQuery(query))
+    
+    var resultsArray = [];
+    for (object in allResults) {
+        resultsArray.push({
+            id: object.id,
+            score: object.score,
+            difficulty_level: object.difficulty_level,
+            difficulty_weight: object.difficulty_weight,
+            durationInSeconds: object.duration_seconds,
+            is_won: object.is_won
+        });
+    }
+    
+    var currentScore = request_body.GetOptProperty('score', 0);
+    var currentDifficulty = request_body.GetOptProperty('difficulty_level', '');
+    var currentDuration = DateDiff(
+        DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', ''))),
+        DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
+    );
+    
+    var difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
+    var sortedResults = ArraySort(
+		resultsArray,
+		'This.score', '-',
+		'This.difficulty_level == "hell" ? 3 : (This.difficulty_level == "nightmare" ? 2 : 1)', '-',
+		'This.durationInSeconds', '+'
+	);
+    
+    var currentPosition = -1;
+    for (var i = 0; i < resultsArray.length; i++) {
+        if (resultsArray[i].id == curUserID && 
+            resultsArray[i].score == currentScore && 
+            resultsArray[i].difficulty_level == currentDifficulty && 
+            resultsArray[i].durationInSeconds == currentDuration) {
+            currentPosition = i + 1;
+        }
+    }
+    
+    result = {rating: currentPosition}
+  try {
+    if(request_body.GetOptProperty('is_won', '')) {
+      try {
+        CustomGameTools.giveIconToUser(
+          curUserID,
+          7097909785607004599, //10 лет работы, для отладки
+          7138424178183920544 //Денис Хмыров
+        )
+      } catch(ex) {
+        Log("Ошибка при вручении значка!!!!" + ex)
+      }
+
+      if(request_body.GetOptProperty('difficulty_level', '') == 'hell') {
+        try {
+          CustomGameTools.giveTrophyToUser(
+            curUserID,
+            7441576689053233029, //Чемпион, для отладки
+            7138424178183920544, //Денис Хмыров
+            "Тебе удалось пройти игру на день рождения Rostic's на самом высоком уровне сложности! Выдающийся результат!"
+          )
+        } catch(ex) {
+          Log("Ошибка при вручении награды!!!!" + ex)
+        }
+      }
+    }
+  } catch(ex) {
+    Log("Ошибка в присвоении пользователю " + curUserID + " награды или значка: " + ex)
+  }
+  Log("Сотрудник с ID " + curUserID + " успешно завершил игру: " +
+    "результат № " + result.rating + ", " +
+    "количество баллов: " + request_body.GetOptProperty('score', '') + ", " +
+    "время: " + DateDiff(OptDate(request_body.GetOptProperty('end_time', '')), OptDate(request_body.GetOptProperty('start_time', ''))) + " секунд, " +
+    "уровень сложности: " + request_body.GetOptProperty('difficulty_level', '')
+  );
+  break;
 		
 	case 'get_rating_data':
-		Log("получить таблицу");
+		Log("Сотрудник с ID " + curUserID + " открыл страницу с игрой");
 		
 		function getTopResults() {
 			GetReadable = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/getReadable.js"));
@@ -126,7 +223,6 @@ switch (mode) {
 
 Response.Write(EncodeJson(result))
 
-Log("завершаем обработку");
 EnableLog(log_file_name, false);
 
 %>
