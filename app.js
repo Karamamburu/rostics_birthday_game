@@ -8,19 +8,31 @@ import {
           TROPHY_CALORY_INCREASE, 
           TROPHY_COUNT, 
           WALL_COLORS,
-          DEN_FACE,
-          DEN_FACE_ARRAY,
           DIFFICULTY_LEVELS,
           GHOST_START_INDEX,
           GHOST_STYLES,
           WIN_MESSAGE,
           LOOSE_MESSAGE,
           PHOBO_STYLES,
-          PHOBO_IMAGES
+          CAT_DANCE,
+          CAT_DANCE_ARRAY
         } 
         from './src/const.js';
 
 import { getRandomElementOfArray } from './src//util.js'
+
+const catImages = {};
+
+CAT_DANCE_ARRAY.forEach(cat => {
+  const img = new Image();
+  img.src = CAT_DANCE[cat];
+  catImages[cat] = img;
+});
+
+function forceCatToDance() {
+  const cat = getRandomElementOfArray(CAT_DANCE_ARRAY);
+  catDiv.style.backgroundImage = `url(${catImages[cat].src})`;
+}
 
 let trophyCounter = 1;
 let selectedDifficulty = null;
@@ -29,31 +41,10 @@ let startTime, endTime;
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
 const restartButton = document.querySelector('.restart-button');
-const denDiv = document.querySelector('.talking-den')
+const catDiv = document.querySelector('.talking-den')
 const difficulty = document.querySelector('.selected-difficulty')
 
-denDiv.style.backgroundImage = DEN_FACE['regular']
-/*
-function getCurUserName() {
-  const url = "custom_web_template.html?object_id=7136203866017102048"
-
-  fetch(url)
-    .then(response => {
-        if (!response.ok) {
-      throw new Error(`SERVER ERROR: ${response.statusText}`)
-        }
-        return response.text()
-    })
-    .then(responseText => {
-        document.getElementById("response_span").textContent = responseText
-    })
-    .catch(error => {
-        console.error("Error fetching data:", error)
-        alert("An error occurred while fetching data.")
-    });
-}
-getCurUserName()
-*/
+catDiv.style.backgroundImage = CAT_DANCE['cat_1']
 
 function sendRequest(body) {
   var response_data;
@@ -158,7 +149,6 @@ function filterTableByDifficulty(difficulty) {
   });
 }
 
-
 document.addEventListener('DOMContentLoaded', displayRatingData);
 
 function onDifficultyButtonClick(e) {
@@ -174,11 +164,6 @@ function onDifficultyButtonClick(e) {
 
 function restartGame() {
   window.location.reload()
-}
-
-function forceDenToTalk() {
-  const denFace = getRandomElementOfArray(DEN_FACE_ARRAY);
-  denDiv.style.backgroundImage = `url(${DEN_FACE[denFace]})`;
 }
 
 function initializeGame(difficulty) {
@@ -216,10 +201,10 @@ function initializeGame(difficulty) {
     1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
   ]
-  // 0 - pac-dots
+  // 0 - drumstick
   // 1 - wall
-  // 2 - ghost-lair
-  // 3 - power-pellet
+  // 2 - doodle's-lair
+  // 3 - bonus
   // 4 - empty
 
   const countCellsByGroups = (layout) => {
@@ -248,14 +233,12 @@ function initializeGame(difficulty) {
   const squares = []
   let powerPelletIndex = 0;
 
-  //create your board
   function createBoard() {
     for (let i = 0; i < layout.length; i++) {
       const square = document.createElement('div')
       grid.appendChild(square)
       squares.push(square)
 
-      //add layout to the board
       if(layout[i] === 0) {
         squares[i].classList.add('pac-dot')
       } else if (layout[i] === 1) {
@@ -277,18 +260,12 @@ function initializeGame(difficulty) {
   createBoard()
 
 
-  //create Characters
-  //draw pacman onto the board
   let pacmanCurrentIndex = 490
   squares[pacmanCurrentIndex].classList.add('pac-man')
-  //get the coordinates of pacman on the grid with X and Y axis
   // function getCoordinates(index) {
   //   return [index % width, Math.floor(index / width)]
   // }
 
-  // console.log(getCoordinates(pacmanCurrentIndex))
-
-  //move pacman
   function movePacman(e) {
     squares[pacmanCurrentIndex].classList.remove('pac-man')
     switch(e.keyCode) {
@@ -299,6 +276,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= 1
+            forceCatToDance()
             playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
           }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
@@ -312,6 +290,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
           ) {
             pacmanCurrentIndex -= width
+            forceCatToDance()
             playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
           }
         break
@@ -322,6 +301,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex += 1
+          forceCatToDance()
           playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
         }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
@@ -335,6 +315,7 @@ function initializeGame(difficulty) {
           !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
         ){
           pacmanCurrentIndex += width
+          forceCatToDance()
           playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
         }
         break
@@ -347,18 +328,15 @@ function initializeGame(difficulty) {
   }
   document.addEventListener('keyup', movePacman)
 
-  // what happens when you eat a pac-dot
   function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
       score += CALORY_INCREASE
       scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
       changeWallsColor()
-      forceDenToTalk()
     }
   }
 
-  //what happens when you eat a power-pellet
   function powerPelletEaten() {
 
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
@@ -399,12 +377,10 @@ function initializeGame(difficulty) {
     });
   }
 
-  //make the ghosts stop flashing
   // function unScareGhosts() {
   //   ghosts.forEach(ghost => ghost.isScared = false)
   // }
 
-  //create ghosts using Constructors
   class Ghost {
     constructor(className, startIndex, speed) {
       this.className = className
@@ -430,7 +406,6 @@ function initializeGame(difficulty) {
 }
   createGhosts();
 
-  //move the Ghosts randomly
   ghosts.forEach(ghost => moveGhost(ghost))
 
   function moveGhost(ghost) {
@@ -438,24 +413,18 @@ function initializeGame(difficulty) {
     let direction = directions[Math.floor(Math.random() * directions.length)]
 
     ghost.timerId = setInterval(function() {
-      //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
       if  (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
         !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
-          //remove the ghosts classes
           squares[ghost.currentIndex].classList.remove(ghost.className)
           squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
-          //move into that space
           ghost.currentIndex += direction
           squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-      //else find a new random direction ot go in
       } else direction = directions[Math.floor(Math.random() * directions.length)]
 
-      //if the ghost is currently scared
       if (ghost.isScared) {
         squares[ghost.currentIndex].classList.add('scared-ghost')
       }
 
-      //if the ghost is currently scared and pacman is on it
       if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')) {
         squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
         ghost.currentIndex = ghost.startIndex
@@ -465,7 +434,6 @@ function initializeGame(difficulty) {
     }, ghost.speed)
   }
 
-  //check for a game over
   function checkForGameOver() {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
@@ -473,7 +441,7 @@ function initializeGame(difficulty) {
       endTime = new Date();
       pauseSoundtrack()
       playSound(PACMAN_SOUNDS['deadSound'])
-      denDiv.style.backgroundImage = `url(${DEN_FACE.sad})`;
+      catDiv.style.backgroundImage = `url(${CAT_DANCE.lose})`;
       restartButton.classList.remove('hidden')
       document.removeEventListener('keyup', movePacman)
       setTimeout(function(){ alert(LOOSE_MESSAGE) }, 500)
@@ -505,7 +473,7 @@ function initializeGame(difficulty) {
       pauseSoundtrack()
       endTime = new Date();
       playSound(PACMAN_SOUNDS['winSound'], VOLUMES['low'])
-      denDiv.style.backgroundImage = `url(${DEN_FACE.win})`;
+      catDiv.style.backgroundImage = `url(${CAT_DANCE.win})`;
       restartButton.classList.remove('hidden')
 
       sendRequest({

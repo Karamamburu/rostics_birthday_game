@@ -57,7 +57,22 @@ const DEN_FACE = {
   sad: '/test_game_for_academy/assets/images/den/Den_sad.png'
 }
 
+const CAT_DANCE = {
+    cat_1: '/test_game_for_academy/assets/images/cat/cat_dance_1.png',
+    cat_2: '/test_game_for_academy/assets/images/cat/cat_dance_2.png',
+    cat_3: '/test_game_for_academy/assets/images/cat/cat_dance_3.png',
+    cat_4: '/test_game_for_academy/assets/images/cat/cat_dance_4.png',
+    cat_5: '/test_game_for_academy/assets/images/cat/cat_dance_5.png',
+    cat_6: '/test_game_for_academy/assets/images/cat/cat_dance_6.png',
+    cat_7: '/test_game_for_academy/assets/images/cat/cat_dance_7.png',
+    cat_8: '/test_game_for_academy/assets/images/cat/cat_dance_8.png',
+    win: '/test_game_for_academy/assets/images/cat/cat_win.png',
+    lose: '/test_game_for_academy/assets/images/cat/cat_lose.png'
+  }
+
 const DEN_FACE_ARRAY = ['regular', 'openLeft', 'openRight', 'openWide', 'win']
+
+const CAT_DANCE_ARRAY = ['cat_1', 'cat_2', 'cat_3', 'cat_4', 'cat_5', 'cat_6', 'cat_7', 'cat_8']
 
 const PHOBO_IMAGES = {
   guitar: '/test_game_for_academy/assets/images/phobos/guitar.png',
@@ -85,5 +100,7 @@ export {
         GHOST_START_INDEX,
         GHOST_STYLES,
         PHOBO_STYLES,
-        PHOBO_IMAGES
+        PHOBO_IMAGES,
+        CAT_DANCE,
+        CAT_DANCE_ARRAY
     }
