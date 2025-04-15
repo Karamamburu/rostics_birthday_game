@@ -1,26 +1,29 @@
-﻿body {
-    overflow-x: hidden;
-}
-
+﻿
 @font-face {
-    font-family: 'PixelifySans-VariableFont_wght';
-    src: url('./fonts/PixelifySans-VariableFont_wght.ttf') format('truetype');
+    font-family: 'MercutioNbpSmallcaps';
+    src: url('./fonts/MercutioNbpSmallcaps.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 body {
-    font-family: 'PixelifySans-VariableFont_wght', Pixelify Sans, Arial, Helvetica, sans-serif !important;
-    font-size: 30px;
+    font-family: 'MercutioNbpSmallcaps',  Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: #323232;
-
-
+    overflow: hidden; 
+    position: fixed; 
+    width: 100%; 
+    height: 100%; 
 }
 
-div, p, span, a, input, textarea, keygen, select, button {
-    font-family: 'PixelifySans-VariableFont_wght', Pixelify Sans, Arial, Helvetica, sans-serif !important;
+
+p, keygen, select, button, h3, table {
+    font-family: 'MercutioNbpSmallcaps',  Arial, Helvetica, sans-serif;
+}
+
+span#score {
+    font-family: 'MercutioNbpSmallcaps', Arial, Helvetica, sans-serif;
 }
 
 .flex {
@@ -30,6 +33,10 @@ div, p, span, a, input, textarea, keygen, select, button {
     width: 1188px;
     
     }
+
+p.selected-difficulty {
+    color: white;
+}
 
 .toolbar {
     display: flex;
@@ -62,41 +69,42 @@ div, p, span, a, input, textarea, keygen, select, button {
     z-index: 0;
 }
 
-.wall {
+.wall { 
+	box-sizing: border-box;
     background-color: #303030;
     border: 1px solid #A020C2;
 }
 
 .wall-1 {
-    background-color: red;
+    background-color: #323232;
 }
 
 .wall-2 {
-    background-color:orange;
+    background-color: #323232;
 }
 
 .wall-3 {
-    background-color: yellow;
+    background-color: #323232;
 }
 
 .wall-4 {
-    background-color: green;
+    background-color: #323232;
 }
 
 .wall-5 {
-    background-color: aqua;
+    background-color: #323232;
 }
 
 .wall-6 {
-    background-color: blue;
+    background-color: #323232;
 }
 
 .wall-7 {
-    background-color: purple;
+    background-color: #323232;
 }
 
 .wall-8 {
-    background-color: black;
+    background-color: #323232;
 }
 
 .power-pellet {
@@ -165,82 +173,98 @@ div, p, span, a, input, textarea, keygen, select, button {
 }
 
 .pac-man {
-    background-image: url(/test_game_for_academy/assets/images/Den.png);
+    background-image: url(/test_game_for_academy/assets/images/cat/cat_head.png);
     background-size: cover;
     /* width: 10px;
     height: 10px; */
     /* border-radius: 10px; */
 }
 
+
+
 .scared-ghost {
-    background-color: aquamarine;
+    background-color: black;
 }
 
 .hidden {
   display: none;
 }
 
+.ratingContainer h3 {
+    margin-bottom: 4px;
+    font-weight: bold;
+	text-align: center;
+}
+
 .talking-den {
   width: 80%;
   height: 60%;
-  background-image: url(/test_game_for_academy/assets/images/cat/den_regular.png);
+  background-image: url(/test_game_for_academy/assets/images/cat/cat_dance_1.png);
   background-repeat: no-repeat;
   background-size: 100%;
   padding:10%;
 }
 
+.difficulty-button, .restart-button {
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-family: 'MercutioNbpSmallcaps', Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
 .difficulty-button {
-    width: 30%;
-    height: 20%;
-    border-radius: 10px;
-    color: white;
-    transition: .2s linear;
-    background: #0B63F6;
-    font-size: 20px;
+    width: 30%; /* исходный размер */
+    height: 20%; /* исходный размер */
+    font-size: 16px;
     padding: 5px;
 }
 
 .difficulty-button:hover {
-    -webkit-transform: rotateZ(5deg);
-    -ms-transform: rotateZ(5deg);
-    transform: rotateZ(5deg);
-    cursor: pointer;
+    transform: scale(1.05);
+    background-color: #702090 !important;
+	border: 2px solid #A020C2 !important;
 }
 
-.normal-button {
-    background: #05a42a;
+.normal-button { background: #007A3D; }
+.nightmare-button { background: #9C5D27; }
+.hell-button { 
+    background: #9C0023; 
+    animation: glow-effect 3s infinite ease-in-out;
 }
 
-.nightmare-button {
-    background: #846926;
-}
-
-.hell-button {
-    background: #cf1f07;
-    box-shadow: 0px 0px 5px red;
+@keyframes glow-effect {
+  0%, 100% { box-shadow: 0 0 8px #9C0023; }
+  25% { box-shadow: 0 0 12px #9C0023, 0 0 4px #FF4500; }
+  50% { box-shadow: 0 0 6px #9C0023; }
+  75% { box-shadow: 0 0 14px #9C0023, 0 0 2px #FF0000; }
 }
 
 .restart-button {
-    width: 80%;
-    height: auto;
-    border-radius: 10px;
-    color: white;
-    transition: .4s linear;
-    background: #f60b0b;
-    font-size: 30px;
-    padding: 5px;
+	border: 2px solid #ffffff;
+    width: 80%; /* исходный размер */
+    font-size: 30px; /* исходный размер */
+    padding: 5px; /* исходный размер */
+    background: #9C0023;
 }
 
 .restart-button:hover {
-    -webkit-transform: rotateZ(360deg);
-    -ms-transform: rotateZ(360deg);
-    transform: rotateZ(360deg);
-    cursor: pointer;
+    transform: scale(1.05);
+    background-color: #702090;
 }
 
 .page-content {
 	margin: 0px;
+	padding: 0px 0 4px 0 !important;
 }
+
+.toolbar h3{
+	color: #ffffff;
+}
+
 
 /* Добавленные стили для таблицы рейтинга */
       .modalContainer {
@@ -265,7 +289,10 @@ div, p, span, a, input, textarea, keygen, select, button {
       .ratingTable {
         width: 100%;
         border-collapse: collapse;
-        font-size: 12px;
+		font-size: 13.5px;
+		text-align: center;
+		align-content: center;
+		font-weight: 500;
       }
       
       .ratingTable th, .ratingTable td {
@@ -279,3 +306,141 @@ div, p, span, a, input, textarea, keygen, select, button {
         position: sticky;
         top: 0;
       }
+	  
+	/* For Rating Tabs*/
+
+	
+	button.tab-button.active {
+		border-color: #A020C2;
+		background-color: #A020C2;
+		color: #FFFFFF;
+	}
+	  
+    /* Базовые стили для экранов >=1280px */
+:root {
+  --scale-factor: 1;
+  font-size: 16px;
+}
+
+/* Адаптация для экранов <1280px */
+@media (max-width: 1280px) { 
+  :root {
+    --scale-factor: 0.65;
+    font-size: 14px;
+  }
+
+ .flex {
+    padding: calc(20px * var(--scale-factor));
+  }
+
+ .toolbar {
+    width: calc(400px * var(--scale-factor));
+    padding: calc(20px * var(--scale-factor));
+  }
+
+.grid {
+    width: calc(700px * var(--scale-factor));
+    height: calc(700px * var(--scale-factor));
+  }
+
+ .grid div {
+    width: calc(25px * var(--scale-factor));
+    height: calc(25px * var(--scale-factor));
+  }
+
+ .difficulty-button {
+    padding: calc(5px * var(--scale-factor));
+  }
+
+.restart-button {
+    font-size: calc(30px * var(--scale-factor));
+    padding: calc(5px * var(--scale-factor));
+  }
+
+.modalActive {
+    padding: calc(40px * var(--scale-factor)) calc(20px * var(--scale-factor));
+  }
+
+ .ratingContainer {
+    width: calc(800px * var(--scale-factor));
+  }
+
+}
+
+/* Help styles*/
+
+.pixel-help {
+  font-family: 'MercutioNbpSmallcaps', cursive;
+  background: #000;
+  border: 4px solid #A020C2;
+  padding: 16px;
+  max-width: 400px;
+  image-rendering: pixelated;
+}
+
+.pixel-border {
+  border: 2px solid #702090;
+  padding: 8px;
+}
+
+.pixel-title {
+  color: #FF00FF;
+  font-size: 14px;
+  text-shadow: 2px 2px 0 #000;
+  margin-bottom: 16px;
+}
+
+.pixel-arrow {
+  color: #ffffff;
+}
+
+.pixel-key {
+  color: #ffffff;
+}
+
+.pixel-row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.pixel-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.pixel-text {
+  color: #FFFFFF;
+  font-size: 10px;
+  margin: 0;
+}
+
+.pixel-rules {
+  margin-top: 20px;
+  border-top: 2px dashed #A020C2;
+  padding-top: 12px;
+}
+
+.pixel-subtitle {
+  color: #FFFF00;
+  font-size: 12px;
+}
+
+.pixel-list {
+  padding-left: 16px;
+}
+
+.pixel-list li {
+  color: #00FFFF;
+  font-size: 9px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.pixel-small {
+  width: 16px;
+  height: 16px;
+  margin: 0 4px;
+}
