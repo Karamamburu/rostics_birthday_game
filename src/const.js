@@ -42,7 +42,7 @@ const DIFFICULTY_LEVELS = {
     },
 }
 
-const GHOST_START_INDEX = [348, 351, 376, 379]
+const GHOST_START_INDEX = [29, 54, 729, 754]
 const GHOST_STYLES = ['ghost-apple', 'ghost-avocado', 'ghost-broccoli', 'ghost-cucumber', 'ghost-lemon', 'ghost-orange', 'ghost-pumpkin', 'ghost-tomato']
 
 const WIN_MESSAGE = `Ура! Поздравляем с победой!`
