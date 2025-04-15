@@ -1,4 +1,4 @@
-﻿import { playSound, playSoundtrack, pauseSoundtrack } from './src/sound-handlers.js';
+﻿import { playSound, playSoundtrack, pauseSoundtrack, toggleSound } from './src/sound-handlers.js';
 import { 
           PACMAN_SOUNDS, 
           RAMPAGE_SOUNDS,
@@ -43,6 +43,20 @@ const modalBackground = document.querySelector('.modalBackground')
 const restartButton = document.querySelector('.restart-button');
 const catDiv = document.querySelector('.talking-den')
 const difficulty = document.querySelector('.selected-difficulty')
+const soundToggle = document.getElementById('soundToggle');
+const soundIcon = document.getElementById('soundIcon');
+
+soundToggle.addEventListener('click', () => {
+  const isCurrentlyEnabled = soundIcon.src.includes('sound_on.png');
+  
+  if (isCurrentlyEnabled) {
+      soundIcon.src = "/test_game_for_academy/assets/images/sound_off.png";
+      toggleSound(false);
+  } else {
+      soundIcon.src = "/test_game_for_academy/assets/images/sound_on.png";
+      toggleSound(true);
+  }
+});
 
 catDiv.style.backgroundImage = CAT_DANCE['cat_1']
 

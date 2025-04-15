@@ -126,9 +126,32 @@
         <li>Избегай дудлов <img src="/test_game_for_academy/assets/images/ghosts/apple.png" class="pixel-small">, они заобнимают тебя до смерти!</li>
       </ul>
     </div>
+    <div class="sound-control">
+      <button id="soundToggle" class="sound-button">
+        <img src="/test_game_for_academy/assets/images/sound_on.png" alt="Sound" id="soundIcon">
+      </button>
+    </div>
   </div>
 </div>
     </div>
+<style>
+  .sound-control {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
+.sound-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.sound-button img {
+    width: 32px;
+    height: 32px;
+}
+</style>
   </body>
 </html>
