@@ -30,7 +30,7 @@ span#score {
     display: inline-flex;
     padding: 20px;
     flex: none;
-    width: 1188px;
+    width: 1920px;
     
     }
 
@@ -116,14 +116,14 @@ p.selected-difficulty {
 }
 
 .ghost-apple {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_1.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/apple.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-avocado {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_2.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/avocado.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
@@ -131,42 +131,42 @@ p.selected-difficulty {
 
 
 .ghost-broccoli {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_3.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/broccoli.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-cucumber {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_4.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/cucumber.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-lemon {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_5.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/lemon.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-orange {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_6.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/orange.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-pumpkin {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_7.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/pumkin.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
 }
 
 .ghost-tomato {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/doodle_8.png);
+    background-image: url(/test_game_for_academy/assets/images/ghosts/tomato.png);
     z-index: 1;
     background-size: cover;
     box-sizing: border-box;
@@ -206,7 +206,6 @@ p.selected-difficulty {
 }
 
 .difficulty-button, .restart-button {
-    border-radius: 5px;
     color: #FFFFFF;
     font-family: 'MercutioNbpSmallcaps', Arial, sans-serif;
     font-weight: bold;
@@ -221,6 +220,7 @@ p.selected-difficulty {
     height: 20%; /* исходный размер */
     font-size: 16px;
     padding: 5px;
+	border: 2px solid transparent !important;
 }
 
 .difficulty-button:hover {
@@ -316,19 +316,17 @@ p.selected-difficulty {
 		color: #FFFFFF;
 	}
 	  
-    /* Базовые стили для экранов >=1280px */
+    
 :root {
-  --scale-factor: 1;
-  font-size: 16px;
+    font-size: 18px;
 }
 
 /* Адаптация для экранов <1280px */
 @media (max-width: 1280px) { 
   :root {
-    --scale-factor: 0.65;
     font-size: 14px;
   }
-
+}
  .flex {
     padding: calc(20px * var(--scale-factor));
   }
@@ -365,7 +363,6 @@ p.selected-difficulty {
     width: calc(800px * var(--scale-factor));
   }
 
-}
 
 /* Help styles*/
 
@@ -392,6 +389,7 @@ p.selected-difficulty {
 
 .pixel-arrow {
   color: #ffffff;
+  margin-right: 4px;
 }
 
 .pixel-key {
@@ -444,3 +442,27 @@ p.selected-difficulty {
   height: 16px;
   margin: 0 4px;
 }
+
+.table-container {
+    width: 98%;
+    max-height: calc(680px * var(--scale-factor));
+    overflow-y: auto;
+    border: 1px solid lightgrey;
+    overflow-x: none;
+}
+
+/* Фиксированный заголовок */
+.pixel-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #FFF;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: grey;
+}
+
