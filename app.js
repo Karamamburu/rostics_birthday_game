@@ -141,7 +141,7 @@ function filterTableByDifficulty(difficulty) {
 
   const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
 
-  const topTenResults = filteredData.slice(0, 10).sort((a, b) => 
+  const topTenResults = filteredData.slice(0, 15).sort((a, b) => 
    b.score - a.score || 
    difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
    a.durationInSeconds - b.durationInSeconds
@@ -228,7 +228,7 @@ function initializeGame(difficulty) {
     1,4,1,1,1,1,0,1,1,4,4,1,1,1,1,1,4,4,4,1,1,0,1,1,1,1,4,1,
     1,4,1,1,1,1,0,1,1,4,4,1,4,4,1,4,4,4,4,1,1,0,1,1,1,1,4,1,
     1,4,1,1,1,1,0,1,1,4,4,1,4,4,4,1,1,4,4,1,1,0,1,1,1,1,4,1,
-    1,0,0,0,0,0,0,1,1,0,0,0,4,4,4,4,0,0,0,1,1,0,0,0,0,0,0,1,
+    1,0,0,0,0,0,0,4,4,0,0,0,4,4,4,4,0,0,0,4,4,0,0,0,0,0,0,1,
     1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
     1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
     1,3,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,3,1,

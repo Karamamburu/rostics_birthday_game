@@ -30,7 +30,7 @@ const WALL_COLORS = ['wall-1', 'wall-2', 'wall-3', 'wall-4', 'wall-5', 'wall-6',
 const DIFFICULTY_LEVELS = {
     normal: {
         speed: 250,
-        ghostsCount: 4
+        ghostsCount: 6
     },
     nightmare: {
         speed: 150,
@@ -42,7 +42,7 @@ const DIFFICULTY_LEVELS = {
     },
 }
 
-const GHOST_START_INDEX = [29, 54, 729, 754]
+const GHOST_START_INDEX = [29, 54, 289, 298, 356, 371, 729, 754]
 const GHOST_STYLES = ['ghost-apple', 'ghost-avocado', 'ghost-broccoli', 'ghost-cucumber', 'ghost-lemon', 'ghost-orange', 'ghost-pumpkin', 'ghost-tomato']
 
 const WIN_MESSAGE = `Ура! Поздравляем с победой!`
