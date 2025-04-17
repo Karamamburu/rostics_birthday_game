@@ -84,10 +84,10 @@ soundToggle.addEventListener('click', () => {
   const isCurrentlyEnabled = soundIcon.src.includes('sound_on.png');
   
   if (isCurrentlyEnabled) {
-      soundIcon.src = "/test_game_for_academy/assets/images/sound_off.png";
+      soundIcon.src = "/rostics_birthday_game/assets/images/sound_off.png";
       toggleSound(false);
   } else {
-      soundIcon.src = "/test_game_for_academy/assets/images/sound_on.png";
+      soundIcon.src = "/rostics_birthday_game/assets/images/sound_on.png";
       toggleSound(true);
   }
 });
@@ -98,7 +98,7 @@ function sendRequest(body) {
   var response_data;
 
   $.ajax({
-      url: '/test_game_for_academy/api.html',
+      url: '/rostics_birthday_game/api.html',
       type: "POST",
       dataType: "JSON",
       data: JSON.stringify(body),
@@ -311,7 +311,7 @@ function initializeGame(difficulty) {
         squares[i].classList.add('ghost-lair')
       } else if (layout[i] === 3) {
         squares[i].classList.add('power-pellet')
-        squares[i].style.backgroundImage = `url(/test_game_for_academy/assets/images/phobos/${PHOBO_STYLES[powerPelletIndex]}.png)`;
+        squares[i].style.backgroundImage = `url(/rostics_birthday_game/assets/images/phobos/${PHOBO_STYLES[powerPelletIndex]}.png)`;
         squares[i].style.backgroundSize = 'contain';
         squares[i].style.borderRadius = '10px';
         squares[i].style.zIndex = '0';
@@ -517,10 +517,10 @@ function initializeGame(difficulty) {
     
     if (isWin) {
       title.textContent = WIN_MESSAGE;
-      image.src = '/test_game_for_academy/assets/images/cat/cat_win.png';
+      image.src = '/rostics_birthday_game/assets/images/cat/cat_win.png';
     } else {
       title.textContent = LOOSE_MESSAGE;
-      image.src = '/test_game_for_academy/assets/images/cat/cat_lose.png';
+      image.src = '/rostics_birthday_game/assets/images/cat/cat_lose.png';
     }
     
     resultNumber.textContent = rating

@@ -1,468 +1,466 @@
 ﻿
 @font-face {
-    font-family: 'MercutioNbpSmallcaps';
-    src: url('./fonts/MercutioNbpSmallcaps.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'MercutioNbpSmallcaps';
+  src: url('./fonts/MercutioNbpSmallcaps.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-    font-family: 'MercutioNbpSmallcaps',  Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: #323232;
-    overflow: hidden; 
-    position: fixed; 
-    width: 100%; 
-    height: 100%; 
+  font-family: 'MercutioNbpSmallcaps',  Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #323232;
+  overflow: hidden; 
+  position: fixed; 
+  width: 100%; 
+  height: 100%; 
 }
 
 
 p, keygen, select, button, h3, table {
-    font-family: 'MercutioNbpSmallcaps',  Arial, Helvetica, sans-serif;
+  font-family: 'MercutioNbpSmallcaps',  Arial, Helvetica, sans-serif;
 }
 
 span#score {
-    font-family: 'MercutioNbpSmallcaps', Arial, Helvetica, sans-serif;
+  font-family: 'MercutioNbpSmallcaps', Arial, Helvetica, sans-serif;
 }
 
 .flex {
-    display: inline-flex;
-    padding: 20px;
-    flex: none;
-    width: 1920px;
-    
-    }
+  display: inline-flex;
+  padding: 20px;
+  flex: none;
+  width: 1920px;
+  
+  }
 
 p.selected-difficulty {
-    color: white;
+  color: white;
 }
 
 .toolbar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    padding: 20px;
-    background-color: rgb(0, 0, 0);
-    width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: rgb(0, 0, 0);
+  width: 400px;
 }
 .grid {
-    display: flex;
-    flex-wrap: wrap;
-    width: 700px;
-    height: 700px;
-    border: solid black;
+  display: flex;
+  flex-wrap: wrap;
+  width: 700px;
+  height: 700px;
+  border: solid black;
 }
-  
+
 
 .grid div {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 
 .pac-dot {
-    background-image: url(/test_game_for_academy/assets/images/chicken.png);
-    background-size: cover;
-    /* border: 2.5px solid white; */
-    box-sizing: border-box;
-    z-index: 0;
+  background-image: url(/rostics_birthday_game/assets/images/chicken.png);
+  background-size: cover;
+  /* border: 2.5px solid white; */
+  box-sizing: border-box;
+  z-index: 0;
 }
 
 .wall { 
-	box-sizing: border-box;
-    background-color: #303030;
-    border: 1px solid #A020C2;
+box-sizing: border-box;
+  background-color: #303030;
+  border: 1px solid #A020C2;
 }
 
 .wall-1 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-2 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-3 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-4 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-5 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-6 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-7 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .wall-8 {
-    background-color: #323232;
+  background-color: #323232;
 }
 
 .power-pellet {
-    background-image: url(/test_game_for_academy/assets/images/pho_bo.png);
-    background-size: contain;
-    border-radius: 10px;
-    z-index: 0;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/pho_bo.png);
+  background-size: contain;
+  border-radius: 10px;
+  z-index: 0;
+  box-sizing: border-box;
 }
 
 .ghost-apple {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/apple.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/apple.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .ghost-avocado {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/avocado.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/avocado.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 
 .ghost-broccoli {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/broccoli.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/broccoli.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .ghost-cucumber {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/cucumber.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/cucumber.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .ghost-lemon {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/lemon.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/lemon.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .ghost-orange {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/orange.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/orange.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .ghost-pumpkin {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/pumkin.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/pumkin.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .ghost-tomato {
-    background-image: url(/test_game_for_academy/assets/images/ghosts/tomato.png);
-    z-index: 1;
-    background-size: cover;
-    box-sizing: border-box;
+  background-image: url(/rostics_birthday_game/assets/images/ghosts/tomato.png);
+  z-index: 1;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .pac-man {
-    background-image: url(/test_game_for_academy/assets/images/cat/cat_head.png);
-    background-size: cover;
-    /* width: 10px;
-    height: 10px; */
-    /* border-radius: 10px; */
+  background-image: url(/rostics_birthday_game/assets/images/cat/cat_head.png);
+  background-size: cover;
+  /* width: 10px;
+  height: 10px; */
+  /* border-radius: 10px; */
 }
 
 
 
 .scared-ghost {
-    background-color: black;
+  background-color: black;
 }
 
 .hidden {
-  display: none;
+display: none;
 }
 
 .ratingContainer h3 {
-    margin-bottom: 4px;
-    font-weight: bold;
-	text-align: center;
+  margin-bottom: 4px;
+  font-weight: bold;
+text-align: center;
 }
 
 .talking-den {
-  width: 80%;
-  height: 60%;
-  background-image: url(/test_game_for_academy/assets/images/cat/cat_dance_1.png);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  padding:10%;
+width: 80%;
+height: 60%;
+background-image: url(/rostics_birthday_game/assets/images/cat/cat_dance_1.png);
+background-repeat: no-repeat;
+background-size: 100%;
+padding:10%;
 }
 
 .difficulty-button, .restart-button {
-    color: #FFFFFF;
-    font-family: 'MercutioNbpSmallcaps', Arial, sans-serif;
-    font-weight: bold;
-    text-align: center;
-    margin: 5px;
-    cursor: pointer;
-    transition: all 0.1s;
+  color: #FFFFFF;
+  font-family: 'MercutioNbpSmallcaps', Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 0.1s;
 }
 
 .difficulty-button {
-    width: 30%; /* исходный размер */
-    height: 20%; /* исходный размер */
-    font-size: 16px;
-    padding: 5px;
-	border: 2px solid transparent !important;
+  width: 30%; /* исходный размер */
+  height: 20%; /* исходный размер */
+  font-size: 16px;
+  padding: 5px;
+border: 2px solid transparent !important;
 }
 
 .difficulty-button:hover {
-    transform: scale(1.05);
-    background-color: #702090 !important;
-	border: 2px solid #A020C2 !important;
+  transform: scale(1.05);
+  background-color: #702090 !important;
+border: 2px solid #A020C2 !important;
 }
 
 .normal-button { background: #007A3D; }
 .nightmare-button { background: #9C5D27; }
 .hell-button { 
-    background: #9C0023; 
-    animation: glow-effect 3s infinite ease-in-out;
+  background: #9C0023; 
+  animation: glow-effect 3s infinite ease-in-out;
 }
 
 @keyframes glow-effect {
-  0%, 100% { box-shadow: 0 0 8px #9C0023; }
-  25% { box-shadow: 0 0 12px #9C0023, 0 0 4px #FF4500; }
-  50% { box-shadow: 0 0 6px #9C0023; }
-  75% { box-shadow: 0 0 14px #9C0023, 0 0 2px #FF0000; }
+0%, 100% { box-shadow: 0 0 8px #9C0023; }
+25% { box-shadow: 0 0 12px #9C0023, 0 0 4px #FF4500; }
+50% { box-shadow: 0 0 6px #9C0023; }
+75% { box-shadow: 0 0 14px #9C0023, 0 0 2px #FF0000; }
 }
 
 .restart-button {
-	border: 2px solid #ffffff;
-    width: 80%; /* исходный размер */
-    font-size: 30px; /* исходный размер */
-    padding: 5px; /* исходный размер */
-    background: #9C0023;
+border: 2px solid #ffffff;
+  width: 80%; /* исходный размер */
+  font-size: 30px; /* исходный размер */
+  padding: 5px; /* исходный размер */
+  background: #9C0023;
 }
 
 .restart-button:hover {
-    transform: scale(1.05);
-    background-color: #702090;
+  transform: scale(1.05);
+  background-color: #702090;
 }
 
 .page-content {
-	margin: 0px;
-	padding: 0px 0 4px 0 !important;
+margin: 0px;
+padding: 0px 0 4px 0 !important;
 }
 
 .toolbar h3{
-	color: #ffffff;
+color: #ffffff;
 }
 
 
 /* Добавленные стили для таблицы рейтинга */
-      .modalContainer {
-        display: flex;
-        width: 100%;
-        height: 100%;
-      }
-      
-      .modalContent {
-        flex: 1;
-        padding: 0 15px;
-      }
-      
-      .ratingContainer {
-        width: 300px;
-        border-right: 1px solid #ccc;
-        padding-right: 15px;
-        height: 100%;
-        overflow-y: auto;
-      }
-      
-      .ratingTable {
-        width: 100%;
-        border-collapse: collapse;
-		font-size: 13.5px;
-		text-align: center;
-		align-content: center;
-		font-weight: 500;
-      }
-      
-      .ratingTable th, .ratingTable td {
-        padding: 6px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      
-      .ratingTable th {
-        background-color: #f2f2f2;
-        position: sticky;
-        top: 0;
-      }
-	  
-	/* For Rating Tabs*/
-
-	
-	button.tab-button.active {
-		border-color: #A020C2;
-		background-color: #A020C2;
-		color: #FFFFFF;
-	}
-	  
+    .modalContainer {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
     
+    .modalContent {
+      flex: 1;
+      padding: 0 15px;
+    }
+    
+    .ratingContainer {
+      width: 300px;
+      border-right: 1px solid #ccc;
+      padding-right: 15px;
+      height: 100%;
+      overflow-y: auto;
+    }
+    
+    .ratingTable {
+      width: 100%;
+      border-collapse: collapse;
+  font-size: 13.5px;
+  text-align: center;
+  align-content: center;
+  font-weight: 500;
+    }
+    
+    .ratingTable th, .ratingTable td {
+      padding: 6px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .ratingTable th {
+      background-color: #f2f2f2;
+      position: sticky;
+      top: 0;
+    }
+  
+/* For Rating Tabs*/
+
+
+button.tab-button.active {
+  border-color: #A020C2;
+  background-color: #A020C2;
+  color: #FFFFFF;
+}
+  
+  
 :root {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 /* Адаптация для экранов <1280px */
 @media (max-width: 1280px) { 
-  :root {
-    font-size: 14px;
-  }
+:root {
+  font-size: 14px;
 }
- .flex {
-    padding: calc(20px * var(--scale-factor));
-  }
+}
+.flex {
+  padding: calc(20px * var(--scale-factor));
+}
 
- .toolbar {
-    width: calc(400px * var(--scale-factor));
-    padding: calc(20px * var(--scale-factor));
-  }
+.toolbar {
+  width: calc(400px * var(--scale-factor));
+  padding: calc(20px * var(--scale-factor));
+}
 
 .grid {
-    width: calc(700px * var(--scale-factor));
-    height: calc(700px * var(--scale-factor));
-  }
+  width: calc(700px * var(--scale-factor));
+  height: calc(700px * var(--scale-factor));
+}
 
- .grid div {
-    width: calc(25px * var(--scale-factor));
-    height: calc(25px * var(--scale-factor));
-  }
+.grid div {
+  width: calc(25px * var(--scale-factor));
+  height: calc(25px * var(--scale-factor));
+}
 
- .difficulty-button {
-    padding: calc(5px * var(--scale-factor));
-  }
+.difficulty-button {
+  padding: calc(5px * var(--scale-factor));
+}
 
 .restart-button {
-    font-size: calc(30px * var(--scale-factor));
-    padding: calc(5px * var(--scale-factor));
-  }
+  font-size: calc(30px * var(--scale-factor));
+  padding: calc(5px * var(--scale-factor));
+}
 
 .modalActive {
-    padding: calc(40px * var(--scale-factor)) calc(20px * var(--scale-factor));
-  }
+  padding: calc(40px * var(--scale-factor)) calc(20px * var(--scale-factor));
+}
 
- .ratingContainer {
-    width: calc(800px * var(--scale-factor));
-  }
+.ratingContainer {
+  width: calc(800px * var(--scale-factor));
+}
 
 
 /* Help styles*/
 
 .pixel-help {
-  font-family: 'MercutioNbpSmallcaps', cursive;
-  background: #000;
-  border: 4px solid #A020C2;
-  padding: 16px;
-  max-width: 400px;
-  image-rendering: pixelated;
+font-family: 'MercutioNbpSmallcaps', cursive;
+background: #000;
+border: 4px solid #A020C2;
+padding: 16px;
+max-width: 400px;
+image-rendering: pixelated;
 }
 
 .pixel-border {
-  border: 2px solid #702090;
-  padding: 8px;
+border: 2px solid #702090;
+padding: 8px;
 }
 
 .pixel-title {
-  color: #FF00FF;
-  font-size: 14px;
-  text-shadow: 2px 2px 0 #000;
-  margin-bottom: 16px;
+color: #FF00FF;
+font-size: 14px;
+text-shadow: 2px 2px 0 #000;
+margin-bottom: 16px;
 }
 
 .pixel-arrow {
-  color: #ffffff;
-  margin-right: 4px;
+color: #ffffff;
+margin-right: 4px;
 }
 
 .pixel-key {
-  color: #ffffff;
+color: #ffffff;
 }
 
 .pixel-row {
-  display: flex;
-  align-items: center;
-  margin: 8px 0;
+display: flex;
+align-items: center;
+margin: 8px 0;
 }
 
 .pixel-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
+width: 24px;
+height: 24px;
+margin-right: 8px;
 }
 
 .pixel-text {
-  color: #FFFFFF;
-  font-size: 10px;
-  margin: 0;
+color: #FFFFFF;
+font-size: 10px;
+margin: 0;
 }
 
 .pixel-rules {
-  margin-top: 20px;
-  border-top: 2px dashed #A020C2;
-  padding-top: 12px;
+margin-top: 20px;
+border-top: 2px dashed #A020C2;
+padding-top: 12px;
 }
 
 .pixel-subtitle {
-  color: #FFFF00;
-  font-size: 12px;
+color: #FFFF00;
+font-size: 12px;
 }
 
 .pixel-list {
-  padding-left: 16px;
+padding-left: 16px;
 }
 
 .pixel-list li {
-  color: #00FFFF;
-  font-size: 9px;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
+color: #00FFFF;
+font-size: 9px;
+margin-bottom: 6px;
+display: flex;
+align-items: center;
 }
 
 .pixel-small {
-  width: 16px;
-  height: 16px;
-  margin: 0 4px;
+width: 16px;
+height: 16px;
+margin: 0 4px;
 }
 
 .table-container {
-    width: 98%;
-    max-height: calc(680px * var(--scale-factor));
-    overflow-y: auto;
-    border: 1px solid lightgrey;
-    overflow-x: none;
+  width: 98%;
+  max-height: calc(680px * var(--scale-factor));
+  overflow-y: auto;
+  border: 1px solid lightgrey;
+  overflow-x: none;
 }
 
 /* Фиксированный заголовок */
 .pixel-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #FFF;
+width: 100%;
+border-collapse: collapse;
+color: #FFF;
 }
 
 .table-container::-webkit-scrollbar {
-  width: 12px;
+width: 12px;
 }
-
 .table-container::-webkit-scrollbar-thumb {
-  background: grey;
+background: grey;
 }
-

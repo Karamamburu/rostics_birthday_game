@@ -1,4 +1,4 @@
-﻿import { PACMAN_SOUNDS, VOLUMES } from "/test_game_for_academy/src/const.js";
+﻿import { PACMAN_SOUNDS, VOLUMES } from "/rostics_birthday_game/src/const.js";
 
 let isSoundEnabled = true;
 

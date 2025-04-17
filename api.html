@@ -153,7 +153,7 @@ switch (mode) {
     gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
     gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
     gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
-    //gameResultDoc.TopElem.move_count = request_body.GetOptProperty('move_count', '')
+    gameResultDoc.TopElem.move_count = request_body.GetOptProperty('move_count', '')
     gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
     gameResultDoc.Save()
 
@@ -167,6 +167,7 @@ switch (mode) {
         gr.end_time, 
         DATEDIFF(second, gr.start_time, gr.end_time) as duration_seconds,
         gr.is_won,
+		gr.move_count
         CASE gr.difficulty_level
             WHEN 'hell' THEN 3
             WHEN 'nightmare' THEN 2
@@ -191,12 +192,14 @@ switch (mode) {
             difficulty_level: object.difficulty_level,
             difficulty_weight: object.difficulty_weight,
             durationInSeconds: object.duration_seconds,
-            is_won: object.is_won
+            is_won: object.is_won,
+			move_count: object.move_count
         });
     }
     
     var currentScore = request_body.GetOptProperty('score', 0);
     var currentDifficulty = request_body.GetOptProperty('difficulty_level', '');
+	var currentMoveCount = request_body.GetOptProperty('move_count', '');
     var currentDuration = DateDiff(
         DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', ''))),
         DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
@@ -226,7 +229,7 @@ switch (mode) {
       try {
         CustomGameTools.giveIconToUser(
           curUserID,
-          7097909785607004599, //10 лет работы, для отладки
+          7494289497748679407, //ROSTICS GAMER
           7138424178183920544 //Денис Хмыров
         )
       } catch(ex) {
@@ -237,7 +240,7 @@ switch (mode) {
         try {
           CustomGameTools.giveTrophyToUser(
             curUserID,
-            7441576689053233029, //Чемпион, для отладки
+            7494288409055329350, //ROSTICS GAME WINNER
             7138424178183920544, //Денис Хмыров
             "Тебе удалось пройти игру на день рождения Rostic's на самом высоком уровне сложности! Выдающийся результат!"
           )
@@ -253,7 +256,8 @@ switch (mode) {
     "результат № " + result.rating + ", " +
     "количество баллов: " + request_body.GetOptProperty('score', '') + ", " +
     "время: " + DateDiff(OptDate(request_body.GetOptProperty('end_time', '')), OptDate(request_body.GetOptProperty('start_time', ''))) + " секунд, " +
-    "уровень сложности: " + request_body.GetOptProperty('difficulty_level', '')
+    "уровень сложности: " + request_body.GetOptProperty('difficulty_level', '') + ", " +
+	"количество движений: " + request_body.GetOptProperty('move_count', '') 
   );
   Response.Write(EncodeJson(result))
   break;
@@ -275,6 +279,7 @@ switch (mode) {
 					gr.start_time, 
 					gr.end_time, 
 					gr.is_won,
+					gr.move_count,
 					ROW_NUMBER() OVER (
 						PARTITION BY c.id, gr.difficulty_level 
 						ORDER BY gr.score DESC, DATEDIFF(second, gr.start_time, gr.end_time) ASC
@@ -290,7 +295,8 @@ switch (mode) {
 				score, 
 				start_time, 
 				end_time, 
-				is_won
+				is_won,
+				move_count,
 			FROM RankedResults
 			WHERE rank = 1
 			ORDER BY difficulty_level, score DESC, DATEDIFF(second, start_time, end_time) ASC
@@ -322,6 +328,7 @@ switch (mode) {
 				newObj.duration = minutes + ":" + seconds
 				newObj.durationInSeconds = durationInSeconds
 				newObj.is_won = object.is_won
+				newObj.move_count = object.move_count
 			} catch (ex) {
 			   LogEvent(log_file_name, "Ошибка в обработке свойств объекта у сотрудника " + object.id + " " + GetReadable.getReadableShortName(object.fullname) + ": " + ex)
 			}
