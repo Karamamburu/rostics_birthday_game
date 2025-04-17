@@ -11,7 +11,7 @@ function Log(message, ex) {
 
 EnableLog(log_file_name, true);
 
-var curGameID = OptInt(7485300246935344434)
+var curGameID = OptInt(7147145395803485382)
 UniTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs/uni_tools.js"));
 CustomGameTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/custom_tools/custom_game_tools.js"));
 Server.Execute(AppDirectoryPath() + "/wt/web/include/user_init.html" );
@@ -167,20 +167,11 @@ switch (mode) {
         gr.end_time, 
         DATEDIFF(second, gr.start_time, gr.end_time) as duration_seconds,
         gr.is_won,
-		gr.move_count
-        CASE gr.difficulty_level
-            WHEN 'hell' THEN 3
-            WHEN 'nightmare' THEN 2
-            WHEN 'normal' THEN 1
-            ELSE 0
-        END as difficulty_weight
+		    gr.move_count
     FROM cc_game_results gr
     LEFT JOIN collaborators c ON c.id = gr.collaborator_id
-    WHERE c.is_dismiss = 0 AND gr.game_id = " + curGameID + "
-    ORDER BY 
-        gr.score DESC, 
-        difficulty_weight DESC, 
-        duration_seconds ASC
+    WHERE c.is_dismiss = 0 
+    AND gr.game_id = " + curGameID + "
     "
     var allResults = ArraySelectAll(XQuery(query))
     
@@ -190,35 +181,37 @@ switch (mode) {
             id: object.id,
             score: object.score,
             difficulty_level: object.difficulty_level,
-            difficulty_weight: object.difficulty_weight,
             durationInSeconds: object.duration_seconds,
             is_won: object.is_won,
-			move_count: object.move_count
+			      move_count: object.move_count
         });
     }
     
     var currentScore = request_body.GetOptProperty('score', 0);
     var currentDifficulty = request_body.GetOptProperty('difficulty_level', '');
-	var currentMoveCount = request_body.GetOptProperty('move_count', '');
+	  var currentMoveCount = request_body.GetOptProperty('move_count', 0);
     var currentDuration = DateDiff(
         DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', ''))),
         DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
     );
     
-    var difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
     var sortedResults = ArraySort(
-		resultsArray,
-		'This.score', '-',
-		'This.difficulty_level == "hell" ? 3 : (This.difficulty_level == "nightmare" ? 2 : 1)', '-',
-		'This.durationInSeconds', '+'
-	);
+      resultsArray,
+      'This.score', '-',
+      'This.difficulty_level == "hell" ? 3 : (This.difficulty_level == "nightmare" ? 2 : 1)', '-',
+      'This.durationInSeconds', '+',
+      'This.move_count', '+'
+	  );
     
     var currentPosition = -1;
-    for (var i = 0; i < resultsArray.length; i++) {
-        if (resultsArray[i].id == curUserID && 
-            resultsArray[i].score == currentScore && 
-            resultsArray[i].difficulty_level == currentDifficulty && 
-            resultsArray[i].durationInSeconds == currentDuration) {
+    for (var i = 0; i < sortedResults.length; i++) {
+        if (
+          sortedResults[i].id == curUserID && 
+          sortedResults[i].score == currentScore && 
+          sortedResults[i].difficulty_level == currentDifficulty && 
+          sortedResults[i].durationInSeconds == currentDuration &&
+          sortedResults[i].move_count == currentMoveCount
+          ) {
             currentPosition = i + 1;
         }
     }
@@ -282,8 +275,17 @@ switch (mode) {
 					gr.move_count,
 					ROW_NUMBER() OVER (
 						PARTITION BY c.id, gr.difficulty_level 
-						ORDER BY gr.score DESC, DATEDIFF(second, gr.start_time, gr.end_time) ASC
-					) AS rank
+						ORDER BY 
+          gr.score DESC, 
+          CASE gr.difficulty_level
+              WHEN 'hell' THEN 3
+              WHEN 'nightmare' THEN 2
+              WHEN 'normal' THEN 1
+              ELSE 0
+          END DESC,
+          DATEDIFF(second, gr.start_time, gr.end_time) ASC,
+          gr.move_count ASC
+          ) AS rank
 				FROM cc_game_results gr
 				LEFT JOIN collaborators c ON c.id = gr.collaborator_id
 				WHERE c.is_dismiss = 0
@@ -296,10 +298,19 @@ switch (mode) {
 				start_time, 
 				end_time, 
 				is_won,
-				move_count,
+				move_count
 			FROM RankedResults
 			WHERE rank = 1
-			ORDER BY difficulty_level, score DESC, DATEDIFF(second, start_time, end_time) ASC
+			ORDER BY 
+        score DESC, 
+        CASE difficulty_level
+            WHEN 'hell' THEN 3
+            WHEN 'nightmare' THEN 2
+            WHEN 'normal' THEN 1
+            ELSE 0
+        END DESC,
+        DATEDIFF(second, start_time, end_time) ASC, 
+        move_count ASC
 			"
 			var results= XQuery(query)
 

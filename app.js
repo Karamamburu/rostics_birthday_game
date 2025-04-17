@@ -155,17 +155,10 @@ function filterTableByDifficulty(difficulty) {
   const tableBody = document.querySelector('.ratingTable tbody');
   tableBody.innerHTML = '';
   
-  const filteredData = difficulty === 'all' 
-    ? allRatingData 
-    : allRatingData.filter(player => player.difficulty_level === difficulty);
-
-  const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
-
-  const topResults = filteredData.slice(0, 100).sort((a, b) => 
-   b.score - a.score || 
-   difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
-   a.durationInSeconds - b.durationInSeconds
-);
+  const topResults = difficulty === 'all' 
+  ? allRatingData.slice(0, 100) 
+  : allRatingData.filter(player => player.difficulty_level === difficulty).slice(0, 100);
+  
   let rowNumber = 1;
   topResults.forEach((player, index) => {
     const row = document.createElement('tr');
