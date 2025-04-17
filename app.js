@@ -70,6 +70,7 @@ function updateTimerDisplay() {
 let trophyCounter = 1;
 let selectedDifficulty = null;
 let startTime, endTime;
+let moveCounter = 0;
 
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
@@ -332,6 +333,7 @@ function initializeGame(difficulty) {
             pacmanCurrentIndex -= 1
             forceCatToDance()
             playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+            moveCounter++;
           }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
           pacmanCurrentIndex = 391
@@ -347,6 +349,7 @@ function initializeGame(difficulty) {
             pacmanCurrentIndex -= width
             forceCatToDance()
             playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+            moveCounter++;
           }
         break
       case 39:
@@ -359,6 +362,7 @@ function initializeGame(difficulty) {
           pacmanCurrentIndex += 1
           forceCatToDance()
           playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+          moveCounter++;
         }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
@@ -374,6 +378,7 @@ function initializeGame(difficulty) {
           pacmanCurrentIndex += width
           forceCatToDance()
           playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+          moveCounter++;
         }
         break
     }
@@ -539,6 +544,7 @@ function initializeGame(difficulty) {
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: false,
+        move_count: moveCounter,
         game_code: "rostics_birthday_game"
       });
 
@@ -570,6 +576,7 @@ function initializeGame(difficulty) {
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: true,
+        move_count: moveCounter,
         game_code: "rostics_birthday_game"
       });
   

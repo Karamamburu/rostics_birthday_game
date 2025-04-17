@@ -44,6 +44,13 @@ function validateRequest(request) {
     }
   }
 
+  if(request.HasProperty('move_count')) {
+    var moveCount = request.GetOptProperty('move_count', 0)
+    if(DataType(moveCount) != 'integer' || moveCount < 0) {
+      errors.push('move_count must be an integer not less than 0')
+    }
+  }
+
   return errors
 }
 
@@ -107,6 +114,7 @@ switch (mode) {
     gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
     gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
     gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
+    //gameResultDoc.TopElem.move_count = request_body.GetOptProperty('move_count', '')
     gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
     gameResultDoc.Save()
 
