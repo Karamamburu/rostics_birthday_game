@@ -70,6 +70,7 @@ function updateTimerDisplay() {
 let trophyCounter = 1;
 let selectedDifficulty = null;
 let startTime, endTime;
+let moveCounter = 0;
 
 const difficultyButtons = document.querySelectorAll('.difficulty-button')
 const modalBackground = document.querySelector('.modalBackground')
@@ -115,10 +116,12 @@ function sendRequest(body) {
 let allRatingData = [];
 
 async function displayRatingData() {
+  const loader = document.getElementById('loader');
+  
   try {
-    allRatingData = await sendRequest({
-      mode: 'get_rating_data'
-    });
+    loader.style.display = 'flex';
+    
+    allRatingData = await sendRequest({ mode: 'get_rating_data' });
     
     filterTableByDifficulty('all');
     
@@ -127,16 +130,24 @@ async function displayRatingData() {
         document.querySelectorAll('.tab-button').forEach(btn => {
           btn.classList.remove('active');
         });
-        
         button.classList.add('active');
-        
         const difficulty = button.dataset.difficulty;
         filterTableByDifficulty(difficulty);
       });
     });
     
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
   } catch (error) {
     console.error('Ошибка при загрузке данных рейтинга:', error);
+    loader.querySelector('.loader-text').textContent = 'Ошибка загрузки. Попробуйте позже.';
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  } finally {
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+      loader.style.opacity = '1';
+    }, 300);
   }
 }
 
@@ -150,14 +161,17 @@ function filterTableByDifficulty(difficulty) {
 
   const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
 
-  const topTenResults = filteredData.slice(0, 100).sort((a, b) => 
+  const topResults = filteredData.slice(0, 100).sort((a, b) => 
    b.score - a.score || 
    difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
    a.durationInSeconds - b.durationInSeconds
 );
-  
-  topTenResults.forEach((player, index) => {
+  let rowNumber = 1;
+  topResults.forEach((player, index) => {
     const row = document.createElement('tr');
+
+    const numberCell = document.createElement('td');
+    numberCell.textContent = rowNumber;
     
     const nameCell = document.createElement('td');
     nameCell.textContent = player.fullname;
@@ -183,6 +197,7 @@ function filterTableByDifficulty(difficulty) {
     const winCell = document.createElement('td');
     winCell.textContent = player.is_won ? 'Да' : 'Нет';
     
+    row.appendChild(numberCell);
     row.appendChild(nameCell);
     row.appendChild(positionCell);
     row.appendChild(restaurantCell);
@@ -193,6 +208,7 @@ function filterTableByDifficulty(difficulty) {
     row.appendChild(winCell);
     
     tableBody.appendChild(row);
+    rowNumber++;
   });
 }
 
@@ -327,6 +343,7 @@ function initializeGame(difficulty) {
             pacmanCurrentIndex -= 1
             forceCatToDance()
             playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+            moveCounter++;
           }
         if (squares[pacmanCurrentIndex -1] === squares[363]) {
           pacmanCurrentIndex = 391
@@ -342,6 +359,7 @@ function initializeGame(difficulty) {
             pacmanCurrentIndex -= width
             forceCatToDance()
             playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+            moveCounter++;
           }
         break
       case 39:
@@ -354,6 +372,7 @@ function initializeGame(difficulty) {
           pacmanCurrentIndex += 1
           forceCatToDance()
           playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+          moveCounter++;
         }
         if (squares[pacmanCurrentIndex +1] === squares[392]) {
           pacmanCurrentIndex = 364
@@ -369,6 +388,7 @@ function initializeGame(difficulty) {
           pacmanCurrentIndex += width
           forceCatToDance()
           playSound(PACMAN_SOUNDS['moveSound'], VOLUMES['low'])
+          moveCounter++;
         }
         break
     }
@@ -534,6 +554,7 @@ function initializeGame(difficulty) {
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: false,
+        move_count: moveCounter,
         game_code: "rostics_birthday_game"
       });
 
@@ -565,6 +586,7 @@ function initializeGame(difficulty) {
         difficulty_level: selectedDifficulty,
         score: score,
         is_won: true,
+        move_count: moveCounter,
         game_code: "rostics_birthday_game"
       });
   

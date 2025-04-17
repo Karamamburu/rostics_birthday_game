@@ -44,6 +44,52 @@ function validateRequest(request) {
     }
   }
 
+  if(request.HasProperty('move_count')) {
+    var moveCount = request.GetOptProperty('move_count', 0)
+    if(DataType(moveCount) != 'integer' || moveCount < 0) {
+      errors.push('move_count must be an integer not less than 0')
+    }
+  }
+
+  if(request.HasProperty('start_time')) {
+    try {
+      startTime = OptDate(request.GetOptProperty('start_time', ''));
+    } catch(e) {
+      errors.push('start_time must be a valid ISO 8601 date string');
+    }
+  } else {
+    errors.push('start_time is required');
+  }
+
+  if(request.HasProperty('end_time')) {
+    try {
+      endTime = OptDate(request.GetOptProperty('end_time', ''));
+    } catch(e) {
+      errors.push('end_time must be a valid ISO 8601 date string');
+    }
+  } else {
+    errors.push('end_time is required');
+  }
+
+  if(request.HasProperty('start_time') && request.HasProperty('end_time') && errors.length === 0) {
+    try {
+        startTime = DateToLocalDate(OptDate(request.GetOptProperty('start_time', '')));
+        endTime = DateToLocalDate(OptDate(request.GetOptProperty('end_time', '')));
+        if(DateDiff(endTime, startTime) < 0) {
+          errors.push('end_time must be later than start_time');
+        }
+    } catch(e) {
+        errors.push('error with datetime: ' + e.message);
+    }
+  }
+
+  if(request.HasProperty('game_code')) {
+    var GameCode = request.GetOptProperty('game_code', '')
+    if(GameCode != 'rostics_birthday_game') {
+      errors.push('game_code must be only "rostics_birthday_game"')
+    }
+  }
+
   return errors
 }
 
@@ -107,6 +153,7 @@ switch (mode) {
     gameResultDoc.TopElem.difficulty_level = request_body.GetOptProperty('difficulty_level', '')
     gameResultDoc.TopElem.start_time = DateToLocalDate(OptDate(request_body.GetOptProperty('start_time', '')))
     gameResultDoc.TopElem.end_time = DateToLocalDate(OptDate(request_body.GetOptProperty('end_time', '')))
+    //gameResultDoc.TopElem.move_count = request_body.GetOptProperty('move_count', '')
     gameResultDoc.TopElem.is_won = request_body.GetOptProperty('is_won', false)
     gameResultDoc.Save()
 
