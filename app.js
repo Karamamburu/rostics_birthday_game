@@ -116,10 +116,12 @@ function sendRequest(body) {
 let allRatingData = [];
 
 async function displayRatingData() {
+  const loader = document.getElementById('loader');
+  
   try {
-    allRatingData = await sendRequest({
-      mode: 'get_rating_data'
-    });
+    loader.style.display = 'flex';
+    
+    allRatingData = await sendRequest({ mode: 'get_rating_data' });
     
     filterTableByDifficulty('all');
     
@@ -128,16 +130,24 @@ async function displayRatingData() {
         document.querySelectorAll('.tab-button').forEach(btn => {
           btn.classList.remove('active');
         });
-        
         button.classList.add('active');
-        
         const difficulty = button.dataset.difficulty;
         filterTableByDifficulty(difficulty);
       });
     });
     
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
   } catch (error) {
     console.error('Ошибка при загрузке данных рейтинга:', error);
+    loader.querySelector('.loader-text').textContent = 'Ошибка загрузки. Попробуйте позже.';
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  } finally {
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+      loader.style.opacity = '1';
+    }, 300);
   }
 }
 
