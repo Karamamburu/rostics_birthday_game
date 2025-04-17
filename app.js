@@ -150,14 +150,17 @@ function filterTableByDifficulty(difficulty) {
 
   const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
 
-  const topTenResults = filteredData.slice(0, 100).sort((a, b) => 
+  const topResults = filteredData.slice(0, 100).sort((a, b) => 
    b.score - a.score || 
    difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
    a.durationInSeconds - b.durationInSeconds
 );
-  
-  topTenResults.forEach((player, index) => {
+  let rowNumber = 1;
+  topResults.forEach((player, index) => {
     const row = document.createElement('tr');
+
+    const numberCell = document.createElement('td');
+    numberCell.textContent = rowNumber;
     
     const nameCell = document.createElement('td');
     nameCell.textContent = player.fullname;
@@ -183,6 +186,7 @@ function filterTableByDifficulty(difficulty) {
     const winCell = document.createElement('td');
     winCell.textContent = player.is_won ? 'Да' : 'Нет';
     
+    row.appendChild(numberCell);
     row.appendChild(nameCell);
     row.appendChild(positionCell);
     row.appendChild(restaurantCell);
@@ -193,6 +197,7 @@ function filterTableByDifficulty(difficulty) {
     row.appendChild(winCell);
     
     tableBody.appendChild(row);
+    rowNumber++;
   });
 }
 
