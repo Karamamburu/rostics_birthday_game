@@ -16,18 +16,84 @@ UniTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/wtv/libs/custom_libs
 CustomGameTools = OpenCodeLib(FilePathToUrl(AppDirectoryPath() + "/custom_tools/custom_game_tools.js"));
 Server.Execute(AppDirectoryPath() + "/wt/web/include/user_init.html" );
 
+function validateRequest(request) {
+  var errors = new Array()
+
+  if(!request.HasProperty('mode')) {
+    errors.push('Request mode is undefined')
+  }
+
+  if(request.HasProperty('score')) {
+    var score = request.GetOptProperty('score', 0)
+    if(DataType(score) != 'integer' || score < 0 || score > 10000) {
+      errors.push('Score must be an integer between 0 and 10000')
+    }
+  }
+
+  if(request.HasProperty('difficulty_level')) {
+    var difficultyLevel = request.GetOptProperty('difficulty_level', '')
+    if(difficultyLevel != 'normal' && difficultyLevel != 'nightmare' && difficultyLevel != 'hell') {
+      errors.push('Difficulty level must be one of: normal, nightmare, hell')
+    }
+  }
+
+  if(request.HasProperty('is_won')) {
+    var isWon = request.GetOptProperty('is_won', '')
+    if(DataType(isWon) != 'bool') {
+      errors.push('is_won must be a boolean')
+    }
+  }
+
+  return errors
+}
+
 result = 'start_result'
 try {
 	request_body = tools.read_object(Request.Body);
 	mode = request_body.GetOptProperty('mode', '')
 } catch(ex) {
-	Log("Err: " + ex)
+  result = {
+      error: 'Invalid request mode',
+      details: ['Failed to parse request body']
+  };
+  Response.SetRespStatus(400, 'Invalid request' )
+  Response.Write(EncodeJson(result));
+  Log("Error parsing request body: " + ex);
+  EnableLog(log_file_name, false);
+}
+Log(tools.object_to_text(request_body, 'json'));
+
+
+
+if (mode === 'game_over') {
+  Log("it's game over")
+} else if (mode !== 'get_rating_data') {
+  result = {
+    error: 'Invalid mode',
+    details: ['Mode must be one of "game_over", "get_rating_data"']
+};
+  Response.SetRespStatus(400, 'Invalid request' )
+  Response.Write(EncodeJson(result));
+  Log("Invalid mode requested: " + mode);
+  EnableLog(log_file_name, false);
 }
 
-Log(tools.object_to_text(request_body, 'json'));
+
 
 switch (mode) {
 	case 'game_over':
+    var validationErrors = validateRequest(request_body)
+    if(ArrayCount(validationErrors) > 0) {
+      result = {
+        error: 'Validation failed',
+        details: validationErrors
+      }
+      Response.SetRespStatus(400, 'Invalid request' )
+      Response.Write(EncodeJson(result))
+      Log(tools.object_to_text(result, 'json'));
+      EnableLog(log_file_name, false);
+      break;
+    }
     gameResultDoc = tools.new_doc_by_name('cc_game_result', false)
     gameResultDoc.BindToDb()
     gameResultDoc.TopElem.name = 
@@ -142,6 +208,7 @@ switch (mode) {
     "время: " + DateDiff(OptDate(request_body.GetOptProperty('end_time', '')), OptDate(request_body.GetOptProperty('start_time', ''))) + " секунд, " +
     "уровень сложности: " + request_body.GetOptProperty('difficulty_level', '')
   );
+  Response.Write(EncodeJson(result))
   break;
 		
 	case 'get_rating_data':
@@ -218,11 +285,9 @@ switch (mode) {
 		}
 		
 		result = getTopResults()
+    Response.Write(EncodeJson(result))
+
 		break;
 }
-
-Response.Write(EncodeJson(result))
-
 EnableLog(log_file_name, false);
-
 %>

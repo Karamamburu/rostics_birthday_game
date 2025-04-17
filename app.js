@@ -21,6 +21,15 @@ import {
 
 import { getRandomElementOfArray } from './src//util.js'
 
+function updateScaleFactor() {
+  const height = window.innerHeight;
+  const scale = height / 1000;
+  document.documentElement.style.setProperty('--scale-factor', scale);
+}
+
+window.addEventListener('load', updateScaleFactor);
+window.addEventListener('resize', updateScaleFactor);
+
 const catImages = {};
 
 CAT_DANCE_ARRAY.forEach(cat => {
@@ -141,7 +150,7 @@ function filterTableByDifficulty(difficulty) {
 
   const difficultyOrder = { hell: 3, nightmare: 2, normal: 1 };
 
-  const topTenResults = filteredData.slice(0, 15).sort((a, b) => 
+  const topTenResults = filteredData.slice(0, 100).sort((a, b) => 
    b.score - a.score || 
    difficultyOrder[b.difficulty_level] - difficultyOrder[a.difficulty_level] || 
    a.durationInSeconds - b.durationInSeconds
