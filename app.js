@@ -186,6 +186,9 @@ function filterTableByDifficulty(difficulty) {
 
     const durationCell = document.createElement('td');
     durationCell.textContent = player.duration;
+
+    const movesCell = document.createElement('td');
+    movesCell.textContent = player.move_count;
     
     const winCell = document.createElement('td');
     winCell.textContent = player.is_won ? 'Да' : 'Нет';
@@ -198,6 +201,7 @@ function filterTableByDifficulty(difficulty) {
     row.appendChild(difficultyCell);
     row.appendChild(scoreCell);
     row.appendChild(durationCell);
+    row.appendChild(movesCell);
     row.appendChild(winCell);
     
     tableBody.appendChild(row);
