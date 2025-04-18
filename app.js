@@ -30,6 +30,20 @@ function updateScaleFactor() {
 window.addEventListener('load', updateScaleFactor);
 window.addEventListener('resize', updateScaleFactor);
 
+document.querySelector('.help-icon').addEventListener('click', function() {
+  document.querySelector('.helpModalBackground').classList.remove('hidden');
+});
+
+document.querySelector('.closeHelpModal').addEventListener('click', function() {
+  document.querySelector('.helpModalBackground').classList.add('hidden');
+});
+
+document.querySelector('.helpModalBackground').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.classList.add('hidden');
+  }
+});
+
 const catImages = {};
 
 CAT_DANCE_ARRAY.forEach(cat => {
