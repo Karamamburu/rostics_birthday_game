@@ -416,16 +416,16 @@ function initializeGame(difficulty) {
     switch (trophyCounter) {
 
       case 1:
-        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['low'])
+        playSound(RAMPAGE_SOUNDS['dominating'], VOLUMES['half'])
         break;
       case 2:
-        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['low'])
+        playSound(RAMPAGE_SOUNDS['rampage'], VOLUMES['half'])
         break;
       case 3:
-        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['low'])
+        playSound(RAMPAGE_SOUNDS['unstoppable'], VOLUMES['half'])
         break;
       case 4:
-        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['low'])
+        playSound(RAMPAGE_SOUNDS['godlike'], VOLUMES['half'])
         break;
     }
       trophyCounter++
@@ -572,7 +572,7 @@ function initializeGame(difficulty) {
 
       pauseSoundtrack()
       endTime = new Date();
-      playSound(PACMAN_SOUNDS['winSound'], VOLUMES['low'])
+      playSound(PACMAN_SOUNDS['winSound'], VOLUMES['half'])
       catDiv.style.backgroundImage = `url(${CAT_DANCE.win})`;
       restartButton.classList.remove('hidden')
       stopTimer()
