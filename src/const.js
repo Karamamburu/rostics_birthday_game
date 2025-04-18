@@ -16,7 +16,7 @@ const VOLUMES = {
     high: 1,
     medium: 0.1,
     half: 0.05,
-    low: 0.01
+    low: 0.03
 }
 
 const COOKIES_COUNT = 234

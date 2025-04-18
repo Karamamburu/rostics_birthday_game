@@ -20,6 +20,32 @@
     ></script>
   </head>
   <body>
+    <div class="helpModalBackground hidden">
+      <div class="helpModal">
+        <span class="closeHelpModal">&times;</span>
+        <h3>Справка по таблице ТОП 100</h3>
+        <p>В таблице отображаются 100 лучших, формируемых по определенным правилам.</p>
+        <p>Что можно делать:</p>
+        <ul>
+          <li>Фильтровать результаты по уровню сложности с помощью табов.</li>
+          <li>Просматривать статистику других игроков.</li>
+          <li>Сравнивать свои результаты с коллегами.</li>
+        </ul>
+        <p>Что можно получить:</p>
+        <ul>
+          <li>Значок ROSTIC'S GAMER - за победу на любом уровне сложности.</li>
+          <li>Награду ROSTIC'S GAME WINNER - за победу на уровне сложности HELL.</li>
+        </ul>
+        <p>В таблицу попадает по одному лучшему результату от каждого игрока на каждом уровне сложности.</p>
+        <p>Правила определения места победителя в общей рейтинговой таблице:</p>
+        <ol>
+          <li>По количеству съеденных калорий ↓ - чем больше, тем выше в таблице.</li>
+          <li>По уровню сложности (HELL → NIGHTMARE → NORMAL) - чем сложнее, тем выше в таблице.</li>
+          <li>По времени, затраченному на попытку ↑ - чем быстрее, тем выше в таблице.</li>
+          <li>По количеству движений, сделанных персонажем ↑ - чем меньше, тем выше в таблице.</li>
+        </ol>
+      </div>
+    </div>
     <div class="gameEndModalBackground hidden">
       <div class="gameEndModal">
         <span class="closeModal">&times;</span>
@@ -36,13 +62,13 @@
       <div class="modalActive">
         <div class="modalContainer">
           <div class="ratingContainer">
-            <h3>ТOП 100 игроков</h3>
-			  <div class="difficulty-tabs">
-			    <button class="tab-button active" data-difficulty="all">Все</button>
-			    <button class="tab-button" data-difficulty="normal">Normal</button>
-			    <button class="tab-button" data-difficulty="nightmare">Nightmare</button>
-			    <button class="tab-button" data-difficulty="hell">Hell</button>
-			  </div>
+            <h3>ТOП 100 игроков <span class="help-icon">?</span></h3>
+            <div class="difficulty-tabs">
+              <button class="tab-button active" data-difficulty="all">Все</button>
+              <button class="tab-button" data-difficulty="normal">Normal</button>
+              <button class="tab-button" data-difficulty="nightmare">Nightmare</button>
+              <button class="tab-button" data-difficulty="hell">Hell</button>
+            </div>
             <div class="table-container">
 				<table class="ratingTable">
 				  <thead>
@@ -136,8 +162,8 @@
     <div class="pixel-rules">
       <h2 class="pixel-title" style="text-align: center">/// ПРАВИЛА ///</h2>
       <ul class="pixel-list">
-        <li>Съешь <img src="/rostics_birthday_game/assets/images/chicken.png" class="pixel-small"> - 10 очков</li>
-        <li> Собери все хиты Rostic's <img src="/rostics_birthday_game/assets/images/pho_bo.png" class="pixel-small">, за каждый - 50 очков</li>
+        <li>Съешь <img src="/rostics_birthday_game/assets/images/chicken.png" class="pixel-small"> - 40 очков</li>
+        <li> Собери все хиты Rostic's <img src="/rostics_birthday_game/assets/images/pho_bo.png" class="pixel-small">, за каждый - 160 очков</li>
         <li>Избегай дудлов <img src="/rostics_birthday_game/assets/images/ghosts/apple.png" class="pixel-small">, они заобнимают тебя до смерти!</li>
       </ul>
     </div>
@@ -255,7 +281,8 @@
   .resultNumber, 
   .resultScore, 
   .resultTime, 
-  .resultDifficulty {
+  .resultDifficulty,
+  .help-icon {
     color: #fff;
     font-weight: bold;
     font-family: 'MercutioNbpSmallcaps', Arial, Helvetica, sans-serif;
@@ -294,6 +321,96 @@
 
   .hidden {
   display: none !important;
+  }
+
+  .help-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #A020C2;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .help-icon:hover {
+    background-color: #702090;
+    transform: scale(1.1);
+  }
+
+  .helpModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+  }
+
+  .helpModal {
+    background-color: #1a1a2e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+  }
+
+  .helpModal h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+
+  .helpModal p, .helpModal ul {
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .helpModal ul {
+    padding-left: 20px;
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+
+  .helpModal li {
+    margin-bottom: 5px;
+  }
+
+  .closeHelpModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .helpModal,
+  .helpModal div,
+  .helpModal p,
+  .helpModal h3,
+  .helpModal ul,
+  .helpModal li,
+  .helpModal span:not(.closeHelpModal) {
+    font-family: Arial, Helvetica, sans-serif !important;
+    color: white !important;
+    font-weight: normal !important;
+  }
+
+  .closeHelpModal:hover {
+    color: #A020C2;
   }
 </style>
   </body>
